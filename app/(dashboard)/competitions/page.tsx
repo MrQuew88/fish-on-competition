@@ -21,15 +21,49 @@ export default function CompetitionsPage() {
         router.push('/login')
         return
       }
-
-      const { data, error } = await supabase
+  
+      // 1. Récupérer les compétitions créées par l'utilisateur
+      const { data: createdCompetitions, error: error1 } = await supabase
         .from('competitions')
         .select('*')
         .eq('creator_id', user.id)
-        .order('start_date', { ascending: false })
-
-      if (error) throw error
-      setCompetitions(data || [])
+  
+      if (error1) throw error1
+  
+      // 2. Récupérer les IDs des compétitions où l'utilisateur est participant
+      const { data: participations, error: error2 } = await supabase
+        .from('participants')
+        .select('competition_id')
+        .eq('user_id', user.id)
+        .eq('status', 'accepted')
+  
+      if (error2) throw error2
+  
+      // 3. Récupérer les détails des compétitions où l'utilisateur participe
+      let participantCompetitions: Competition[] = []
+      if (participations && participations.length > 0) {
+        const competitionIds = participations.map(p => p.competition_id)
+        const { data, error: error3 } = await supabase
+          .from('competitions')
+          .select('*')
+          .in('id', competitionIds)
+  
+        if (error3) throw error3
+        participantCompetitions = data || []
+      }
+  
+      // 4. Combiner les deux listes et éliminer les doublons
+      const allCompetitions = [...(createdCompetitions || []), ...participantCompetitions]
+      const uniqueCompetitions = Array.from(
+        new Map(allCompetitions.map(comp => [comp.id, comp])).values()
+      )
+  
+      // 5. Trier par date
+      uniqueCompetitions.sort((a, b) => 
+        new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
+      )
+  
+      setCompetitions(uniqueCompetitions)
     } catch (error) {
       console.error('Erreur:', error)
     } finally {
