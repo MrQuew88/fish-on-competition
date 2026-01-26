@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /Users/quentinguislain/Desktop/App\\\\ Perso/fishing-competition && npm run build:*)"
+    ]
+  }
+}

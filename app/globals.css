@@ -1,0 +1,488 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  body {
+    @apply bg-earth-50 text-depth-900 min-h-screen;
+  }
+}
+
+@layer components {
+  /* ========================================
+     TYPOGRAPHY - Clean, sophisticated
+     ======================================== */
+
+  .text-display {
+    @apply font-semibold tracking-tight text-depth-950;
+    letter-spacing: -0.02em;
+  }
+
+  .text-label {
+    @apply text-xs font-semibold uppercase tracking-wider text-depth-500;
+  }
+
+  /* ========================================
+     BUTTONS - Understated elegance
+     ======================================== */
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2
+           px-4 py-2.5
+           text-sm font-semibold
+           rounded-xl
+           transition-all duration-200 ease-out
+           disabled:opacity-40 disabled:pointer-events-none
+           active:scale-[0.98];
+  }
+
+  .btn-primary {
+    @apply btn
+           bg-depth-800 text-white
+           shadow-soft
+           hover:bg-depth-700 hover:shadow-medium;
+  }
+
+  .btn-secondary {
+    @apply btn
+           bg-white text-depth-700
+           border border-depth-200
+           shadow-soft
+           hover:bg-depth-50 hover:border-depth-300;
+  }
+
+  .btn-success {
+    @apply btn
+           bg-moss-600 text-white
+           shadow-soft
+           hover:bg-moss-500 hover:shadow-medium;
+  }
+
+  .btn-ghost {
+    @apply btn
+           bg-transparent text-depth-600
+           hover:bg-depth-100 hover:text-depth-800;
+  }
+
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+
+  /* ========================================
+     CARDS - Subtle, layered surfaces
+     ======================================== */
+
+  .card {
+    @apply bg-white rounded-2xl shadow-soft
+           border border-earth-200/60;
+  }
+
+  .card-elevated {
+    @apply card shadow-medium border-0;
+  }
+
+  .card-interactive {
+    @apply card
+           cursor-pointer
+           transition-all duration-200
+           hover:shadow-medium hover:border-depth-200/60
+           hover:-translate-y-0.5;
+  }
+
+  .card-dark {
+    @apply bg-gradient-depth text-white rounded-2xl shadow-medium;
+  }
+
+  .card-nature {
+    @apply bg-gradient-moss text-white rounded-2xl shadow-medium;
+  }
+
+  /* ========================================
+     INPUTS - Refined, subtle
+     ======================================== */
+
+  .input {
+    @apply w-full px-4 py-3
+           bg-white text-depth-900
+           border border-depth-200 rounded-xl
+           text-sm
+           placeholder:text-depth-400
+           transition-all duration-200
+           focus:outline-none focus:border-depth-400 focus:ring-2 focus:ring-depth-100;
+  }
+
+  .input-lg {
+    @apply py-3.5 text-base;
+  }
+
+  .label {
+    @apply block mb-1.5 text-sm font-medium text-depth-700;
+  }
+
+  .helper-text {
+    @apply mt-1.5 text-xs text-depth-500;
+  }
+
+  /* ========================================
+     BADGES - Subtle indicators
+     ======================================== */
+
+  .badge {
+    @apply inline-flex items-center gap-1.5
+           px-2.5 py-1
+           text-xs font-semibold
+           rounded-lg;
+  }
+
+  .badge-neutral {
+    @apply bg-depth-100 text-depth-600;
+  }
+
+  .badge-active {
+    @apply bg-moss-100 text-moss-700;
+  }
+
+  .badge-finished {
+    @apply bg-depth-800 text-white;
+  }
+
+  .badge-draft {
+    @apply bg-earth-200 text-earth-700;
+  }
+
+  /* ========================================
+     STATUS INDICATORS
+     ======================================== */
+
+  .status-dot {
+    @apply w-2 h-2 rounded-full;
+  }
+
+  .status-dot-live {
+    @apply bg-moss-500 animate-pulse-slow;
+  }
+
+  .status-dot-idle {
+    @apply bg-depth-300;
+  }
+
+  /* ========================================
+     AVATARS
+     ======================================== */
+
+  .avatar {
+    @apply rounded-full object-cover bg-depth-100;
+  }
+
+  .avatar-ring {
+    @apply ring-2 ring-white shadow-soft;
+  }
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+
+  .page-container {
+    @apply max-w-lg mx-auto px-4 py-6 pb-24;
+  }
+
+  .page-title {
+    @apply text-display text-xl;
+  }
+
+  .section-title {
+    @apply text-display text-base mb-3;
+  }
+
+  /* ========================================
+     NAVIGATION
+     ======================================== */
+
+  .header {
+    @apply sticky top-0 z-50
+           bg-white/95 backdrop-blur-md
+           border-b border-earth-200/80;
+  }
+
+  .back-btn {
+    @apply inline-flex items-center gap-1.5
+           text-sm font-medium text-depth-500
+           hover:text-depth-800
+           transition-colors duration-200
+           mb-4 -ml-1;
+  }
+
+  /* ========================================
+     ALERTS
+     ======================================== */
+
+  .alert {
+    @apply p-4 rounded-xl text-sm;
+  }
+
+  .alert-error {
+    @apply bg-red-50 text-red-800 border border-red-200;
+  }
+
+  .alert-success {
+    @apply bg-moss-50 text-moss-800 border border-moss-200;
+  }
+
+  .alert-info {
+    @apply bg-depth-50 text-depth-800 border border-depth-200;
+  }
+
+  /* ========================================
+     LOADING
+     ======================================== */
+
+  .skeleton {
+    @apply bg-depth-100 rounded-lg animate-pulse;
+  }
+
+  .spinner {
+    @apply w-4 h-4 border-2 border-depth-200 border-t-depth-600 rounded-full animate-spin;
+  }
+
+  .spinner-light {
+    @apply w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin;
+  }
+
+  /* ========================================
+     EMPTY STATES
+     ======================================== */
+
+  .empty-state {
+    @apply py-12 text-center;
+  }
+
+  .empty-state-icon {
+    @apply text-4xl mb-3 opacity-50;
+  }
+
+  .empty-state-title {
+    @apply text-display text-lg mb-1;
+  }
+
+  .empty-state-text {
+    @apply text-sm text-depth-500 max-w-xs mx-auto;
+  }
+
+  /* ========================================
+     STATS
+     ======================================== */
+
+  .stat-card {
+    @apply bg-white rounded-xl p-4 border border-earth-200/60;
+  }
+
+  .stat-value {
+    @apply text-display text-2xl;
+  }
+
+  .stat-label {
+    @apply text-label mt-0.5;
+  }
+
+  /* ========================================
+     LIST ITEMS
+     ======================================== */
+
+  .list-item {
+    @apply flex items-center gap-3 py-3
+           border-b border-earth-100 last:border-0;
+  }
+
+  /* ========================================
+     RANK MEDALS - Sophisticated podium style
+     ======================================== */
+
+  .rank {
+    @apply flex items-center justify-center
+           w-8 h-8
+           rounded-lg
+           text-xs font-bold;
+  }
+
+  .rank-1 {
+    @apply bg-gradient-to-b from-amber-200 via-amber-300 to-amber-400
+           text-amber-900 shadow-soft
+           ring-1 ring-amber-300/50;
+  }
+
+  .rank-2 {
+    @apply bg-gradient-to-b from-slate-200 via-slate-300 to-slate-400
+           text-slate-700 shadow-soft
+           ring-1 ring-slate-300/50;
+  }
+
+  .rank-3 {
+    @apply bg-gradient-to-b from-copper-400 via-copper-500 to-copper-600
+           text-white shadow-soft
+           ring-1 ring-copper-400/50;
+  }
+
+  .rank-default {
+    @apply bg-earth-100 text-depth-600;
+  }
+
+  /* ========================================
+     ACTION BUTTONS (Quick actions grid)
+     ======================================== */
+
+  .action-btn {
+    @apply flex flex-col items-center justify-center
+           p-4 rounded-xl
+           bg-white border border-earth-200/60
+           shadow-soft
+           transition-all duration-200
+           hover:shadow-medium hover:border-depth-200
+           active:scale-[0.98];
+  }
+
+  .action-btn-icon {
+    @apply w-10 h-10 rounded-xl
+           flex items-center justify-center
+           text-lg mb-2;
+  }
+
+  .action-btn-label {
+    @apply text-xs font-semibold text-depth-700;
+  }
+
+  /* ========================================
+     FLOATING ACTION BUTTON
+     ======================================== */
+
+  .fab {
+    @apply fixed bottom-24 right-4
+           w-14 h-14
+           bg-depth-800 text-white
+           rounded-2xl
+           shadow-strong
+           flex items-center justify-center
+           transition-all duration-200
+           hover:bg-depth-700 hover:scale-105
+           active:scale-95
+           z-50;
+  }
+
+  /* ========================================
+     DIVIDERS
+     ======================================== */
+
+  .divider {
+    @apply border-t border-earth-200 my-4;
+  }
+
+  /* ========================================
+     BOTTOM NAVIGATION
+     ======================================== */
+
+  .bottom-nav {
+    @apply fixed bottom-0 left-0 right-0
+           bg-white/95 backdrop-blur-md
+           border-t border-earth-200
+           z-50 safe-area-pb;
+  }
+
+  .bottom-nav-item {
+    @apply flex flex-col items-center justify-center
+           py-2 px-3
+           text-depth-400
+           transition-colors duration-200;
+  }
+
+  .bottom-nav-item.active {
+    @apply text-depth-800;
+  }
+
+  .bottom-nav-item span {
+    @apply text-2xs font-medium mt-0.5;
+  }
+
+  /* ========================================
+     PARTICIPANT ROW
+     ======================================== */
+
+  .participant-row {
+    @apply flex items-center gap-3 p-3
+           rounded-xl
+           transition-colors duration-150
+           hover:bg-earth-50;
+  }
+
+  /* ========================================
+     RULE ITEM
+     ======================================== */
+
+  .rule-item {
+    @apply flex items-center gap-3 py-2.5;
+  }
+
+  .rule-icon {
+    @apply w-9 h-9 rounded-lg
+           flex items-center justify-center
+           text-sm;
+  }
+
+  /* ========================================
+     PRIZE DISPLAY
+     ======================================== */
+
+  .prize-banner {
+    @apply flex items-center gap-4 p-4
+           bg-gradient-to-r from-earth-100 to-earth-50
+           border border-earth-200
+           rounded-xl;
+  }
+}
+
+/* ========================================
+   GLOBAL OVERRIDES
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-depth-200 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-depth-300;
+}
+
+*:focus-visible {
+  @apply outline-2 outline-offset-2 outline-depth-500;
+}
+
+::selection {
+  @apply bg-depth-200 text-depth-900;
+}
+
+/* Safe area for bottom navigation */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
