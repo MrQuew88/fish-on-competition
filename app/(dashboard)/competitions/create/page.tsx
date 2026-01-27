@@ -121,7 +121,7 @@ export default function CreateCompetitionPage() {
 
       {/* Premium Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
         <div
           className="absolute inset-0 opacity-[0.025]"
           style={{ backgroundImage: grainTexture }}
@@ -133,10 +133,10 @@ export default function CreateCompetitionPage() {
           {/* Back link */}
           <Link
             href="/competitions"
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-[#0A4F4C] mb-6 group transition-colors duration-200"
+            className="inline-flex items-center gap-2 text-slate-600 hover:text-primary mb-6 group transition-colors duration-200"
             style={{ animation: 'slideInUp 0.4s ease-out forwards' }}
           >
-            <div className="w-8 h-8 rounded-lg bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-[#0A4F4C]/30 transition-all duration-200">
+            <div className="w-8 h-8 rounded-lg bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-primary/30 transition-all duration-200">
               <svg className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
@@ -149,7 +149,7 @@ export default function CreateCompetitionPage() {
             className="text-center mb-8"
             style={{ animation: 'slideInUp 0.4s ease-out 0.1s forwards', opacity: 0 }}
           >
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#0A4F4C] to-[#065F46] rounded-2xl mb-4 shadow-lg shadow-[#0A4F4C]/20">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid rounded-2xl mb-4 shadow-lg shadow-primary/20">
               <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
               </svg>
@@ -186,7 +186,7 @@ export default function CreateCompetitionPage() {
               <div className="p-5 border-b border-slate-100">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0A4F4C]/10 to-[#0A4F4C]/5 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-[#0A4F4C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                     </svg>
                   </div>
@@ -207,7 +207,7 @@ export default function CreateCompetitionPage() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200"
+                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
                     placeholder="Challenge Brochet Irlande 2026"
                   />
                 </div>
@@ -222,7 +222,7 @@ export default function CreateCompetitionPage() {
                       required
                       value={formData.start_date}
                       onChange={(e) => setFormData({ ...formData, start_date: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200"
+                      className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
                     />
                   </div>
                   <div>
@@ -234,7 +234,7 @@ export default function CreateCompetitionPage() {
                       required
                       value={formData.end_date}
                       onChange={(e) => setFormData({ ...formData, end_date: e.target.value })}
-                      className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200"
+                      className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
                     />
                   </div>
                 </div>
@@ -248,7 +248,7 @@ export default function CreateCompetitionPage() {
                     required
                     value={formData.location}
                     onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200"
+                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
                     placeholder="Lough Corrib, Irlande"
                   />
                 </div>
@@ -260,7 +260,7 @@ export default function CreateCompetitionPage() {
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200 resize-none"
+                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 resize-none"
                     rows={3}
                     placeholder="Une semaine de pêche au brochet entre amis..."
                   />
@@ -274,7 +274,7 @@ export default function CreateCompetitionPage() {
                     type="text"
                     value={formData.prize}
                     onChange={(e) => setFormData({ ...formData, prize: e.target.value })}
-                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200"
+                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
                     placeholder="Trophée + dîner offert"
                   />
                 </div>
@@ -289,7 +289,7 @@ export default function CreateCompetitionPage() {
                     min="2"
                     value={formData.max_participants}
                     onChange={(e) => setFormData({ ...formData, max_participants: parseInt(e.target.value) })}
-                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200"
+                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200"
                   />
                 </div>
               </div>
@@ -351,7 +351,7 @@ export default function CreateCompetitionPage() {
                 {/* Record Size Rule */}
                 <label className={`block p-4 rounded-xl border-2 cursor-pointer transition-all duration-200 ${
                   formData.rule_record_size
-                    ? 'border-[#0A4F4C] bg-[#E6F2F1]/50'
+                    ? 'border-primary bg-primary-light/50'
                     : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'
                 }`}>
                   <div className="flex items-start gap-4">
@@ -359,16 +359,16 @@ export default function CreateCompetitionPage() {
                       type="checkbox"
                       checked={formData.rule_record_size}
                       onChange={(e) => setFormData({ ...formData, rule_record_size: e.target.checked })}
-                      className="w-5 h-5 mt-0.5 rounded border-slate-300 text-[#0A4F4C] focus:ring-[#0A4F4C]"
+                      className="w-5 h-5 mt-0.5 rounded border-slate-300 text-primary focus:ring-primary"
                     />
                     <div className="flex-1">
                       <div className="flex items-center gap-2">
                         <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
                           formData.rule_record_size
-                            ? 'bg-[#0A4F4C]/20'
-                            : 'bg-[#0A4F4C]/10'
+                            ? 'bg-primary/20'
+                            : 'bg-primary/10'
                         }`}>
-                          <svg className="w-4 h-4 text-[#0A4F4C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                           </svg>
                         </div>
@@ -434,7 +434,7 @@ export default function CreateCompetitionPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-[#0A4F4C] to-[#065F46] text-white rounded-xl font-semibold shadow-lg shadow-[#0A4F4C]/25 hover:shadow-xl hover:shadow-[#0A4F4C]/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid text-white rounded-xl font-semibold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {loading ? (
                   <>

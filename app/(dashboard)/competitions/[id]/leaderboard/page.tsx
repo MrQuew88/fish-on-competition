@@ -211,7 +211,7 @@ export default function LeaderboardPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6">
@@ -236,7 +236,7 @@ export default function LeaderboardPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6 flex items-center justify-center">
@@ -249,7 +249,7 @@ export default function LeaderboardPage() {
             <h3 className="text-lg font-semibold text-slate-900 mb-2">Compétition introuvable</h3>
             <Link
               href="/competitions"
-              className="inline-flex items-center justify-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-[#0A4F4C] to-[#065F46] text-white rounded-xl font-semibold shadow-lg shadow-[#0A4F4C]/25"
+              className="inline-flex items-center justify-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid text-white rounded-xl font-semibold shadow-lg shadow-primary/25"
             >
               Retour
             </Link>
@@ -329,7 +329,7 @@ export default function LeaderboardPage() {
 
       {/* Premium Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
         <div
           className="absolute inset-0 opacity-[0.025]"
           style={{ backgroundImage: grainTexture }}
@@ -341,10 +341,10 @@ export default function LeaderboardPage() {
           {/* Back button */}
           <Link
             href={`/competitions/${competitionId}`}
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-[#0A4F4C] mb-6 group transition-colors duration-200"
+            className="inline-flex items-center gap-2 text-slate-600 hover:text-primary mb-6 group transition-colors duration-200"
             style={{ animation: 'slideInUp 0.4s ease-out forwards' }}
           >
-            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-[#0A4F4C]/30 transition-all duration-200">
+            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-primary/30 transition-all duration-200">
               <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
@@ -386,7 +386,7 @@ export default function LeaderboardPage() {
                   onClick={() => setActiveRule(rule.type)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 whitespace-nowrap ${
                     activeRule === rule.type
-                      ? 'text-white bg-gradient-to-r from-[#0A4F4C] to-[#065F46] shadow-md shadow-[#0A4F4C]/20'
+                      ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md shadow-primary/20'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 bg-white/50'
                   }`}
                 >
@@ -403,8 +403,8 @@ export default function LeaderboardPage() {
               className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-lg p-12 text-center"
               style={{ animation: 'slideInUp 0.4s ease-out 0.2s forwards', opacity: 0 }}
             >
-              <div className="h-24 w-24 mx-auto rounded-full bg-gradient-to-br from-[#E6F2F1] to-[#0A4F4C]/10 flex items-center justify-center mb-6">
-                <svg className="w-12 h-12 text-[#0A4F4C]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="h-24 w-24 mx-auto rounded-full bg-gradient-to-br from-primary-light to-[#0A4F4C]/10 flex items-center justify-center mb-6">
+                <svg className="w-12 h-12 text-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                 </svg>
               </div>
@@ -439,7 +439,7 @@ export default function LeaderboardPage() {
                         <div
                           key={entry.user_id}
                           className={`relative rounded-2xl p-5 ${getPodiumCardStyle(rank)} ${
-                            isCurrentUser ? 'ring-2 ring-[#0A4F4C] ring-offset-2' : ''
+                            isCurrentUser ? 'ring-2 ring-primary ring-offset-2' : ''
                           }`}
                         >
                           {/* Glow effect for 1st place */}
@@ -456,7 +456,7 @@ export default function LeaderboardPage() {
                                   className={`w-16 h-16 rounded-full object-cover ${getAvatarRingStyle(rank)}`}
                                 />
                               ) : (
-                                <div className={`w-16 h-16 rounded-full bg-gradient-to-br from-[#0A4F4C] to-[#065F46] flex items-center justify-center text-xl text-white font-bold ${getAvatarRingStyle(rank)}`}>
+                                <div className={`w-16 h-16 rounded-full bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-xl text-white font-bold ${getAvatarRingStyle(rank)}`}>
                                   {getInitials(entry.user_name)}
                                 </div>
                               )}
@@ -471,7 +471,7 @@ export default function LeaderboardPage() {
                                   {entry.user_name}
                                 </h3>
                                 {isCurrentUser && (
-                                  <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-[#0A4F4C] text-white">
+                                  <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-primary text-white">
                                     Vous
                                   </span>
                                 )}
@@ -497,7 +497,7 @@ export default function LeaderboardPage() {
                     {top3[1] ? (
                       <div
                         className={`relative rounded-2xl p-6 ${getPodiumCardStyle(2)} ${
-                          top3[1].user_id === currentUserId ? 'ring-2 ring-[#0A4F4C] ring-offset-2' : ''
+                          top3[1].user_id === currentUserId ? 'ring-2 ring-primary ring-offset-2' : ''
                         }`}
                       >
                         <div className="flex flex-col items-center text-center">
@@ -509,7 +509,7 @@ export default function LeaderboardPage() {
                                 className={`w-16 h-16 rounded-full object-cover ${getAvatarRingStyle(2)}`}
                               />
                             ) : (
-                              <div className={`w-16 h-16 rounded-full bg-gradient-to-br from-[#0A4F4C] to-[#065F46] flex items-center justify-center text-xl text-white font-bold ${getAvatarRingStyle(2)}`}>
+                              <div className={`w-16 h-16 rounded-full bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-xl text-white font-bold ${getAvatarRingStyle(2)}`}>
                                 {getInitials(top3[1].user_name)}
                               </div>
                             )}
@@ -522,7 +522,7 @@ export default function LeaderboardPage() {
                               {top3[1].user_name}
                             </h3>
                             {top3[1].user_id === currentUserId && (
-                              <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-[#0A4F4C] text-white">
+                              <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-primary text-white">
                                 Vous
                               </span>
                             )}
@@ -539,7 +539,7 @@ export default function LeaderboardPage() {
                     {top3[0] && (
                       <div
                         className={`relative rounded-2xl p-6 -mt-4 ${getPodiumCardStyle(1)} ${
-                          top3[0].user_id === currentUserId ? 'ring-2 ring-[#0A4F4C] ring-offset-2' : ''
+                          top3[0].user_id === currentUserId ? 'ring-2 ring-primary ring-offset-2' : ''
                         }`}
                       >
                         {/* Glow effect */}
@@ -554,7 +554,7 @@ export default function LeaderboardPage() {
                                 className={`w-20 h-20 rounded-full object-cover ${getAvatarRingStyle(1)}`}
                               />
                             ) : (
-                              <div className={`w-20 h-20 rounded-full bg-gradient-to-br from-[#0A4F4C] to-[#065F46] flex items-center justify-center text-2xl text-white font-bold ${getAvatarRingStyle(1)}`}>
+                              <div className={`w-20 h-20 rounded-full bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-2xl text-white font-bold ${getAvatarRingStyle(1)}`}>
                                 {getInitials(top3[0].user_name)}
                               </div>
                             )}
@@ -567,7 +567,7 @@ export default function LeaderboardPage() {
                               {top3[0].user_name}
                             </h3>
                             {top3[0].user_id === currentUserId && (
-                              <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-[#0A4F4C] text-white">
+                              <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-primary text-white">
                                 Vous
                               </span>
                             )}
@@ -584,7 +584,7 @@ export default function LeaderboardPage() {
                     {top3[2] ? (
                       <div
                         className={`relative rounded-2xl p-6 ${getPodiumCardStyle(3)} ${
-                          top3[2].user_id === currentUserId ? 'ring-2 ring-[#0A4F4C] ring-offset-2' : ''
+                          top3[2].user_id === currentUserId ? 'ring-2 ring-primary ring-offset-2' : ''
                         }`}
                       >
                         <div className="flex flex-col items-center text-center">
@@ -596,7 +596,7 @@ export default function LeaderboardPage() {
                                 className={`w-16 h-16 rounded-full object-cover ${getAvatarRingStyle(3)}`}
                               />
                             ) : (
-                              <div className={`w-16 h-16 rounded-full bg-gradient-to-br from-[#0A4F4C] to-[#065F46] flex items-center justify-center text-xl text-white font-bold ${getAvatarRingStyle(3)}`}>
+                              <div className={`w-16 h-16 rounded-full bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-xl text-white font-bold ${getAvatarRingStyle(3)}`}>
                                 {getInitials(top3[2].user_name)}
                               </div>
                             )}
@@ -609,7 +609,7 @@ export default function LeaderboardPage() {
                               {top3[2].user_name}
                             </h3>
                             {top3[2].user_id === currentUserId && (
-                              <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-[#0A4F4C] text-white">
+                              <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-primary text-white">
                                 Vous
                               </span>
                             )}
@@ -644,7 +644,7 @@ export default function LeaderboardPage() {
                           key={entry.user_id}
                           className={`group flex items-center gap-4 p-4 rounded-xl transition-all duration-200 ${
                             isCurrentUser
-                              ? 'bg-[#E6F2F1]/50 border-2 border-[#0A4F4C]/30'
+                              ? 'bg-primary-light/50 border-2 border-primary/30'
                               : 'hover:bg-slate-50 border border-transparent'
                           }`}
                         >
@@ -656,10 +656,10 @@ export default function LeaderboardPage() {
                             <img
                               src={entry.user_avatar}
                               alt=""
-                              className="w-12 h-12 rounded-full ring-2 ring-slate-200 group-hover:ring-[#0A4F4C]/50 transition-all duration-200 object-cover"
+                              className="w-12 h-12 rounded-full ring-2 ring-slate-200 group-hover:ring-primary/50 transition-all duration-200 object-cover"
                             />
                           ) : (
-                            <div className="w-12 h-12 rounded-full ring-2 ring-slate-200 group-hover:ring-[#0A4F4C]/50 transition-all duration-200 bg-gradient-to-br from-[#0A4F4C] to-[#065F46] flex items-center justify-center text-white font-semibold">
+                            <div className="w-12 h-12 rounded-full ring-2 ring-slate-200 group-hover:ring-primary/50 transition-all duration-200 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-white font-semibold">
                               {getInitials(entry.user_name)}
                             </div>
                           )}
@@ -668,7 +668,7 @@ export default function LeaderboardPage() {
                             <div className="flex items-center gap-2">
                               <p className="font-semibold text-slate-900 truncate">{entry.user_name}</p>
                               {isCurrentUser && (
-                                <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-[#0A4F4C] text-white">
+                                <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-primary text-white">
                                   Vous
                                 </span>
                               )}

@@ -80,12 +80,12 @@ export default function Header() {
           <div className="flex justify-between items-center h-16 md:h-[72px]">
             {/* Logo */}
             <Link href="/competitions" className="flex items-center gap-3 group">
-              <div className="h-9 w-9 md:h-10 md:w-10 rounded-xl bg-gradient-to-br from-[#0A4F4C] to-[#065F46] flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-200">
+              <div className="h-9 w-9 md:h-10 md:w-10 rounded-xl bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-200">
                 <svg className="w-5 h-5 md:w-6 md:h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                 </svg>
               </div>
-              <span className="text-xl md:text-2xl font-bold tracking-tight bg-gradient-to-r from-[#0A4F4C] to-[#0D9488] bg-clip-text text-transparent">
+              <span className="text-xl md:text-2xl font-bold tracking-tight bg-gradient-to-r from-water-deep to-water-surface bg-clip-text text-transparent">
                 Fish On
               </span>
             </Link>
@@ -96,8 +96,8 @@ export default function Header() {
                 href="/competitions"
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive('/competitions')
-                    ? 'text-white bg-gradient-to-r from-[#0A4F4C] to-[#065F46] shadow-sm'
-                    : 'text-slate-600 hover:text-[#0A4F4C] hover:bg-[#E6F2F1]'
+                    ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-sm'
+                    : 'text-slate-600 hover:text-primary hover:bg-primary-light'
                 }`}
               >
                 Compétitions
@@ -110,7 +110,7 @@ export default function Header() {
                 href="/profile"
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   isActive('/profile')
-                    ? 'bg-[#E6F2F1]'
+                    ? 'bg-primary-light'
                     : 'hover:bg-slate-50'
                 }`}
               >
@@ -121,7 +121,7 @@ export default function Header() {
                     className="h-8 w-8 rounded-full ring-2 ring-slate-200 object-cover"
                   />
                 ) : (
-                  <div className="h-8 w-8 rounded-full ring-2 ring-slate-200 bg-[#0A4F4C] flex items-center justify-center text-xs text-white font-medium">
+                  <div className="h-8 w-8 rounded-full ring-2 ring-slate-200 bg-primary flex items-center justify-center text-xs text-white font-medium">
                     {getInitials(profile?.name)}
                   </div>
                 )}
@@ -196,7 +196,7 @@ export default function Header() {
                   className="h-14 w-14 rounded-xl ring-2 ring-slate-200 object-cover shadow-sm"
                 />
               ) : (
-                <div className="h-14 w-14 rounded-xl ring-2 ring-slate-200 bg-gradient-to-br from-[#0A4F4C] to-[#065F46] flex items-center justify-center text-lg text-white font-semibold shadow-sm">
+                <div className="h-14 w-14 rounded-xl ring-2 ring-slate-200 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-lg text-white font-semibold shadow-sm">
                   {getInitials(profile?.name)}
                 </div>
               )}
@@ -215,17 +215,17 @@ export default function Header() {
               href="/competitions"
               className={`block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
                 isActive('/competitions')
-                  ? 'text-white bg-gradient-to-r from-[#0A4F4C] to-[#065F46] shadow-md'
-                  : 'text-slate-700 hover:text-[#0A4F4C] hover:bg-[#E6F2F1]'
+                  ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md'
+                  : 'text-slate-700 hover:text-primary hover:bg-primary-light'
               }`}
             >
               <div className="flex items-center gap-3">
                 <div className={`h-9 w-9 rounded-lg flex items-center justify-center ${
                   isActive('/competitions')
                     ? 'bg-white/20'
-                    : 'bg-gradient-to-br from-[#E6F2F1] to-[#0A4F4C]/10'
+                    : 'bg-gradient-to-br from-primary-light to-primary/10'
                 }`}>
-                  <svg className={`w-5 h-5 ${isActive('/competitions') ? 'text-white' : 'text-[#0A4F4C]'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-5 h-5 ${isActive('/competitions') ? 'text-white' : 'text-primary'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                   </svg>
                 </div>
@@ -237,8 +237,8 @@ export default function Header() {
               href="/profile"
               className={`block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
                 isActive('/profile')
-                  ? 'text-white bg-gradient-to-r from-[#0A4F4C] to-[#065F46] shadow-md'
-                  : 'text-slate-700 hover:text-[#0A4F4C] hover:bg-[#E6F2F1]'
+                  ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md'
+                  : 'text-slate-700 hover:text-primary hover:bg-primary-light'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -261,7 +261,7 @@ export default function Header() {
             <div className="pt-6">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border-2 border-slate-200 hover:border-[#0A4F4C] text-slate-700 hover:text-[#0A4F4C] rounded-xl transition-all duration-200 font-medium shadow-sm hover:shadow-md"
+                className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border-2 border-slate-200 hover:border-primary text-slate-700 hover:text-primary rounded-xl transition-all duration-200 font-medium shadow-sm hover:shadow-md"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

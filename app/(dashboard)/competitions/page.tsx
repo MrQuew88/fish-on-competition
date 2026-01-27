@@ -218,8 +218,8 @@ export default function CompetitionsPage() {
             className="group relative"
           >
             {/* Glow effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-[#0A4F4C] to-[#065F46] rounded-xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
-            <div className="relative h-12 w-12 bg-gradient-to-br from-[#0A4F4C] to-[#065F46] text-white rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-110">
+            <div className="absolute -inset-1 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid rounded-xl blur-lg opacity-40 group-hover:opacity-60 transition-opacity duration-300"></div>
+            <div className="relative h-12 w-12 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid text-white rounded-xl flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-110">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
@@ -236,9 +236,9 @@ export default function CompetitionsPage() {
             <div className="flex flex-col items-center justify-center py-8 px-4">
               {/* Illustration */}
               <div className="relative mb-6">
-                <div className="absolute inset-0 bg-[#0A4F4C]/10 rounded-full blur-xl"></div>
-                <div className="relative h-32 w-32 rounded-full bg-gradient-to-br from-[#E6F2F1] to-[#0A4F4C]/10 flex items-center justify-center shadow-lg">
-                  <svg className="h-16 w-16 text-[#0A4F4C]/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="absolute inset-0 bg-primary/10 rounded-full blur-xl"></div>
+                <div className="relative h-32 w-32 rounded-full bg-gradient-to-br from-primary-light to-[#0A4F4C]/10 flex items-center justify-center shadow-lg">
+                  <svg className="h-16 w-16 text-primary/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                   </svg>
                 </div>
@@ -253,7 +253,7 @@ export default function CompetitionsPage() {
 
               <Link
                 href="/competitions/create"
-                className="inline-flex items-center gap-3 bg-gradient-to-br from-[#0A4F4C] to-[#065F46] hover:from-[#0D6963] hover:to-[#047857] text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+                className="inline-flex items-center gap-3 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
               >
                 Créer ma première compétition
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,7 +302,7 @@ export default function CompetitionsPage() {
                     </div>
 
                     {/* Arrow */}
-                    <svg className="h-5 w-5 text-slate-400 flex-shrink-0 group-hover:text-[#0A4F4C] group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-5 w-5 text-slate-400 flex-shrink-0 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
@@ -315,11 +315,11 @@ export default function CompetitionsPage() {
         {/* Floating Create Button (mobile) */}
         <div className="md:hidden fixed bottom-6 right-6 group">
           {/* Glow effect */}
-          <div className="absolute -inset-2 bg-gradient-to-r from-[#0A4F4C] to-[#065F46] rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+          <div className="absolute -inset-2 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
 
           <Link
             href="/competitions/create"
-            className="relative bg-gradient-to-br from-[#0A4F4C] to-[#065F46] hover:from-[#0D6963] hover:to-[#047857] text-white rounded-full h-16 w-16 flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110"
+            className="relative bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] text-white rounded-full h-16 w-16 flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110"
           >
             <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

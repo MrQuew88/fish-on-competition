@@ -71,7 +71,7 @@ export default function SignupPage() {
       <div className="p-4 relative" style={{ zIndex: 10 }}>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-[#0A4F4C] transition-colors group"
+          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-primary transition-colors group"
         >
           <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -88,12 +88,12 @@ export default function SignupPage() {
             className="text-center mb-8 animate-slide-in-up"
             style={{ animationDelay: '0ms' }}
           >
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#0A4F4C] to-[#065F46] rounded-xl mb-4 shadow-lg shadow-[#0A4F4C]/25">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid rounded-xl mb-4 shadow-lg shadow-primary/25">
               <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
             </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-[#0A4F4C] to-[#0D9488] bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-water-deep to-water-surface bg-clip-text text-transparent">
               Fish On
             </h1>
             <p className="text-slate-600 mt-2 text-sm">
@@ -145,7 +145,7 @@ export default function SignupPage() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 text-base"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 text-base"
                     placeholder="Jean Dupont"
                     autoComplete="name"
                   />
@@ -168,7 +168,7 @@ export default function SignupPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 text-base"
+                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 text-base"
                     placeholder="vous@exemple.com"
                     autoComplete="email"
                   />
@@ -192,7 +192,7 @@ export default function SignupPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength={6}
-                    className="w-full pl-11 pr-12 py-3 rounded-xl border border-slate-300 focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 text-base"
+                    className="w-full pl-11 pr-12 py-3 rounded-xl border border-slate-300 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 text-slate-900 placeholder:text-slate-400 text-base"
                     placeholder="Créez un mot de passe"
                     autoComplete="new-password"
                   />
@@ -225,7 +225,7 @@ export default function SignupPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-br from-[#0A4F4C] to-[#065F46] hover:from-[#0D6963] hover:to-[#047857] text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-[#0A4F4C]/25 hover:shadow-xl hover:shadow-[#0A4F4C]/30 transition-all duration-300 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+                className="w-full bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] transition-all duration-300 hover:scale-[1.02] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>
@@ -249,7 +249,7 @@ export default function SignupPage() {
                 Déjà un compte ?{' '}
                 <Link
                   href="/login"
-                  className="font-semibold text-[#0A4F4C] hover:text-[#0D6963] transition-colors duration-200"
+                  className="font-semibold text-primary hover:text-primary-hover transition-colors duration-200"
                 >
                   Se connecter
                 </Link>

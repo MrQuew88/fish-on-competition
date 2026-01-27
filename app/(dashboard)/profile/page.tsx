@@ -195,7 +195,7 @@ export default function ProfilePage() {
         {/* Back link */}
         <Link
           href="/competitions"
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-[#0A4F4C] transition-colors mb-6 group animate-slide-in-up"
+          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-primary transition-colors mb-6 group animate-slide-in-up"
           style={{ animationDelay: '0ms' }}
         >
           <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,7 +220,7 @@ export default function ProfilePage() {
                 className="relative w-24 h-24 rounded-2xl object-cover ring-4 ring-white shadow-xl"
               />
             ) : (
-              <div className="relative w-24 h-24 rounded-2xl bg-gradient-to-br from-[#0A4F4C] to-[#0D6963] flex items-center justify-center text-2xl text-white font-bold ring-4 ring-white shadow-xl">
+              <div className="relative w-24 h-24 rounded-2xl bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-2xl text-white font-bold ring-4 ring-white shadow-xl">
                 {getInitials(name)}
               </div>
             )}
@@ -253,11 +253,11 @@ export default function ProfilePage() {
           </h1>
           <p className="text-slate-500 text-sm mt-1">{user?.email}</p>
           {punchline && (
-            <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-[#0A4F4C]/5 rounded-full">
-              <svg className="w-4 h-4 text-[#0A4F4C]" fill="currentColor" viewBox="0 0 20 20">
+            <div className="mt-3 inline-flex items-center gap-2 px-4 py-2 bg-primary/5 rounded-full">
+              <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clipRule="evenodd" />
               </svg>
-              <p className="text-[#0A4F4C] text-sm font-medium italic">"{punchline}"</p>
+              <p className="text-primary text-sm font-medium italic">"{punchline}"</p>
             </div>
           )}
         </div>
@@ -304,7 +304,7 @@ export default function ProfilePage() {
             {/* Card header */}
             <div className="px-6 py-4 bg-gradient-to-r from-slate-50 to-slate-100/50 border-b border-slate-200/80">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#0A4F4C] to-[#0D6963] flex items-center justify-center shadow-md">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center shadow-md">
                   <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
@@ -326,7 +326,7 @@ export default function ProfilePage() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A4F4C]/20 focus:border-[#0A4F4C] transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder="Jean Dupont"
                 />
               </div>
@@ -339,7 +339,7 @@ export default function ProfilePage() {
                   type="text"
                   value={punchline}
                   onChange={(e) => setPunchline(e.target.value)}
-                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#0A4F4C]/20 focus:border-[#0A4F4C] transition-all"
+                  className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
                   placeholder="Chasseur de brochets depuis 2010"
                 />
                 <p className="mt-2 text-xs text-slate-500 flex items-center gap-1">
@@ -381,7 +381,7 @@ export default function ProfilePage() {
           <button
             type="submit"
             disabled={saving}
-            className="w-full py-4 px-6 bg-gradient-to-r from-[#0A4F4C] to-[#0D6963] hover:from-[#0D6963] hover:to-[#0A4F4C] text-white font-semibold rounded-xl shadow-lg shadow-[#0A4F4C]/25 hover:shadow-xl hover:shadow-[#0A4F4C]/30 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed animate-slide-in-up"
+            className="w-full py-4 px-6 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] text-white font-semibold rounded-xl shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed animate-slide-in-up"
             style={{ animationDelay: '150ms' }}
           >
             {saving ? (

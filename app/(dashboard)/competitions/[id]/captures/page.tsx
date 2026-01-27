@@ -246,7 +246,7 @@ export default function CapturesPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6">
@@ -269,7 +269,7 @@ export default function CapturesPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6 flex items-center justify-center">
@@ -282,7 +282,7 @@ export default function CapturesPage() {
             <h3 className="text-lg font-semibold text-slate-900 mb-2">Compétition introuvable</h3>
             <Link
               href="/competitions"
-              className="inline-flex items-center justify-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-[#0A4F4C] to-[#065F46] text-white rounded-xl font-semibold shadow-lg shadow-[#0A4F4C]/25"
+              className="inline-flex items-center justify-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid text-white rounded-xl font-semibold shadow-lg shadow-primary/25"
             >
               Retour
             </Link>
@@ -298,7 +298,7 @@ export default function CapturesPage() {
 
       {/* Premium Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
         <div
           className="absolute inset-0 opacity-[0.025]"
           style={{ backgroundImage: grainTexture }}
@@ -310,10 +310,10 @@ export default function CapturesPage() {
           {/* Back button */}
           <Link
             href={`/competitions/${competitionId}`}
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-[#0A4F4C] mb-6 group transition-colors duration-200"
+            className="inline-flex items-center gap-2 text-slate-600 hover:text-primary mb-6 group transition-colors duration-200"
             style={{ animation: 'slideInUp 0.4s ease-out forwards' }}
           >
-            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-[#0A4F4C]/30 transition-all duration-200">
+            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-primary/30 transition-all duration-200">
               <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
@@ -334,8 +334,8 @@ export default function CapturesPage() {
             {/* Stats */}
             <div className="flex items-center gap-6 mt-4 text-sm text-slate-600">
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#E6F2F1] flex items-center justify-center">
-                  <svg className="w-4 h-4 text-[#0A4F4C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 rounded-lg bg-primary-light flex items-center justify-center">
+                  <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
@@ -372,7 +372,7 @@ export default function CapturesPage() {
                 onClick={() => setSelectedFilter(null)}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 whitespace-nowrap ${
                   selectedFilter === null
-                    ? 'text-white bg-gradient-to-r from-[#0A4F4C] to-[#065F46] shadow-md shadow-[#0A4F4C]/20'
+                    ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md shadow-primary/20'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 bg-white/50'
                 }`}
               >
@@ -384,7 +384,7 @@ export default function CapturesPage() {
                   onClick={() => setSelectedFilter(participant.id)}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 whitespace-nowrap ${
                     selectedFilter === participant.id
-                      ? 'text-white bg-gradient-to-r from-[#0A4F4C] to-[#065F46] shadow-md shadow-[#0A4F4C]/20'
+                      ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md shadow-primary/20'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 bg-white/50'
                   }`}
                 >
@@ -398,7 +398,7 @@ export default function CapturesPage() {
                     <div className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
                       selectedFilter === participant.id
                         ? 'bg-white/30 text-white'
-                        : 'bg-[#0A4F4C] text-white'
+                        : 'bg-primary text-white'
                     }`}>
                       {getInitials(participant.name)}
                     </div>
@@ -415,8 +415,8 @@ export default function CapturesPage() {
               className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-lg p-12 text-center"
               style={{ animation: 'slideInUp 0.4s ease-out 0.2s forwards', opacity: 0 }}
             >
-              <div className="h-24 w-24 mx-auto rounded-full bg-gradient-to-br from-[#E6F2F1] to-[#0A4F4C]/10 flex items-center justify-center mb-6">
-                <svg className="w-12 h-12 text-[#0A4F4C]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="h-24 w-24 mx-auto rounded-full bg-gradient-to-br from-primary-light to-primary/10 flex items-center justify-center mb-6">
+                <svg className="w-12 h-12 text-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
@@ -429,7 +429,7 @@ export default function CapturesPage() {
               {competition.status === 'active' && (
                 <Link
                   href={`/competitions/${competitionId}/catches`}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-[#0A4F4C] text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-primary text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -486,7 +486,7 @@ export default function CapturesPage() {
                               className="w-6 h-6 rounded-full ring-2 ring-white object-cover"
                             />
                           ) : (
-                            <div className="w-6 h-6 rounded-full ring-2 ring-white bg-[#0A4F4C] flex items-center justify-center text-xs font-bold">
+                            <div className="w-6 h-6 rounded-full ring-2 ring-white bg-primary flex items-center justify-center text-xs font-bold">
                               {getInitials(session.user_name)}
                             </div>
                           )}
@@ -527,7 +527,7 @@ export default function CapturesPage() {
           {competition.status === 'active' && sessionsWithPhotos.length > 0 && (
             <Link
               href={`/competitions/${competitionId}/catches`}
-              className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-emerald-500 to-[#0A4F4C] text-white rounded-full shadow-lg shadow-emerald-500/30 flex items-center justify-center hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-200 z-30"
+              className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-emerald-500 to-primary text-white rounded-full shadow-lg shadow-emerald-500/30 flex items-center justify-center hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-200 z-30"
               style={{ animation: 'slideInUp 0.4s ease-out 0.4s forwards', opacity: 0 }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -619,7 +619,7 @@ export default function CapturesPage() {
                         className="w-12 h-12 rounded-full ring-2 ring-slate-200 object-cover"
                       />
                     ) : (
-                      <div className="w-12 h-12 rounded-full ring-2 ring-slate-200 bg-gradient-to-br from-[#0A4F4C] to-[#065F46] flex items-center justify-center text-white font-bold">
+                      <div className="w-12 h-12 rounded-full ring-2 ring-slate-200 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-white font-bold">
                         {getInitials(selectedSession.user_name)}
                       </div>
                     )}
@@ -655,14 +655,14 @@ export default function CapturesPage() {
 
                   {/* Size */}
                   {selectedSession.biggestSize && (
-                    <div className="p-4 rounded-xl bg-[#E6F2F1] border border-[#0A4F4C]/20">
-                      <div className="w-10 h-10 rounded-lg bg-[#0A4F4C]/10 flex items-center justify-center mb-2">
-                        <svg className="w-5 h-5 text-[#0A4F4C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="p-4 rounded-xl bg-primary-light border border-primary/20">
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-2">
+                        <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                         </svg>
                       </div>
-                      <p className="text-xs font-semibold text-[#0A4F4C] uppercase tracking-wide mb-1">Plus grande</p>
-                      <p className="text-2xl font-bold text-[#0A4F4C] tabular-nums">{selectedSession.biggestSize} cm</p>
+                      <p className="text-xs font-semibold text-primary uppercase tracking-wide mb-1">Plus grande</p>
+                      <p className="text-2xl font-bold text-primary tabular-nums">{selectedSession.biggestSize} cm</p>
                     </div>
                   )}
 
@@ -707,7 +707,7 @@ export default function CapturesPage() {
                               idx === 0 && size === biggestOverall
                                 ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white'
                                 : idx === 0
-                                ? 'bg-[#0A4F4C] text-white'
+                                ? 'bg-primary text-white'
                                 : 'bg-slate-100 text-slate-700'
                             }`}
                           >

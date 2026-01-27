@@ -197,7 +197,7 @@ export default function RecordCatchPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6">
@@ -221,7 +221,7 @@ export default function RecordCatchPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6 flex items-center justify-center">
@@ -234,7 +234,7 @@ export default function RecordCatchPage() {
             <h3 className="text-lg font-semibold text-slate-900 mb-2">Compétition introuvable</h3>
             <Link
               href="/competitions"
-              className="inline-flex items-center justify-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-[#0A4F4C] to-[#065F46] text-white rounded-xl font-semibold shadow-lg shadow-[#0A4F4C]/25"
+              className="inline-flex items-center justify-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid text-white rounded-xl font-semibold shadow-lg shadow-primary/25"
             >
               Retour
             </Link>
@@ -250,7 +250,7 @@ export default function RecordCatchPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-[#E6F2F1] to-teal-50" />
+          <div className="absolute inset-0 bg-gradient-to-br from-emerald-50 via-primary-light to-teal-50" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 flex items-center justify-center">
@@ -298,7 +298,7 @@ export default function RecordCatchPage() {
 
       {/* Premium Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-[#E6F2F1] to-slate-100" />
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
         <div
           className="absolute inset-0 opacity-[0.025]"
           style={{ backgroundImage: grainTexture }}
@@ -310,10 +310,10 @@ export default function RecordCatchPage() {
           {/* Back button */}
           <Link
             href={`/competitions/${competitionId}`}
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-[#0A4F4C] mb-6 group transition-colors duration-200"
+            className="inline-flex items-center gap-2 text-slate-600 hover:text-primary mb-6 group transition-colors duration-200"
             style={{ animation: 'slideInUp 0.4s ease-out forwards' }}
           >
-            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-[#0A4F4C]/30 transition-all duration-200">
+            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-primary/30 transition-all duration-200">
               <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
@@ -326,7 +326,7 @@ export default function RecordCatchPage() {
             className="text-center mb-8"
             style={{ animation: 'slideInUp 0.4s ease-out 0.1s forwards', opacity: 0 }}
           >
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-400 to-[#0A4F4C] rounded-2xl mb-4 shadow-xl shadow-emerald-500/25">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-emerald-400 to-primary rounded-2xl mb-4 shadow-xl shadow-emerald-500/25">
               <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
               </svg>
@@ -362,8 +362,8 @@ export default function RecordCatchPage() {
             >
               <div className="p-5 border-b border-slate-100">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0D9488]/20 to-[#0A4F4C]/10 flex items-center justify-center">
-                    <svg className="w-6 h-6 text-[#0A4F4C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0D9488]/20 to-primary/10 flex items-center justify-center">
+                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -429,16 +429,16 @@ export default function RecordCatchPage() {
                 ) : (
                   // Upload Area
                   <label className="block cursor-pointer group">
-                    <div className="relative border-2 border-dashed border-slate-300 rounded-xl p-8 hover:border-[#0A4F4C] hover:bg-[#E6F2F1]/30 transition-all duration-200">
+                    <div className="relative border-2 border-dashed border-slate-300 rounded-xl p-8 hover:border-primary hover:bg-primary-light/30 transition-all duration-200">
                       <div className="flex flex-col items-center text-center gap-3">
-                        <div className="h-16 w-16 rounded-xl bg-gradient-to-br from-[#E6F2F1] to-[#0A4F4C]/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
-                          <svg className="w-8 h-8 text-[#0A4F4C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div className="h-16 w-16 rounded-xl bg-gradient-to-br from-primary-light to-primary/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                          <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
                           </svg>
                         </div>
                         <div>
-                          <p className="text-base font-semibold text-slate-900 group-hover:text-[#0A4F4C] transition-colors">
+                          <p className="text-base font-semibold text-slate-900 group-hover:text-primary transition-colors">
                             Ajouter une photo
                           </p>
                           <p className="text-sm text-slate-500 mt-1">
@@ -489,7 +489,7 @@ export default function RecordCatchPage() {
                       onClick={() => handleFishCountChange(count)}
                       className={`relative min-h-[56px] rounded-xl font-bold text-xl transition-all duration-150 active:scale-95 ${
                         fishCount === count
-                          ? 'bg-gradient-to-br from-[#0A4F4C] to-[#065F46] text-white shadow-lg shadow-[#0A4F4C]/30'
+                          ? 'bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid text-white shadow-lg shadow-primary/30'
                           : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                       }`}
                     >
@@ -515,7 +515,7 @@ export default function RecordCatchPage() {
                     max="50"
                     value={fishCount}
                     onChange={(e) => handleFishCountChange(parseInt(e.target.value) || 1)}
-                    className="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-xl text-center text-xl font-bold text-slate-900 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all"
+                    className="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-xl text-center text-xl font-bold text-slate-900 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                   />
                 </div>
               </div>
@@ -558,7 +558,7 @@ export default function RecordCatchPage() {
                     {Array.from({ length: fishCount }).map((_, index) => (
                       <div key={index} className="p-4 bg-slate-50 rounded-xl">
                         <div className="flex items-center gap-2 mb-3">
-                          <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0A4F4C] to-[#065F46] text-white text-sm font-bold flex items-center justify-center shadow-sm">
+                          <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid text-white text-sm font-bold flex items-center justify-center shadow-sm">
                             {index + 1}
                           </span>
                           <span className="font-medium text-slate-700">Poisson {index + 1}</span>
@@ -574,7 +574,7 @@ export default function RecordCatchPage() {
                                 min="0"
                                 value={fishSizes[index] || ''}
                                 onChange={(e) => handleSizeChange(index, e.target.value)}
-                                className="w-full px-4 py-3 pr-12 bg-white border border-slate-200 rounded-xl text-center font-semibold text-slate-900 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all"
+                                className="w-full px-4 py-3 pr-12 bg-white border border-slate-200 rounded-xl text-center font-semibold text-slate-900 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                                 placeholder="85"
                               />
                               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-medium text-sm">
@@ -588,7 +588,7 @@ export default function RecordCatchPage() {
                               type="text"
                               value={fishLures[index] || ''}
                               onChange={(e) => handleLureChange(index, e.target.value)}
-                              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-[#0A4F4C] focus:ring-2 focus:ring-[#0A4F4C]/20 transition-all"
+                              className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl text-slate-900 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
                               placeholder="Cuillère"
                             />
                           </div>
@@ -615,7 +615,7 @@ export default function RecordCatchPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-[#0A4F4C] text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
+                className="flex-1 flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-primary text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:shadow-emerald-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {submitting ? (
                   <>
@@ -653,7 +653,7 @@ export default function RecordCatchPage() {
             type="button"
             onClick={handleSubmit}
             disabled={submitting}
-            className="flex-1 min-h-[52px] flex items-center justify-center gap-2 px-6 bg-gradient-to-r from-emerald-500 to-[#0A4F4C] text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+            className="flex-1 min-h-[52px] flex items-center justify-center gap-2 px-6 bg-gradient-to-r from-emerald-500 to-primary text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/25 active:scale-[0.98] transition-all disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {submitting ? (
               <>

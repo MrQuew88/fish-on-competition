@@ -159,7 +159,7 @@ export default function CompetitionDetailPage() {
               <p className="text-base text-slate-600 mb-6">Cette compétition n'existe pas ou a été supprimée</p>
               <Link
                 href="/competitions"
-                className="inline-flex items-center justify-center bg-gradient-to-br from-[#0A4F4C] to-[#065F46] hover:from-[#0D6963] hover:to-[#047857] text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105"
+                className="inline-flex items-center justify-center bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105"
               >
                 Retour
               </Link>
@@ -218,7 +218,7 @@ export default function CompetitionDetailPage() {
         {/* Back button - enhanced animation */}
         <Link
           href="/competitions"
-          className="flex items-center gap-2 text-slate-600 hover:text-[#0A4F4C] transition-all duration-200 group mb-6"
+          className="flex items-center gap-2 text-slate-600 hover:text-primary transition-all duration-200 group mb-6"
         >
           <svg className="h-5 w-5 group-hover:-translate-x-1 group-hover:scale-110 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -276,8 +276,14 @@ export default function CompetitionDetailPage() {
             </div>
           </div>
         ) : (
-          // Active/Finished: dramatic dark hero card
-          <div className="relative overflow-hidden bg-gradient-to-br from-[#064E3B] via-[#0A4F4C] to-[#065F46] rounded-2xl p-8 shadow-2xl">
+          // Active/Finished: dramatic dark hero card with water reflections
+          <div className="relative overflow-hidden rounded-2xl p-8 shadow-2xl">
+            {/* Base: Deep water gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-water-deepest via-water-deep to-water-mid" />
+
+            {/* Reflection layer: Golden shimmer */}
+            <div className="absolute inset-0 bg-gradient-to-t from-reflect-gold/8 via-reflect-gold/3 to-transparent" />
+
             {/* Pattern texture overlay - enhanced visibility */}
             <div
               className="absolute inset-0 opacity-[0.05]"
@@ -336,18 +342,18 @@ export default function CompetitionDetailPage() {
             style={{ animation: 'slideInUp 0.5s ease-out 0.15s both' }}
           >
             {/* Glow effect - enhanced on hover */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-amber-400 to-orange-400 rounded-2xl blur-lg opacity-20 group-hover:opacity-40 group-hover:blur-xl transition-all duration-500"></div>
+            <div className="absolute -inset-1 bg-gradient-to-r from-reflect-gold to-reflect-bright rounded-2xl blur-lg opacity-20 group-hover:opacity-40 group-hover:blur-xl transition-all duration-500"></div>
 
-            <div className="relative bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 border-2 border-amber-300/50 rounded-xl p-6 shadow-lg">
+            <div className="relative bg-gradient-to-br from-reflect-bright/15 via-reflect-gold/20 to-reflect-amber/15 border-2 border-reflect-gold/30 rounded-xl p-6 shadow-lg backdrop-blur-sm">
               <div className="flex items-center gap-4">
-                <div className="relative h-16 w-16 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+                <div className="relative h-16 w-16 rounded-xl bg-gradient-to-br from-reflect-gold to-reflect-amber flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
                   <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-amber-700 uppercase tracking-wider mb-1">Récompense</div>
-                  <div className="text-2xl font-bold text-amber-900">{competition.prize}</div>
+                  <div className="text-xs font-bold text-reflect-amber uppercase tracking-wider mb-1">Récompense</div>
+                  <div className="text-2xl font-bold text-water-deepest">{competition.prize}</div>
                 </div>
               </div>
             </div>
@@ -360,17 +366,17 @@ export default function CompetitionDetailPage() {
             className="grid grid-cols-3 gap-4"
             style={{ animation: 'slideInUp 0.5s ease-out 0.3s both' }}
           >
-            {/* Capturer - Teal */}
+            {/* Capturer - Water tones */}
             <Link
               href={`/competitions/${competitionId}/catches`}
-              className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-teal-300/50 transition-all duration-300 ease-out hover:scale-105"
+              className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-water-surface/50 hover:shadow-[0_4px_20px_rgba(212,165,116,0.12)] transition-all duration-300 ease-out hover:scale-105"
             >
               {/* Hover gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-teal-50/0 to-teal-100/50 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-water-surface/0 to-water-surface/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
 
               <div className="relative z-10 flex flex-col items-center gap-3">
-                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-teal-100 to-teal-200 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:rotate-3">
-                  <svg className="h-7 w-7 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-water-surface/20 to-water-mid/10 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:rotate-3">
+                  <svg className="h-7 w-7 text-water-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
                   </svg>
                 </div>
@@ -378,16 +384,16 @@ export default function CompetitionDetailPage() {
               </div>
             </Link>
 
-            {/* Classement - Orange */}
+            {/* Classement - Reflection tones */}
             <Link
               href={`/competitions/${competitionId}/leaderboard`}
-              className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-orange-300/50 transition-all duration-300 ease-out hover:scale-105"
+              className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-reflect-gold/50 hover:shadow-[0_4px_20px_rgba(212,165,116,0.12)] transition-all duration-300 ease-out hover:scale-105"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-orange-50/0 to-orange-100/50 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-reflect-gold/0 to-reflect-gold/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
 
               <div className="relative z-10 flex flex-col items-center gap-3">
-                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-orange-100 to-orange-200 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:rotate-3">
-                  <svg className="h-7 w-7 text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-reflect-gold/20 via-reflect-subtle/15 to-water-surface/10 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:rotate-3">
+                  <svg className="h-7 w-7 text-reflect-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
@@ -395,16 +401,16 @@ export default function CompetitionDetailPage() {
               </div>
             </Link>
 
-            {/* Galerie - Sky Blue */}
+            {/* Galerie - Merged tones */}
             <Link
               href={`/competitions/${competitionId}/captures`}
-              className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-sky-300/50 transition-all duration-300 ease-out hover:scale-105"
+              className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-merged-teal-gold/50 hover:shadow-[0_4px_20px_rgba(212,165,116,0.12)] transition-all duration-300 ease-out hover:scale-105"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-sky-50/0 to-sky-100/50 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-merged-teal-gold/0 to-merged-teal-gold/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
 
               <div className="relative z-10 flex flex-col items-center gap-3">
-                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-sky-100 to-sky-200 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:rotate-3">
-                  <svg className="h-7 w-7 text-sky-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-merged-teal-gold/20 to-water-mid/15 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:rotate-3">
+                  <svg className="h-7 w-7 text-merged-teal-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
@@ -418,14 +424,14 @@ export default function CompetitionDetailPage() {
         {competition.status === 'finished' && (
           <Link
             href={`/competitions/${competitionId}/results`}
-            className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-[#0A4F4C]/30 transition-all duration-300 ease-out block"
+            className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-primary/30 transition-all duration-300 ease-out block"
             style={{ animation: 'slideInUp 0.5s ease-out 0.3s both' }}
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-[#E6F2F1]/0 to-[#E6F2F1]/50 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-light/0 to-primary-light/50 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
 
             <div className="relative z-10 flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="relative h-16 w-16 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
+                <div className="relative h-16 w-16 rounded-xl bg-gradient-to-br from-reflect-gold to-reflect-amber flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
                   <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                   </svg>
@@ -452,7 +458,7 @@ export default function CompetitionDetailPage() {
             {isCreator && competition.status === 'draft' && (
               <Link
                 href={`/competitions/${competitionId}/invite`}
-                className="inline-flex items-center gap-2 text-sm font-semibold text-[#0A4F4C] hover:text-[#0D6963] transition-colors duration-200"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover transition-colors duration-200"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -479,10 +485,10 @@ export default function CompetitionDetailPage() {
                       <img
                         src={participant.profiles.avatar_url}
                         alt=""
-                        className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-[#0A4F4C] transition-all duration-300 group-hover:scale-105 object-cover"
+                        className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-primary transition-all duration-300 group-hover:scale-105 object-cover"
                       />
                     ) : (
-                      <div className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-[#0A4F4C] bg-[#0A4F4C] flex items-center justify-center text-base text-white font-semibold transition-all duration-300 group-hover:scale-105">
+                      <div className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-primary bg-primary flex items-center justify-center text-base text-white font-semibold transition-all duration-300 group-hover:scale-105">
                         {getInitials(participant.profiles?.name)}
                       </div>
                     )}
@@ -533,9 +539,9 @@ export default function CompetitionDetailPage() {
               <div className="flex items-center gap-4 p-4 group">
                 <div className="relative flex-shrink-0">
                   {/* Shadow layer for depth */}
-                  <div className="absolute inset-0 bg-[#0A4F4C]/20 rounded-xl blur-md"></div>
-                  <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-[#E6F2F1] via-teal-50 to-[#0A4F4C]/10 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                    <svg className="h-7 w-7 text-[#0A4F4C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="absolute inset-0 bg-primary/20 rounded-xl blur-md"></div>
+                  <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-water-surface/20 to-water-mid/10 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+                    <svg className="h-7 w-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                     </svg>
                   </div>
@@ -543,13 +549,13 @@ export default function CompetitionDetailPage() {
                 <span className="text-lg font-semibold text-slate-900">Nombre total de prises</span>
               </div>
             )}
-            {/* Record size rule - Orange */}
+            {/* Record size rule - Reflection */}
             {competition.rule_record_size && (
               <div className="flex items-center gap-4 p-4 group">
                 <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 bg-orange-500/20 rounded-xl blur-md"></div>
-                  <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-orange-50 via-orange-100/50 to-orange-500/10 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                    <svg className="h-7 w-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="absolute inset-0 bg-reflect-gold/20 rounded-xl blur-md"></div>
+                  <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-reflect-bright/20 via-reflect-gold/15 to-reflect-amber/10 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+                    <svg className="h-7 w-7 text-reflect-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                     </svg>
                   </div>
@@ -557,13 +563,13 @@ export default function CompetitionDetailPage() {
                 <span className="text-lg font-semibold text-slate-900">Plus grosse prise</span>
               </div>
             )}
-            {/* Top X biggest rule - Amber */}
+            {/* Top X biggest rule - Merged */}
             {competition.rule_top_x_biggest && (
               <div className="flex items-center gap-4 p-4 group">
                 <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 bg-amber-500/20 rounded-xl blur-md"></div>
-                  <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-amber-50 via-amber-100/50 to-amber-500/10 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                    <svg className="h-7 w-7 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="absolute inset-0 bg-merged-teal-gold/20 rounded-xl blur-md"></div>
+                  <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-reflect-gold/20 via-merged-teal-gold/15 to-water-surface/10 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
+                    <svg className="h-7 w-7 text-merged-teal-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                     </svg>
                   </div>
@@ -584,7 +590,7 @@ export default function CompetitionDetailPage() {
               <button
                 onClick={handleStartCompetition}
                 disabled={actionLoading}
-                className="w-full bg-gradient-to-br from-[#0A4F4C] to-[#065F46] hover:from-[#0D6963] hover:to-[#047857] active:from-[#083D3A] active:to-[#064E3B] disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-6 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-[1.02] flex items-center justify-center gap-3"
+                className="w-full bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] active:from-water-deepest active:to-water-deep disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-6 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-[1.02] flex items-center justify-center gap-3"
               >
                 {actionLoading ? (
                   <>
@@ -615,7 +621,7 @@ export default function CompetitionDetailPage() {
               <button
                 onClick={handleFinishCompetition}
                 disabled={actionLoading}
-                className="w-full bg-white border-2 border-slate-300 hover:border-[#0A4F4C] text-slate-700 hover:text-[#0A4F4C] font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-3"
+                className="w-full bg-white border-2 border-slate-300 hover:border-primary text-slate-700 hover:text-primary font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-3"
               >
                 {actionLoading ? (
                   <>
@@ -643,11 +649,11 @@ export default function CompetitionDetailPage() {
             style={{ animation: 'slideInUp 0.5s ease-out 0.3s both' }}
           >
             {/* Glow effect */}
-            <div className="absolute -inset-2 bg-gradient-to-r from-[#0A4F4C] to-[#065F46] rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+            <div className="absolute -inset-2 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
 
             <Link
               href={`/competitions/${competitionId}/catches`}
-              className="relative bg-gradient-to-br from-[#0A4F4C] to-[#065F46] hover:from-[#0D6963] hover:to-[#047857] text-white rounded-full h-16 w-16 flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110"
+              className="relative bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] text-white rounded-full h-16 w-16 flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110"
             >
               <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />

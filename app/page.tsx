@@ -148,7 +148,7 @@ export default function Home() {
         >
           <Link
             href="/signup"
-            className="flex items-center justify-center gap-2 w-full bg-white hover:bg-white/95 text-[#0A4F4C] font-bold py-4 px-8 rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-[1.02] text-lg"
+            className="flex items-center justify-center gap-2 w-full bg-white hover:bg-white/95 text-water-deep font-bold py-4 px-8 rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-[1.02] text-lg"
           >
             <span>Commencer</span>
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

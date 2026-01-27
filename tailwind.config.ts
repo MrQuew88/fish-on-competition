@@ -9,61 +9,87 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // === PRIMARY: Ocean/Teal family ===
+        // === DEEP WATER TONES ===
+        water: {
+          deepest: '#152D30',
+          deep: '#1A3B3F',
+          mid: '#2C4F54',
+          surface: '#3D6A6F',
+        },
+
+        // === GOLDEN REFLECTIONS ===
+        reflect: {
+          bright: '#E8A66F',
+          gold: '#D4A574',
+          amber: '#C9915D',
+          subtle: '#B8896A',
+        },
+
+        // === MERGED TONES (where water meets reflection) ===
+        merged: {
+          'teal-gold': '#4A6B5F',
+          'dark-amber': '#5C5647',
+        },
+
+        // === PRIMARY (water-based) ===
         primary: {
-          DEFAULT: '#0F766E',  // teal-700 - main brand
-          hover: '#0D9488',    // teal-600
-          dark: '#115E59',     // teal-800
-          50: '#F0FDFA',
-          100: '#CCFBF1',
-          200: '#99F6E4',
-          300: '#5EEAD4',
-          400: '#2DD4BF',
-          500: '#14B8A6',
-          600: '#0D9488',
-          700: '#0F766E',
-          800: '#115E59',
-          900: '#134E4A',
+          DEFAULT: '#2C4F54',
+          hover: '#3D6A6F',
+          dark: '#1A3B3F',
+          light: '#E8F4F2',
+          50: '#E8F4F2',
+          100: '#D1E9E6',
+          200: '#A3D3CD',
+          300: '#75BDB4',
+          400: '#4A9A91',
+          500: '#3D6A6F',
+          600: '#2C4F54',
+          700: '#1A3B3F',
+          800: '#152D30',
+          900: '#0F2224',
+        },
+
+        // === ACCENT (reflection-based) ===
+        accent: {
+          DEFAULT: '#D4A574',
+          hover: '#E8A66F',
+          dark: '#C9915D',
+          amber: '#C9915D',
+          orange: '#E8A66F',
+          emerald: '#4A6B5F',
         },
 
         // === NEUTRAL backbone (slate) ===
         surface: {
           DEFAULT: '#FFFFFF',
-          bg: '#F8FAFC',       // slate-50
-          muted: '#F1F5F9',    // slate-100
-          border: '#E2E8F0',   // slate-200
-          hover: '#CBD5E1',    // slate-300
+          bg: '#F8FAFC',
+          muted: '#F1F5F9',
+          border: '#E2E8F0',
+          hover: '#CBD5E1',
         },
         text: {
-          primary: '#0F172A',  // slate-900
-          secondary: '#64748B', // slate-500
-          muted: '#94A3B8',    // slate-400
+          primary: '#0F172A',
+          secondary: '#64748B',
+          muted: '#94A3B8',
           inverse: '#FFFFFF',
-        },
-
-        // === ACCENT colors (use sparingly) ===
-        accent: {
-          amber: '#D97706',    // amber-600 - achievements
-          orange: '#F97316',   // orange-500 - alerts
-          emerald: '#059669',  // emerald-600 - success
         },
 
         // === STATUS indicators ===
         status: {
-          active: '#059669',   // emerald-600
-          'active-bg': 'rgba(5, 150, 105, 0.1)',
-          completed: '#94A3B8', // slate-400
-          pending: '#F59E0B',  // amber-500
+          active: '#4A6B5F',
+          'active-bg': 'rgba(74, 107, 95, 0.1)',
+          completed: '#94A3B8',
+          pending: '#D4A574',
         },
 
-        // === MEDAL colors (subtle) ===
+        // === MEDAL colors (reflection-themed) ===
         medal: {
-          gold: '#D97706',
-          'gold-bg': '#FFFBEB',
+          gold: '#D4A574',
+          'gold-bg': '#FDF8F3',
           silver: '#64748B',
           'silver-bg': '#F1F5F9',
-          bronze: '#EA580C',
-          'bronze-bg': '#FFF7ED',
+          bronze: '#C9915D',
+          'bronze-bg': '#FDF6F0',
         },
       },
 
