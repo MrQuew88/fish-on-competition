@@ -32,7 +32,7 @@ function PodiumDisplay({
   const [first, second, third] = [podium[0], podium[1], podium[2]]
 
   return (
-    <div className="flex items-end justify-center gap-3 py-6">
+    <div className="flex items-end justify-center gap-4 py-8 px-4">
       {/* Second place */}
       {second && (
         <div className="text-center animate-slide-up" style={{ animationDelay: '0.1s' }}>
@@ -40,19 +40,19 @@ function PodiumDisplay({
             <img
               src={second.user_avatar}
               alt=""
-              className="w-14 h-14 mx-auto rounded-xl object-cover ring-4 ring-silver-300 mb-2"
+              className="w-14 h-14 mx-auto rounded-xl object-cover ring-2 ring-slate-300 mb-2"
             />
           ) : (
-            <div className="w-14 h-14 mx-auto rounded-xl bg-gradient-silver flex items-center justify-center text-lg font-display font-bold text-navy-600 mb-2">
+            <div className="w-14 h-14 mx-auto rounded-xl bg-slate-200 flex items-center justify-center text-lg font-semibold text-slate-600 mb-2">
               {getInitials(second.user_name)}
             </div>
           )}
           <div className="w-20 podium-second h-20 flex flex-col items-center justify-end pb-3">
-            <div className="rank rank-2 mb-1">2</div>
-            <span className="text-xs font-bold text-navy-700 truncate w-full px-1">
+            <div className="rank-badge rank-2 mb-1">2</div>
+            <span className="text-xs font-semibold text-slate-700 truncate w-full px-1">
               {second.user_name.split(' ')[0]}
             </span>
-            <span className="text-[10px] text-navy-500">{valueFormatter(second)}</span>
+            <span className="text-[10px] text-slate-500">{valueFormatter(second)}</span>
           </div>
         </div>
       )}
@@ -65,25 +65,25 @@ function PodiumDisplay({
               <img
                 src={first.user_avatar}
                 alt=""
-                className="w-18 h-18 mx-auto rounded-xl object-cover ring-4 ring-gold-400 mb-2 shadow-glow-gold"
+                className="w-16 h-16 mx-auto rounded-xl object-cover ring-2 ring-amber-400 mb-2"
               />
             ) : (
-              <div className="w-18 h-18 mx-auto rounded-xl bg-gradient-gold flex items-center justify-center text-xl font-display font-bold text-gold-900 mb-2 shadow-glow-gold">
+              <div className="w-16 h-16 mx-auto rounded-xl bg-amber-100 flex items-center justify-center text-xl font-semibold text-amber-700 mb-2">
                 {getInitials(first.user_name)}
               </div>
             )}
-            <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-gold-400 rounded-full flex items-center justify-center shadow-glow-gold animate-float">
-              <svg className="w-5 h-5 text-gold-900" fill="currentColor" viewBox="0 0 20 20">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 bg-amber-400 rounded-lg flex items-center justify-center shadow-sm">
+              <svg className="w-4 h-4 text-amber-800" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
               </svg>
             </div>
           </div>
-          <div className="w-24 podium-first h-28 flex flex-col items-center justify-end pb-3">
-            <div className="rank rank-1 mb-1 shadow-glow-gold">1</div>
-            <span className="text-sm font-bold text-gold-900 truncate w-full px-1">
+          <div className="w-24 podium-first h-24 flex flex-col items-center justify-end pb-3">
+            <div className="rank-badge rank-1 mb-1">1</div>
+            <span className="text-sm font-semibold text-amber-800 truncate w-full px-1">
               {first.user_name.split(' ')[0]}
             </span>
-            <span className="text-xs text-gold-800 font-semibold">{valueFormatter(first)}</span>
+            <span className="text-xs text-amber-700 font-medium">{valueFormatter(first)}</span>
           </div>
         </div>
       )}
@@ -95,19 +95,19 @@ function PodiumDisplay({
             <img
               src={third.user_avatar}
               alt=""
-              className="w-12 h-12 mx-auto rounded-xl object-cover ring-4 ring-bronze-400 mb-2"
+              className="w-12 h-12 mx-auto rounded-xl object-cover ring-2 ring-orange-300 mb-2"
             />
           ) : (
-            <div className="w-12 h-12 mx-auto rounded-xl bg-gradient-bronze flex items-center justify-center text-base font-display font-bold text-white mb-2">
+            <div className="w-12 h-12 mx-auto rounded-xl bg-orange-100 flex items-center justify-center text-base font-semibold text-orange-700 mb-2">
               {getInitials(third.user_name)}
             </div>
           )}
           <div className="w-18 podium-third h-16 flex flex-col items-center justify-end pb-3">
-            <div className="rank rank-3 mb-1">3</div>
-            <span className="text-[10px] font-bold text-white truncate w-full px-1">
+            <div className="rank-badge rank-3 mb-1">3</div>
+            <span className="text-[10px] font-semibold text-orange-800 truncate w-full px-1">
               {third.user_name.split(' ')[0]}
             </span>
-            <span className="text-[9px] text-white/80">{valueFormatter(third)}</span>
+            <span className="text-[9px] text-orange-600">{valueFormatter(third)}</span>
           </div>
         </div>
       )}
@@ -151,7 +151,7 @@ export default function ResultsPage() {
         if (!userScores[c.user_id]) {
           userScores[c.user_id] = {
             user_id: c.user_id,
-            user_name: c.profiles?.name || 'Inconnu',
+            user_name: c.profiles?.name || 'Unknown',
             user_avatar: c.profiles?.avatar_url || null,
             total_count: 0,
             record_size: null,
@@ -180,7 +180,7 @@ export default function ResultsPage() {
 
       setLeaderboard(Object.values(userScores))
     } catch (error) {
-      console.error('Erreur:', error)
+      console.error('Error:', error)
     } finally {
       setLoading(false)
     }
@@ -205,7 +205,7 @@ export default function ResultsPage() {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('fr-FR', {
+    return new Date(dateString).toLocaleDateString('en-US', {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
@@ -214,28 +214,28 @@ export default function ResultsPage() {
 
   if (loading) {
     return (
-      <div className="page-container">
+      <div className="page-container-narrow">
         <div className="skeleton h-5 w-32 mb-6"></div>
-        <div className="skeleton h-48 rounded-3xl mb-6"></div>
-        <div className="skeleton h-64 rounded-3xl mb-5"></div>
-        <div className="skeleton h-64 rounded-3xl"></div>
+        <div className="skeleton h-48 rounded-xl mb-6"></div>
+        <div className="skeleton h-64 rounded-xl mb-5"></div>
+        <div className="skeleton h-64 rounded-xl"></div>
       </div>
     )
   }
 
   if (!competition) {
     return (
-      <div className="page-container">
+      <div className="page-container-narrow">
         <div className="card p-8">
           <div className="empty-state">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-navy-100 flex items-center justify-center">
-              <svg className="w-8 h-8 text-navy-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="empty-state-icon">
+              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <h3 className="empty-state-title">Compétition introuvable</h3>
+            <h3 className="empty-state-title">Competition not found</h3>
             <Link href="/competitions" className="btn-primary mt-4">
-              Retour
+              Go back
             </Link>
           </div>
         </div>
@@ -248,69 +248,54 @@ export default function ResultsPage() {
   const rankedByTopN = getRankedByTopN()
 
   return (
-    <div className="page-container">
+    <div className="page-container-narrow">
       {/* Back link */}
       <Link href={`/competitions/${competitionId}`} className="back-btn">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        Retour
+        Back
       </Link>
 
       {/* Hero Header */}
-      <div className="card-gold p-6 mb-6 text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-full h-full">
-            <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-              <circle cx="10" cy="20" r="2" fill="white" />
-              <circle cx="30" cy="60" r="1.5" fill="white" />
-              <circle cx="70" cy="30" r="2.5" fill="white" />
-              <circle cx="90" cy="70" r="1" fill="white" />
-              <circle cx="50" cy="10" r="2" fill="white" />
-              <circle cx="85" cy="15" r="1.5" fill="white" />
-              <circle cx="15" cy="80" r="2" fill="white" />
-            </svg>
-          </div>
+      <div className="card bg-amber-50 border-amber-200 p-6 mb-6 text-center">
+        <div className="w-14 h-14 mx-auto mb-4 bg-amber-100 rounded-xl flex items-center justify-center">
+          <svg className="w-7 h-7 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-1.17a3 3 0 01-5.66 0H8.83a3 3 0 01-5.66 0H2a2 2 0 110-4h1.17A3 3 0 015 5z" clipRule="evenodd" />
+          </svg>
         </div>
-        <div className="relative">
-          <div className="w-16 h-16 mx-auto mb-4 bg-white/20 rounded-2xl flex items-center justify-center animate-bounce-in">
-            <svg className="w-10 h-10 text-white trophy-glow" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-1.17a3 3 0 01-5.66 0H8.83a3 3 0 01-5.66 0H2a2 2 0 110-4h1.17A3 3 0 015 5zm.17 4a3.001 3.001 0 015.66 0h.17a3 3 0 105.66 0H16h.17a3.001 3.001 0 01-5.66 0H8.83z" clipRule="evenodd" />
+        <h1 className="text-xl font-semibold text-slate-900 mb-1">
+          Final Results
+        </h1>
+        <p className="text-slate-600 text-sm">{competition.name}</p>
+        <div className="flex flex-wrap items-center justify-center gap-4 text-slate-500 text-xs mt-4">
+          <span className="flex items-center gap-1.5">
+            <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-          </div>
-          <h1 className="font-display text-2xl font-bold text-white mb-1">
-            Résultats Finaux
-          </h1>
-          <p className="text-white/80 text-sm">{competition.name}</p>
-          <div className="flex flex-wrap items-center justify-center gap-4 text-white/70 text-xs mt-4">
-            <span className="flex items-center gap-1">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              {formatDate(competition.start_date)}
-            </span>
-            <span className="flex items-center gap-1">
-              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              </svg>
-              {competition.location}
-            </span>
-          </div>
+            {formatDate(competition.start_date)}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+            </svg>
+            {competition.location}
+          </span>
         </div>
       </div>
 
       {/* Results Sections */}
-      <div className="space-y-5">
+      <div className="space-y-4">
         {/* Total Fish Count */}
         {competition.rule_total_count && rankedByTotal.length > 0 && (
           <div className="card overflow-hidden animate-slide-up">
-            <div className="flex items-center gap-4 p-5 border-b border-navy-100">
-              <div className="w-12 h-12 rounded-xl bg-forest-100 flex items-center justify-center">
-                <svg className="w-6 h-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-3 p-4 border-b border-slate-100">
+              <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                 </svg>
               </div>
-              <h2 className="font-display text-lg font-bold text-navy-900">Total des prises</h2>
+              <h2 className="text-base font-semibold text-slate-900">Total catch count</h2>
             </div>
             <PodiumDisplay
               entries={rankedByTotal}
@@ -322,13 +307,13 @@ export default function ResultsPage() {
         {/* Record Size */}
         {competition.rule_record_size && rankedByRecord.length > 0 && (
           <div className="card overflow-hidden animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            <div className="flex items-center gap-4 p-5 border-b border-navy-100">
-              <div className="w-12 h-12 rounded-xl bg-water-100 flex items-center justify-center">
-                <svg className="w-6 h-6 text-water-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-3 p-4 border-b border-slate-100">
+              <div className="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center">
+                <svg className="w-5 h-5 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                 </svg>
               </div>
-              <h2 className="font-display text-lg font-bold text-navy-900">Plus grande prise</h2>
+              <h2 className="text-base font-semibold text-slate-900">Biggest catch</h2>
             </div>
             <PodiumDisplay
               entries={rankedByRecord}
@@ -340,13 +325,13 @@ export default function ResultsPage() {
         {/* Top N */}
         {competition.rule_top_x_biggest && rankedByTopN.length > 0 && (
           <div className="card overflow-hidden animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <div className="flex items-center gap-4 p-5 border-b border-navy-100">
-              <div className="w-12 h-12 rounded-xl bg-gold-100 flex items-center justify-center">
-                <svg className="w-6 h-6 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-3 p-4 border-b border-slate-100">
+              <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <h2 className="font-display text-lg font-bold text-navy-900">Top {competition.rule_top_x_biggest} cumulés</h2>
+              <h2 className="text-base font-semibold text-slate-900">Top {competition.rule_top_x_biggest} combined</h2>
             </div>
             <PodiumDisplay
               entries={rankedByTopN}
@@ -359,20 +344,20 @@ export default function ResultsPage() {
       {/* Prize Section */}
       {competition.prize && (
         <div className="prize-banner mt-6 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-          <div className="w-12 h-12 rounded-xl bg-gold-200 flex items-center justify-center">
-            <svg className="w-6 h-6 text-gold-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center">
+            <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
             </svg>
           </div>
           <div>
-            <p className="text-label">Récompense</p>
-            <p className="text-base font-bold text-gold-800">{competition.prize}</p>
+            <p className="text-xs font-medium text-amber-600 uppercase tracking-wide">Prize</p>
+            <p className="text-sm font-semibold text-slate-900">{competition.prize}</p>
           </div>
         </div>
       )}
 
       {/* Action */}
-      <div className="mt-8 text-center">
+      <div className="mt-8 flex justify-center">
         <Link
           href={`/competitions/${competitionId}/captures`}
           className="btn-secondary"
@@ -380,7 +365,7 @@ export default function ResultsPage() {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          Voir la galerie
+          View gallery
         </Link>
       </div>
     </div>

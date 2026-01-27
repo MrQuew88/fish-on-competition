@@ -36,56 +36,50 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-navy-50">
-      {/* Header gradient */}
-      <div className="bg-gradient-hero h-40 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <svg className="absolute bottom-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-            <path
-              fill="rgba(56, 178, 172, 0.4)"
-              d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z"
-            />
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Header */}
+      <div className="p-4">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-        </div>
+          Back
+        </Link>
       </div>
 
-      <div className="max-w-sm mx-auto px-4 -mt-20">
-        <div className="animate-slide-up">
+      {/* Content */}
+      <div className="flex-1 flex items-center justify-center px-4 py-8">
+        <div className="w-full max-w-sm">
           {/* Logo */}
-          <div className="text-center mb-6">
-            <Link
-              href="/"
-              className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-2xl shadow-strong hover:scale-105 transition-transform"
-            >
-              <svg className="w-8 h-8 text-water-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313-12.454z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17.5 8.5c-1.5-1.5-3-2-5.5-2" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 12c3 0 5.5 2 6.5 5" />
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-14 h-14 bg-teal-700 rounded-xl mb-4">
+              <svg className="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
-            </Link>
+            </div>
+            <h1 className="text-2xl font-semibold text-slate-900">
+              Create account
+            </h1>
+            <p className="text-slate-500 mt-1">
+              Join Fish On for free
+            </p>
           </div>
 
           {/* Form Card */}
-          <div className="card-elevated p-8">
-            <div className="text-center mb-8">
-              <h1 className="font-display text-2xl font-bold text-navy-900">
-                Créer un compte
-              </h1>
-              <p className="text-navy-500 mt-2">
-                Rejoignez Fish On! gratuitement
-              </p>
-            </div>
-
-            <form onSubmit={handleSignup} className="space-y-5">
+          <div className="card p-6">
+            <form onSubmit={handleSignup} className="space-y-4">
               <div>
-                <label className="label">Votre nom</label>
+                <label className="label">Your name</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
                   className="input"
-                  placeholder="Jean Dupont"
+                  placeholder="John Smith"
                   autoComplete="name"
                 />
               </div>
@@ -98,13 +92,13 @@ export default function SignupPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   className="input"
-                  placeholder="votre@email.com"
+                  placeholder="you@example.com"
                   autoComplete="email"
                 />
               </div>
 
               <div>
-                <label className="label">Mot de passe</label>
+                <label className="label">Password</label>
                 <input
                   type="password"
                   value={password}
@@ -112,14 +106,14 @@ export default function SignupPage() {
                   required
                   minLength={6}
                   className="input"
-                  placeholder="••••••••"
+                  placeholder="Create a password"
                   autoComplete="new-password"
                 />
-                <p className="helper-text">Minimum 6 caractères</p>
+                <p className="helper-text">Minimum 6 characters</p>
               </div>
 
               {error && (
-                <div className="alert alert-error animate-scale-in">
+                <div className="alert alert-error">
                   <p>{error}</p>
                 </div>
               )}
@@ -127,16 +121,16 @@ export default function SignupPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="btn-water w-full btn-lg"
+                className="btn-primary w-full"
               >
                 {loading ? (
-                  <span className="flex items-center justify-center gap-3">
+                  <span className="flex items-center justify-center gap-2">
                     <span className="spinner-light"></span>
-                    Création...
+                    Creating account...
                   </span>
                 ) : (
                   <>
-                    Créer mon compte
+                    Create account
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
@@ -145,30 +139,17 @@ export default function SignupPage() {
               </button>
             </form>
 
-            <div className="mt-8 pt-6 border-t border-navy-100 text-center">
-              <p className="text-sm text-navy-500">
-                Déjà un compte ?{' '}
+            <div className="mt-6 pt-6 border-t border-slate-200 text-center">
+              <p className="text-sm text-slate-500">
+                Already have an account?{' '}
                 <Link
                   href="/login"
-                  className="font-bold text-water-600 hover:text-water-700 transition-colors"
+                  className="font-medium text-teal-700 hover:text-teal-600 transition-colors"
                 >
-                  Se connecter
+                  Sign in
                 </Link>
               </p>
             </div>
-          </div>
-
-          {/* Back to home */}
-          <div className="text-center mt-6">
-            <Link
-              href="/"
-              className="text-sm text-navy-400 hover:text-navy-600 transition-colors inline-flex items-center gap-1"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Retour à l'accueil
-            </Link>
           </div>
         </div>
       </div>

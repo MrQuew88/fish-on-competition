@@ -1,103 +1,117 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   BASE STYLES - Premium, understated foundation
+   ============================================ */
+
 @layer base {
   html {
-    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-navy-50 text-navy-900 min-h-screen;
+    @apply bg-slate-50 text-slate-900 min-h-screen;
+  }
+
+  /* Focus states - accessible but subtle */
+  *:focus-visible {
+    @apply outline-2 outline-offset-2 outline-teal-600;
+  }
+
+  ::selection {
+    @apply bg-teal-100 text-teal-900;
   }
 }
 
-@layer components {
-  /* ========================================
-     TYPOGRAPHY - Premium FishBrain style
-     ======================================== */
+/* ============================================
+   COMPONENT LAYER - Sophisticated UI elements
+   ============================================ */
 
-  .text-display {
-    font-family: 'Outfit', system-ui, sans-serif;
-    @apply font-bold tracking-tight text-navy-900;
+@layer components {
+
+  /* ----------------------------------------
+     TYPOGRAPHY - Clean, professional
+     ---------------------------------------- */
+
+  .text-heading-1 {
+    @apply text-2xl font-semibold text-slate-900 tracking-tight;
   }
 
-  .text-label {
-    @apply text-xs font-semibold uppercase tracking-wider text-navy-500;
+  .text-heading-2 {
+    @apply text-xl font-semibold text-slate-900;
+  }
+
+  .text-heading-3 {
+    @apply text-lg font-semibold text-slate-900;
   }
 
   .text-body {
-    @apply text-sm text-navy-600 leading-relaxed;
+    @apply text-sm text-slate-600 leading-relaxed;
   }
 
-  /* ========================================
-     BUTTONS - Modern, touch-friendly
-     ======================================== */
+  .text-label {
+    @apply text-xs font-medium uppercase tracking-wider text-slate-500;
+  }
+
+  .text-caption {
+    @apply text-sm text-slate-500;
+  }
+
+  /* ----------------------------------------
+     BUTTONS - Professional, touch-friendly
+     ---------------------------------------- */
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2.5
-           px-5 py-3
-           text-sm font-semibold
-           rounded-2xl
-           transition-all duration-200 ease-out
-           disabled:opacity-40 disabled:pointer-events-none
-           active:scale-[0.97]
-           touch-manipulation;
-    min-height: 48px;
+    @apply inline-flex items-center justify-center gap-2
+           px-6 py-3
+           text-sm font-medium
+           rounded-lg
+           transition-colors duration-150
+           disabled:opacity-50 disabled:cursor-not-allowed
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    min-height: 44px;
   }
 
   .btn-primary {
     @apply btn
-           bg-navy-900 text-white
-           shadow-medium
-           hover:bg-navy-800 hover:shadow-strong hover:-translate-y-0.5;
+           bg-teal-700 text-white
+           hover:bg-teal-600
+           focus-visible:ring-teal-600;
   }
 
   .btn-secondary {
     @apply btn
-           bg-white text-navy-700
-           border-2 border-navy-200
-           shadow-soft
-           hover:bg-navy-50 hover:border-navy-300 hover:-translate-y-0.5;
-  }
-
-  .btn-water {
-    @apply btn
-           bg-gradient-water text-white
-           shadow-medium shadow-water-500/20
-           hover:shadow-glow-water hover:-translate-y-0.5;
-  }
-
-  .btn-success {
-    @apply btn
-           bg-gradient-forest text-white
-           shadow-medium shadow-forest-500/20
-           hover:shadow-glow-forest hover:-translate-y-0.5;
+           border-2 border-teal-700 text-teal-700
+           bg-transparent
+           hover:bg-teal-50
+           focus-visible:ring-teal-600;
   }
 
   .btn-ghost {
     @apply btn
-           bg-transparent text-navy-600
-           hover:bg-navy-100 hover:text-navy-800;
+           text-slate-600
+           bg-transparent
+           hover:bg-slate-100
+           focus-visible:ring-slate-400;
   }
 
-  .btn-icon {
-    @apply p-3 rounded-xl
-           text-navy-500
-           transition-all duration-200
-           hover:bg-navy-100 hover:text-navy-700
-           active:scale-95;
-    min-height: 44px;
-    min-width: 44px;
+  .btn-success {
+    @apply btn
+           bg-emerald-600 text-white
+           hover:bg-emerald-500
+           focus-visible:ring-emerald-500;
   }
 
   .btn-lg {
-    @apply px-7 py-4 text-base;
-    min-height: 56px;
+    @apply px-8 py-4 text-base;
+    min-height: 52px;
   }
 
   .btn-sm {
@@ -105,193 +119,181 @@
     min-height: 36px;
   }
 
-  /* ========================================
-     CARDS - Elevated, premium surfaces
-     ======================================== */
-
-  .card {
-    @apply bg-white rounded-3xl shadow-card
-           border border-navy-100/50;
+  .btn-icon {
+    @apply p-2.5 rounded-lg
+           text-slate-500
+           transition-colors duration-150
+           hover:bg-slate-100 hover:text-slate-700
+           focus-visible:ring-2 focus-visible:ring-teal-600;
+    min-height: 40px;
+    min-width: 40px;
   }
 
-  .card-elevated {
-    @apply card shadow-medium border-0;
+  /* ----------------------------------------
+     CARDS - Clean white surfaces
+     ---------------------------------------- */
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm
+           border border-slate-200;
   }
 
   .card-interactive {
     @apply card
            cursor-pointer
-           transition-all duration-300 ease-out
-           hover:shadow-card-hover hover:border-water-200/50
-           hover:-translate-y-1
-           active:scale-[0.99];
+           transition-all duration-200
+           hover:shadow-md hover:border-slate-300;
   }
 
-  .card-navy {
-    @apply bg-gradient-navy text-white rounded-3xl shadow-strong;
+  .card-elevated {
+    @apply bg-white rounded-xl shadow-md border border-slate-200;
   }
 
-  .card-water {
-    @apply bg-gradient-water text-white rounded-3xl shadow-strong;
-  }
-
-  .card-gold {
-    @apply bg-gradient-gold text-white rounded-3xl shadow-strong shadow-gold-400/30;
-  }
-
-  /* ========================================
-     INPUTS - Clean, modern forms
-     ======================================== */
+  /* ----------------------------------------
+     FORM ELEMENTS - Clean, professional
+     ---------------------------------------- */
 
   .input {
-    @apply w-full px-4 py-3.5
-           bg-white text-navy-900
-           border-2 border-navy-200 rounded-2xl
+    @apply w-full px-4 py-3
+           bg-white text-slate-900
+           border border-slate-200 rounded-lg
            text-base
-           placeholder:text-navy-400
-           transition-all duration-200
-           focus:outline-none focus:border-water-400 focus:ring-4 focus:ring-water-100;
-    min-height: 52px;
+           placeholder:text-slate-400
+           transition-colors duration-150
+           focus:outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600/20;
+    min-height: 48px;
   }
 
   .input-lg {
-    @apply py-4 text-lg;
-    min-height: 60px;
+    @apply py-4;
+    min-height: 56px;
   }
 
   .label {
-    @apply block mb-2 text-sm font-semibold text-navy-700;
+    @apply block mb-2 text-sm font-medium text-slate-700;
   }
 
   .helper-text {
-    @apply mt-2 text-xs text-navy-500;
+    @apply mt-1.5 text-xs text-slate-500;
   }
 
-  /* ========================================
-     BADGES - Status indicators
-     ======================================== */
+  /* ----------------------------------------
+     BADGES - Subtle status indicators
+     ---------------------------------------- */
 
   .badge {
     @apply inline-flex items-center gap-1.5
-           px-3 py-1.5
-           text-xs font-bold
+           px-3 py-1
+           text-sm font-medium
            rounded-full;
   }
 
   .badge-active {
-    @apply bg-forest-100 text-forest-700;
+    @apply bg-emerald-500/10 text-emerald-700
+           border border-emerald-500/20;
   }
 
   .badge-finished {
-    @apply bg-navy-900 text-white;
+    @apply bg-slate-100 text-slate-600
+           border border-slate-200;
   }
 
   .badge-draft {
-    @apply bg-navy-100 text-navy-600;
+    @apply bg-amber-500/10 text-amber-700
+           border border-amber-500/20;
   }
 
-  .badge-water {
-    @apply bg-water-100 text-water-700;
-  }
-
-  /* ========================================
+  /* ----------------------------------------
      STATUS INDICATORS
-     ======================================== */
+     ---------------------------------------- */
 
   .status-dot {
     @apply w-2 h-2 rounded-full;
   }
 
   .status-dot-live {
-    @apply bg-forest-500;
+    @apply bg-emerald-500;
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
   .status-dot-idle {
-    @apply bg-navy-300;
+    @apply bg-slate-300;
   }
 
-  /* ========================================
-     AVATARS - Social feel
-     ======================================== */
+  /* ----------------------------------------
+     AVATARS - Professional
+     ---------------------------------------- */
 
   .avatar {
-    @apply rounded-2xl object-cover bg-navy-100;
-  }
-
-  .avatar-ring {
-    @apply ring-3 ring-white shadow-soft;
+    @apply rounded-lg object-cover bg-slate-100;
   }
 
   .avatar-sm {
-    @apply w-10 h-10 rounded-xl;
+    @apply w-8 h-8;
   }
 
   .avatar-md {
-    @apply w-12 h-12 rounded-xl;
+    @apply w-10 h-10;
   }
 
   .avatar-lg {
-    @apply w-16 h-16 rounded-2xl;
+    @apply w-12 h-12;
   }
 
   .avatar-xl {
-    @apply w-20 h-20 rounded-2xl;
+    @apply w-16 h-16;
   }
 
   .avatar-placeholder {
     @apply flex items-center justify-center
-           bg-gradient-water text-white
-           font-display font-bold;
+           bg-teal-700 text-white
+           font-medium;
   }
 
-  /* ========================================
-     LAYOUT - Mobile-first containers
-     ======================================== */
+  /* ----------------------------------------
+     LAYOUT CONTAINERS
+     ---------------------------------------- */
 
   .page-container {
-    @apply max-w-lg mx-auto px-4 py-6 pb-28;
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pb-24;
   }
 
-  .page-title {
-    font-family: 'Outfit', system-ui, sans-serif;
-    @apply text-2xl font-bold text-navy-900;
+  .page-container-narrow {
+    @apply max-w-lg mx-auto px-4 py-6 pb-24;
   }
 
-  .section-title {
-    font-family: 'Outfit', system-ui, sans-serif;
-    @apply text-lg font-bold text-navy-900 mb-4;
+  .form-container {
+    @apply max-w-md mx-auto;
   }
 
-  /* ========================================
-     NAVIGATION - Premium header
-     ======================================== */
+  /* ----------------------------------------
+     NAVIGATION
+     ---------------------------------------- */
 
   .header {
     @apply sticky top-0 z-50
-           bg-white/90 backdrop-blur-xl
-           border-b border-navy-100;
+           bg-white/95 backdrop-blur-sm
+           border-b border-slate-200;
   }
 
   .back-btn {
-    @apply inline-flex items-center gap-2
-           text-sm font-semibold text-navy-500
-           hover:text-navy-700
-           transition-colors duration-200
-           mb-5 -ml-1
-           py-2;
+    @apply inline-flex items-center gap-1.5
+           text-sm font-medium text-slate-500
+           hover:text-slate-700
+           transition-colors duration-150
+           mb-6 py-1;
   }
 
   .back-link {
     @apply back-btn;
   }
 
-  /* ========================================
-     ALERTS - Informative feedback
-     ======================================== */
+  /* ----------------------------------------
+     ALERTS - Professional feedback
+     ---------------------------------------- */
 
   .alert {
-    @apply p-4 rounded-2xl text-sm font-medium;
+    @apply p-4 rounded-lg text-sm font-medium;
   }
 
   .alert-error {
@@ -299,342 +301,206 @@
   }
 
   .alert-success {
-    @apply bg-forest-50 text-forest-700 border border-forest-200;
+    @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
   }
 
   .alert-info {
-    @apply bg-water-50 text-water-700 border border-water-200;
+    @apply bg-teal-50 text-teal-700 border border-teal-200;
   }
 
-  /* ========================================
-     LOADING - Polished states
-     ======================================== */
+  /* ----------------------------------------
+     LOADING STATES
+     ---------------------------------------- */
 
   .skeleton {
-    @apply bg-navy-100 rounded-2xl;
-    background: linear-gradient(90deg, #d9e2ec 0%, #f0f4f8 50%, #d9e2ec 100%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s ease-in-out infinite;
+    @apply bg-slate-200 rounded-lg animate-pulse;
   }
 
   .spinner {
-    @apply w-5 h-5 border-2 border-navy-200 border-t-navy-600 rounded-full animate-spin;
+    @apply w-5 h-5 border-2 border-slate-200 border-t-slate-600 rounded-full animate-spin;
   }
 
   .spinner-light {
     @apply w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin;
   }
 
-  /* ========================================
-     EMPTY STATES - Friendly, encouraging
-     ======================================== */
+  /* ----------------------------------------
+     EMPTY STATES
+     ---------------------------------------- */
 
   .empty-state {
-    @apply py-16 text-center;
+    @apply py-12 text-center;
   }
 
   .empty-state-icon {
-    @apply text-6xl mb-4 opacity-80;
+    @apply w-16 h-16 mx-auto mb-4 rounded-xl bg-slate-100 flex items-center justify-center;
   }
 
   .empty-state-title {
-    font-family: 'Outfit', system-ui, sans-serif;
-    @apply text-xl font-bold text-navy-900 mb-2;
+    @apply text-lg font-semibold text-slate-900 mb-2;
   }
 
   .empty-state-text {
-    @apply text-sm text-navy-500 max-w-xs mx-auto leading-relaxed;
+    @apply text-sm text-slate-500 max-w-sm mx-auto leading-relaxed;
   }
 
-  /* ========================================
-     STATS CARDS
-     ======================================== */
+  /* ----------------------------------------
+     LEADERBOARD - Premium sports aesthetic
+     ---------------------------------------- */
 
-  .stat-card {
-    @apply bg-white rounded-2xl p-5 border border-navy-100;
-  }
-
-  .stat-value {
-    font-family: 'Outfit', system-ui, sans-serif;
-    @apply text-3xl font-bold text-navy-900;
-  }
-
-  .stat-label {
-    @apply text-label mt-1;
-  }
-
-  /* ========================================
-     RANK & MEDALS - Celebratory podium style
-     ======================================== */
-
-  .rank {
+  .rank-badge {
     @apply flex items-center justify-center
-           w-10 h-10
-           rounded-xl
-           text-sm font-bold;
+           w-8 h-8
+           rounded-lg
+           text-sm font-semibold;
   }
 
   .rank-1 {
-    @apply bg-gradient-gold text-gold-900
-           shadow-md shadow-gold-400/30;
+    @apply bg-amber-100 text-amber-700 shadow-sm;
   }
 
   .rank-2 {
-    @apply bg-gradient-silver text-navy-700
-           shadow-md shadow-silver-400/30;
+    @apply bg-slate-100 text-slate-600 shadow-sm;
   }
 
   .rank-3 {
-    @apply bg-gradient-bronze text-white
-           shadow-md shadow-bronze-400/30;
+    @apply bg-orange-100 text-orange-700 shadow-sm;
   }
 
   .rank-default {
-    @apply bg-navy-100 text-navy-600;
+    @apply bg-slate-50 text-slate-500;
   }
-
-  .medal {
-    @apply w-10 h-10 rounded-xl
-           flex items-center justify-center
-           text-lg font-bold;
-  }
-
-  .medal-gold {
-    @apply bg-gradient-gold text-gold-900 shadow-glow-gold;
-  }
-
-  .medal-silver {
-    @apply bg-gradient-silver text-navy-700;
-  }
-
-  .medal-bronze {
-    @apply bg-gradient-bronze text-white;
-  }
-
-  /* ========================================
-     LEADERBOARD ENTRIES - Premium ranking
-     ======================================== */
 
   .leaderboard-entry {
-    @apply flex items-center gap-4 p-4 rounded-2xl
-           transition-all duration-200;
+    @apply flex items-center gap-4 p-4 rounded-xl
+           transition-colors duration-150;
   }
 
-  .leaderboard-entry-gold {
-    @apply bg-gold-50 border-2 border-gold-200;
-  }
-
-  .leaderboard-entry-silver {
-    @apply bg-silver-100 border-2 border-silver-200;
-  }
-
-  .leaderboard-entry-bronze {
-    @apply bg-bronze-300/10 border-2 border-bronze-300/30;
+  .leaderboard-entry-top {
+    @apply bg-amber-50/50 border border-amber-200/50;
   }
 
   .leaderboard-entry-default {
-    @apply bg-navy-50 border-2 border-navy-100;
+    @apply bg-slate-50 border border-slate-100;
   }
 
-  /* ========================================
-     ACTION BUTTONS - Quick actions grid
-     ======================================== */
+  /* ----------------------------------------
+     ACTION BUTTONS GRID
+     ---------------------------------------- */
 
   .action-btn {
     @apply flex flex-col items-center justify-center
-           p-5 rounded-2xl
-           bg-white border-2 border-navy-100
-           shadow-soft
+           p-4 rounded-xl
+           bg-white border border-slate-200
+           shadow-sm
            transition-all duration-200
-           hover:shadow-medium hover:border-water-200 hover:-translate-y-0.5
-           active:scale-[0.98];
-    min-height: 100px;
+           hover:shadow-md hover:border-slate-300;
+    min-height: 88px;
   }
 
   .action-btn-icon {
-    @apply w-12 h-12 rounded-xl
+    @apply w-10 h-10 rounded-lg
            flex items-center justify-center
-           text-xl mb-2;
+           mb-2;
   }
 
   .action-btn-label {
-    @apply text-xs font-bold text-navy-700;
+    @apply text-xs font-medium text-slate-700;
   }
 
-  /* ========================================
-     FLOATING ACTION BUTTON - Mobile FAB
-     ======================================== */
+  /* ----------------------------------------
+     FLOATING ACTION BUTTON
+     ---------------------------------------- */
 
   .fab {
-    @apply fixed bottom-24 right-5
-           w-16 h-16
-           bg-gradient-water text-white
-           rounded-2xl
-           shadow-strong shadow-water-500/30
+    @apply fixed bottom-20 right-4
+           w-14 h-14
+           bg-teal-700 text-white
+           rounded-xl
+           shadow-md
            flex items-center justify-center
            transition-all duration-200
-           hover:shadow-glow-water hover:scale-105
-           active:scale-95
+           hover:bg-teal-600 hover:shadow-lg
            z-50;
   }
 
-  /* ========================================
-     DIVIDERS
-     ======================================== */
+  /* ----------------------------------------
+     MISC ELEMENTS
+     ---------------------------------------- */
 
   .divider {
-    @apply border-t border-navy-100 my-6;
+    @apply border-t border-slate-200 my-6;
   }
-
-  /* ========================================
-     PARTICIPANT ROW - Social list items
-     ======================================== */
 
   .participant-row {
     @apply flex items-center gap-3 p-3
-           rounded-xl
+           rounded-lg
            transition-colors duration-150
-           hover:bg-navy-50;
+           hover:bg-slate-50;
   }
-
-  /* ========================================
-     RULE ITEM - Competition rules display
-     ======================================== */
 
   .rule-item {
     @apply flex items-center gap-3 py-3;
   }
 
   .rule-icon {
-    @apply w-10 h-10 rounded-xl
-           flex items-center justify-center
-           text-base;
+    @apply w-10 h-10 rounded-lg
+           flex items-center justify-center;
   }
-
-  /* ========================================
-     PRIZE DISPLAY - Trophy feel
-     ======================================== */
 
   .prize-banner {
-    @apply flex items-center gap-4 p-5
-           bg-gradient-to-r from-gold-50 to-gold-100
-           border-2 border-gold-200
-           rounded-2xl;
+    @apply flex items-center gap-4 p-4
+           bg-amber-50
+           border border-amber-200
+           rounded-xl;
   }
 
-  /* ========================================
-     FISH COUNT BADGE
-     ======================================== */
-
-  .fish-count {
-    @apply inline-flex items-center gap-1.5
-           px-4 py-2
-           bg-water-100 text-water-700
-           rounded-full
-           text-lg font-bold;
+  .stat-card {
+    @apply bg-white rounded-xl p-4 border border-slate-200 shadow-sm;
   }
 
-  /* ========================================
-     SIZE & LURE BADGES
-     ======================================== */
-
-  .size-badge {
-    @apply inline-flex items-center gap-1
-           px-3 py-1.5
-           bg-navy-100 text-navy-700
-           rounded-lg
-           text-sm font-medium;
+  .stat-value {
+    @apply text-2xl font-semibold text-slate-900;
   }
 
-  .lure-badge {
-    @apply inline-flex items-center gap-1
-           px-3 py-1.5
-           bg-water-100 text-water-700
-           rounded-lg
-           text-sm font-medium;
+  .stat-label {
+    @apply text-xs font-medium text-slate-500 uppercase tracking-wide mt-1;
   }
 
-  /* ========================================
-     HERO SECTIONS
-     ======================================== */
-
-  .hero-water {
-    @apply bg-gradient-hero text-white
-           relative overflow-hidden;
-  }
-
-  .hero-water::before {
-    content: '';
-    @apply absolute inset-0 opacity-10;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%23ffffff' fill-opacity='1' d='M0,160L48,144C96,128,192,96,288,106.7C384,117,480,171,576,181.3C672,192,768,160,864,144C960,128,1056,128,1152,144C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
-    background-size: cover;
-    background-position: bottom;
-  }
-
-  .water-bg {
-    @apply bg-gradient-water relative overflow-hidden;
-  }
-
-  .forest-bg {
-    @apply bg-gradient-forest relative overflow-hidden;
-  }
-
-  .trophy-bg {
-    @apply bg-gradient-gold relative overflow-hidden;
-  }
-
-  .trophy-glow {
-    animation: trophyGlow 2s ease-in-out infinite;
-  }
-
-  /* ========================================
-     PODIUM DISPLAY
-     ======================================== */
+  /* ----------------------------------------
+     PODIUM DISPLAY - Subtle, professional
+     ---------------------------------------- */
 
   .podium-first {
-    @apply bg-gradient-to-t from-gold-400 to-gold-300
-           rounded-t-2xl shadow-glow-gold;
+    @apply bg-gradient-to-t from-amber-100 to-amber-50
+           rounded-t-xl border-x border-t border-amber-200;
   }
 
   .podium-second {
-    @apply bg-gradient-to-t from-silver-300 to-silver-200
-           rounded-t-2xl;
+    @apply bg-gradient-to-t from-slate-100 to-slate-50
+           rounded-t-xl border-x border-t border-slate-200;
   }
 
   .podium-third {
-    @apply bg-gradient-to-t from-bronze-400 to-bronze-300
-           rounded-t-2xl;
+    @apply bg-gradient-to-t from-orange-100 to-orange-50
+           rounded-t-xl border-x border-t border-orange-200;
   }
 
-  /* ========================================
-     GRADIENT TEXT
-     ======================================== */
-
-  .gradient-text-water {
-    @apply bg-gradient-water bg-clip-text text-transparent;
+  /* Icon containers with teal accent */
+  .icon-container {
+    @apply bg-teal-500/10 p-3 rounded-lg;
   }
 
-  .gradient-text-gold {
-    @apply bg-gradient-gold bg-clip-text text-transparent;
-  }
-
-  /* ========================================
-     FORM CONTAINER
-     ======================================== */
-
-  .form-container {
-    @apply max-w-md mx-auto;
+  .icon-container-lg {
+    @apply bg-teal-500/10 p-4 rounded-xl;
   }
 }
 
-/* ========================================
-   GLOBAL OVERRIDES & UTILITIES
-   ======================================== */
+/* ============================================
+   UTILITY OVERRIDES
+   ============================================ */
 
-html {
-  scroll-behavior: smooth;
-}
-
+/* Scrollbar styling - subtle */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -645,19 +511,11 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-navy-200 rounded-full;
+  @apply bg-slate-300 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-navy-300;
-}
-
-*:focus-visible {
-  @apply outline-2 outline-offset-2 outline-water-500;
-}
-
-::selection {
-  @apply bg-water-200 text-water-900;
+  @apply bg-slate-400;
 }
 
 /* Safe area for mobile devices */
@@ -669,20 +527,12 @@ html {
   padding-top: env(safe-area-inset-top, 0px);
 }
 
-/* Utility for ring-3 (not in default Tailwind) */
-.ring-3 {
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(3px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
-
-/* Touch manipulation for better mobile UX */
+/* Touch optimization */
 .touch-manipulation {
   touch-action: manipulation;
 }
 
-/* Gradient text utility */
-.bg-clip-text {
-  -webkit-background-clip: text;
-  background-clip: text;
+/* Section headers */
+.section-header {
+  @apply text-sm font-semibold text-slate-900 mb-4;
 }

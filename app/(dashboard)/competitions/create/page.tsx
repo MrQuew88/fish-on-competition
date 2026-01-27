@@ -40,7 +40,7 @@ export default function CreateCompetitionPage() {
     setError('')
 
     if (formData.end_date && formData.start_date && formData.end_date < formData.start_date) {
-      setError('La date de fin doit être après la date de début')
+      setError('End date must be after start date')
       setLoading(false)
       return
     }
@@ -49,7 +49,7 @@ export default function CreateCompetitionPage() {
       const { data: { user }, error: authError } = await supabase.auth.getUser()
 
       if (authError || !user) {
-        setError('Vous devez être connecté')
+        setError('You must be logged in')
         setLoading(false)
         return
       }
@@ -63,7 +63,7 @@ export default function CreateCompetitionPage() {
           end_date: formData.end_date,
           description: formData.description || null,
           prize: formData.prize || null,
-          species: 'Brochet',
+          species: 'Pike',
           location: formData.location,
           max_participants: formData.max_participants,
           status: 'draft',
@@ -87,7 +87,7 @@ export default function CreateCompetitionPage() {
         })
 
       if (participantError) {
-        console.error('Erreur ajout participant:', participantError)
+        console.error('Error adding participant:', participantError)
       }
 
       router.push('/competitions')
@@ -99,43 +99,49 @@ export default function CreateCompetitionPage() {
   }
 
   return (
-    <div className="page-container form-container">
+    <div className="page-container-narrow form-container">
       {/* Back link */}
-      <Link href="/competitions" className="back-link">
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <Link href="/competitions" className="back-btn">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        Mes compétitions
+        Competitions
       </Link>
 
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-water-gradient rounded-2xl shadow-water-lg mb-4">
-          <span className="text-3xl">🏆</span>
+        <div className="inline-flex items-center justify-center w-14 h-14 bg-teal-700 rounded-xl mb-4">
+          <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+          </svg>
         </div>
-        <h1 className="font-display text-3xl font-bold text-navy-900">
-          Nouvelle compétition
+        <h1 className="text-xl font-semibold text-slate-900">
+          New competition
         </h1>
-        <p className="text-navy-500 mt-1">Créez votre défi entre amis</p>
+        <p className="text-slate-500 text-sm mt-1">Create a challenge for your friends</p>
       </div>
 
       {error && (
         <div className="alert alert-error mb-6 animate-scale-in">
-          <p className="font-medium">{error}</p>
+          <p>{error}</p>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
         {/* Basic Info */}
-        <div className="card p-6">
-          <h2 className="section-header flex items-center gap-2">
-            <span className="w-8 h-8 rounded-lg bg-water-100 flex items-center justify-center text-sm">📝</span>
-            Informations
-          </h2>
+        <div className="card p-5">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center">
+              <svg className="w-5 h-5 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+              </svg>
+            </div>
+            <h2 className="font-semibold text-slate-900">Details</h2>
+          </div>
 
           <div className="space-y-4">
             <div>
-              <label className="label">Nom de la compétition *</label>
+              <label className="label">Name *</label>
               <input
                 type="text"
                 required
@@ -148,7 +154,7 @@ export default function CreateCompetitionPage() {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="label">Date de début *</label>
+                <label className="label">Start date *</label>
                 <input
                   type="date"
                   required
@@ -158,7 +164,7 @@ export default function CreateCompetitionPage() {
                 />
               </div>
               <div>
-                <label className="label">Date de fin *</label>
+                <label className="label">End date *</label>
                 <input
                   type="date"
                   required
@@ -170,14 +176,14 @@ export default function CreateCompetitionPage() {
             </div>
 
             <div>
-              <label className="label">Lieu *</label>
+              <label className="label">Location *</label>
               <input
                 type="text"
                 required
                 value={formData.location}
                 onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                 className="input"
-                placeholder="Lough Corrib, Irlande"
+                placeholder="Lough Corrib, Ireland"
               />
             </div>
 
@@ -188,23 +194,23 @@ export default function CreateCompetitionPage() {
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 className="input min-h-[100px] resize-none"
                 rows={4}
-                placeholder="Une semaine de pêche au brochet entre amis..."
+                placeholder="A week of pike fishing with friends..."
               />
             </div>
 
             <div>
-              <label className="label">Récompense</label>
+              <label className="label">Prize</label>
               <input
                 type="text"
                 value={formData.prize}
                 onChange={(e) => setFormData({ ...formData, prize: e.target.value })}
                 className="input"
-                placeholder="Trophée + dîner offert"
+                placeholder="Trophy + dinner paid"
               />
             </div>
 
             <div>
-              <label className="label">Nombre de participants max *</label>
+              <label className="label">Max participants *</label>
               <input
                 type="number"
                 required
@@ -218,53 +224,65 @@ export default function CreateCompetitionPage() {
         </div>
 
         {/* Rules */}
-        <div className="card p-6">
-          <h2 className="section-header flex items-center gap-2">
-            <span className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center text-sm">📏</span>
-            Règles du jeu
-          </h2>
+        <div className="card p-5">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
+              <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+              </svg>
+            </div>
+            <h2 className="font-semibold text-slate-900">Scoring rules</h2>
+          </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {/* Total Count */}
-            <label className="flex items-start gap-4 p-4 rounded-xl border-2 border-transparent hover:border-navy-200 hover:bg-navy-50 cursor-pointer transition-all">
+            <label className="flex items-start gap-4 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition-all">
               <input
                 type="checkbox"
                 checked={formData.rule_total_count}
                 onChange={(e) => setFormData({ ...formData, rule_total_count: e.target.checked })}
-                className="w-5 h-5 mt-0.5 rounded border-navy-300 text-water-600 focus:ring-water-500"
+                className="w-5 h-5 mt-0.5 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
               />
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xl">🐟</span>
-                  <span className="font-display font-semibold text-navy-900">Nombre total de poissons</span>
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                    </svg>
+                  </div>
+                  <span className="font-medium text-slate-900">Total fish count</span>
                 </div>
-                <p className="text-sm text-navy-500 mt-1">
-                  Comptabilise le nombre total de poissons attrapés par chaque participant
+                <p className="text-sm text-slate-500 mt-2 ml-10">
+                  Count total fish caught by each participant
                 </p>
               </div>
             </label>
 
             {/* Record Size */}
-            <label className="flex items-start gap-4 p-4 rounded-xl border-2 border-transparent hover:border-navy-200 hover:bg-navy-50 cursor-pointer transition-all">
+            <label className="flex items-start gap-4 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition-all">
               <input
                 type="checkbox"
                 checked={formData.rule_record_size}
                 onChange={(e) => setFormData({ ...formData, rule_record_size: e.target.checked })}
-                className="w-5 h-5 mt-0.5 rounded border-navy-300 text-water-600 focus:ring-water-500"
+                className="w-5 h-5 mt-0.5 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
               />
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xl">📏</span>
-                  <span className="font-display font-semibold text-navy-900">Poisson record</span>
+                  <div className="w-8 h-8 rounded-lg bg-teal-500/10 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                    </svg>
+                  </div>
+                  <span className="font-medium text-slate-900">Biggest catch</span>
                 </div>
-                <p className="text-sm text-navy-500 mt-1">
-                  Le plus grand poisson de chaque participant compte pour le classement
+                <p className="text-sm text-slate-500 mt-2 ml-10">
+                  Biggest fish of each participant counts
                 </p>
               </div>
             </label>
 
             {/* Top X */}
-            <label className="flex items-start gap-4 p-4 rounded-xl border-2 border-transparent hover:border-navy-200 hover:bg-navy-50 cursor-pointer transition-all">
+            <label className="flex items-start gap-4 p-4 rounded-xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 cursor-pointer transition-all">
               <input
                 type="checkbox"
                 checked={formData.rule_top_x_biggest !== null}
@@ -272,15 +290,19 @@ export default function CreateCompetitionPage() {
                   ...formData,
                   rule_top_x_biggest: e.target.checked ? 5 : null
                 })}
-                className="w-5 h-5 mt-0.5 rounded border-navy-300 text-water-600 focus:ring-water-500"
+                className="w-5 h-5 mt-0.5 rounded border-slate-300 text-teal-600 focus:ring-teal-500"
               />
               <div className="flex-1">
                 <div className="flex items-center gap-2">
-                  <span className="text-xl">🏆</span>
-                  <span className="font-display font-semibold text-navy-900">Top 5 plus gros</span>
+                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                  </div>
+                  <span className="font-medium text-slate-900">Top 5 combined</span>
                 </div>
-                <p className="text-sm text-navy-500 mt-1">
-                  Cumul des tailles des 5 plus gros poissons de chaque participant
+                <p className="text-sm text-slate-500 mt-2 ml-10">
+                  Sum of top 5 biggest fish per participant
                 </p>
               </div>
             </label>
@@ -288,33 +310,30 @@ export default function CreateCompetitionPage() {
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="flex gap-3 pt-2">
           <button
             type="button"
             onClick={() => router.push('/competitions')}
-            className="btn-secondary"
+            className="btn-ghost"
           >
-            Annuler
+            Cancel
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="btn-primary flex-1 flex items-center justify-center gap-2"
+            className="btn-primary flex-1"
           >
             {loading ? (
-              <>
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                </svg>
-                Création...
-              </>
+              <span className="flex items-center justify-center gap-2">
+                <span className="spinner-light"></span>
+                Creating...
+              </span>
             ) : (
               <>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                Créer la compétition
+                Create competition
               </>
             )}
           </button>

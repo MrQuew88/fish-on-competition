@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
+import Link from 'next/link'
 
 export default function InviteAcceptPage() {
   const router = useRouter()
@@ -22,7 +23,6 @@ export default function InviteAcceptPage() {
 
   const loadInvitation = async () => {
     try {
-      // Récupérer l'invitation
       const { data: participant, error: partError } = await supabase
         .from('participants')
         .select('*, competitions(*)')
@@ -30,20 +30,20 @@ export default function InviteAcceptPage() {
         .single()
 
       if (partError || !participant) {
-        setError('Invitation invalide ou expirée')
+        setError('Invalid or expired invitation')
         setLoading(false)
         return
       }
 
       if (participant.status === 'accepted') {
-        setError('Cette invitation a déjà été acceptée')
+        setError('This invitation has already been accepted')
         setLoading(false)
         return
       }
 
       setCompetition(participant.competitions)
     } catch (err) {
-      setError('Erreur lors du chargement de l\'invitation')
+      setError('Error loading invitation')
     } finally {
       setLoading(false)
     }
@@ -55,22 +55,18 @@ export default function InviteAcceptPage() {
     setError('')
 
     try {
-      // Vérifier si l'utilisateur est connecté
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
-        // Rediriger vers signup avec le token
         router.push(`/signup?invite=${token}&name=${encodeURIComponent(name)}&punchline=${encodeURIComponent(punchline)}`)
         return
       }
 
-      // Mettre à jour le profil
       await supabase
         .from('profiles')
         .update({ name, punchline })
         .eq('id', user.id)
 
-      // Accepter l'invitation
       await supabase
         .from('participants')
         .update({
@@ -80,7 +76,6 @@ export default function InviteAcceptPage() {
         })
         .eq('invitation_token', token)
 
-      // Rediriger vers la compétition
       router.push(`/competitions/${competition.id}`)
     } catch (err: any) {
       setError(err.message)
@@ -88,71 +83,184 @@ export default function InviteAcceptPage() {
     }
   }
 
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    })
+  }
+
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <p>Chargement...</p>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center w-12 h-12 bg-teal-700 rounded-xl mb-4 animate-pulse">
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <p className="text-slate-500">Loading invitation...</p>
+        </div>
       </div>
     )
   }
 
-  if (error) {
+  if (error && !competition) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Erreur</h1>
-          <p>{error}</p>
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-4">
+        <div className="w-full max-w-sm">
+          <div className="card p-8">
+            <div className="empty-state">
+              <div className="empty-state-icon">
+                <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="empty-state-title">Invitation Error</h3>
+              <p className="empty-state-text mb-6">{error}</p>
+              <Link href="/" className="btn-primary">
+                Go to homepage
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-lg border p-8">
-        <h1 className="text-2xl font-bold mb-6">Invitation à une compétition</h1>
+    <div className="min-h-screen bg-slate-50 flex flex-col">
+      {/* Header */}
+      <div className="p-4">
+        <Link
+          href="/"
+          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-700 transition-colors"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Back
+        </Link>
+      </div>
 
-        <div className="mb-6 p-4 bg-blue-50 rounded">
-          <h2 className="font-bold text-lg">{competition.name}</h2>
-          <p className="text-sm text-gray-600 mt-2">
-            📅 {new Date(competition.start_date).toLocaleDateString('fr-FR')} → {new Date(competition.end_date).toLocaleDateString('fr-FR')}
-          </p>
-          <p className="text-sm text-gray-600">📍 {competition.location}</p>
+      {/* Content */}
+      <div className="flex-1 flex items-center justify-center px-4 py-8">
+        <div className="w-full max-w-sm">
+          {/* Logo */}
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-14 h-14 bg-teal-700 rounded-xl mb-4">
+              <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h1 className="text-2xl font-semibold text-slate-900">
+              You're invited!
+            </h1>
+            <p className="text-slate-500 mt-1">
+              Join this fishing competition
+            </p>
+          </div>
+
+          {/* Competition Info Card */}
+          <div className="card p-5 mb-4 bg-teal-50 border-teal-200">
+            <h2 className="font-semibold text-slate-900 text-lg mb-3">{competition.name}</h2>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 text-sm text-slate-600">
+                <svg className="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                <span>{formatDate(competition.start_date)} → {formatDate(competition.end_date)}</span>
+              </div>
+              {competition.location && (
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <svg className="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span>{competition.location}</span>
+                </div>
+              )}
+              {competition.species && (
+                <div className="flex items-center gap-2 text-sm text-slate-600">
+                  <svg className="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                  </svg>
+                  <span>{competition.species}</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Form Card */}
+          <div className="card p-6">
+            <form onSubmit={handleAccept} className="space-y-4">
+              <div>
+                <label className="label">Your name *</label>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  className="input"
+                  placeholder="John Smith"
+                  autoComplete="name"
+                />
+              </div>
+
+              <div>
+                <label className="label">Tagline (optional)</label>
+                <input
+                  type="text"
+                  value={punchline}
+                  onChange={(e) => setPunchline(e.target.value)}
+                  className="input"
+                  placeholder="Pike hunter since 2010"
+                  maxLength={100}
+                />
+                <p className="helper-text">This will appear on your profile</p>
+              </div>
+
+              {error && (
+                <div className="alert alert-error">
+                  <p>{error}</p>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn-primary w-full"
+              >
+                {submitting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <span className="spinner-light"></span>
+                    Joining...
+                  </span>
+                ) : (
+                  <>
+                    Accept invitation
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </>
+                )}
+              </button>
+            </form>
+
+            <div className="mt-6 pt-6 border-t border-slate-200 text-center">
+              <p className="text-sm text-slate-500">
+                Already have an account?{' '}
+                <Link
+                  href="/login"
+                  className="font-medium text-teal-700 hover:text-teal-600 transition-colors"
+                >
+                  Sign in first
+                </Link>
+              </p>
+            </div>
+          </div>
         </div>
-
-        <form onSubmit={handleAccept} className="space-y-4">
-          <div>
-            <label className="block mb-2 font-medium">Votre nom *</label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="w-full px-4 py-2 border rounded"
-              placeholder="Jean Dupont"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-2 font-medium">Punchline (optionnel)</label>
-            <input
-              type="text"
-              value={punchline}
-              onChange={(e) => setPunchline(e.target.value)}
-              className="w-full px-4 py-2 border rounded"
-              placeholder="Le roi du brochet"
-              maxLength={100}
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:bg-gray-400"
-          >
-            {submitting ? 'Acceptation...' : 'Accepter l\'invitation'}
-          </button>
-        </form>
       </div>
     </div>
   )

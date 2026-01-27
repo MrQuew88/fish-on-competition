@@ -39,7 +39,7 @@ export default function InvitePage() {
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
-        setError('Vous devez être connecté')
+        setError('You must be logged in')
         setLoading(false)
         return
       }
@@ -50,7 +50,7 @@ export default function InvitePage() {
         .filter(email => email.length > 0)
 
       if (emailList.length === 0) {
-        setError('Veuillez entrer au moins un email')
+        setError('Please enter at least one email')
         setLoading(false)
         return
       }
@@ -78,7 +78,7 @@ export default function InvitePage() {
               joined_at: new Date().toISOString(),
             })
           if (partError) {
-            console.error('Erreur création participant:', partError)
+            console.error('Error creating participant:', partError)
             continue
           }
           acceptedCount++
@@ -91,7 +91,7 @@ export default function InvitePage() {
               status: 'invited',
             })
           if (partError) {
-            console.error('Erreur création participant:', partError)
+            console.error('Error creating participant:', partError)
             continue
           }
           invitedCount++
@@ -114,16 +114,16 @@ export default function InvitePage() {
               }),
             })
           } catch (emailError) {
-            console.error('Erreur envoi email:', emailError)
+            console.error('Error sending email:', emailError)
           }
         }
       }
 
       const message = []
-      if (acceptedCount > 0) message.push(`${acceptedCount} participant(s) ajouté(s)`)
-      if (invitedCount > 0) message.push(`${invitedCount} invitation(s) envoyée(s)`)
+      if (acceptedCount > 0) message.push(`${acceptedCount} participant(s) added`)
+      if (invitedCount > 0) message.push(`${invitedCount} invitation(s) sent`)
 
-      setSuccess(message.join(' et ') + ' !')
+      setSuccess(message.join(' and '))
       setEmails('')
 
       setTimeout(() => {
@@ -137,113 +137,122 @@ export default function InvitePage() {
   }
 
   return (
-    <div className="page-container form-container">
+    <div className="page-container-narrow">
       {/* Back link */}
-      <Link href={`/competitions/${competitionId}`} className="back-link">
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <Link href={`/competitions/${competitionId}`} className="back-btn">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        Retour à la compétition
+        Back
       </Link>
 
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-water-gradient rounded-2xl shadow-water-lg mb-4">
-          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+        <div className="inline-flex items-center justify-center w-14 h-14 bg-teal-700 rounded-xl mb-4">
+          <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
           </svg>
         </div>
-        <h1 className="font-display text-3xl font-bold text-navy-900">
-          Inviter des participants
+        <h1 className="text-xl font-semibold text-slate-900">
+          Invite participants
         </h1>
         {competition && (
-          <p className="text-navy-500 mt-1">{competition.name}</p>
+          <p className="text-slate-500 text-sm mt-1">{competition.name}</p>
         )}
       </div>
 
+      {/* Alerts */}
       {error && (
-        <div className="alert alert-error mb-6 animate-scale-in">
-          <p className="font-medium">{error}</p>
+        <div className="alert alert-error mb-4 animate-slide-up">
+          <p>{error}</p>
         </div>
       )}
 
       {success && (
-        <div className="alert alert-success mb-6 animate-scale-in">
+        <div className="alert alert-success mb-4 animate-slide-up">
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
-            <p className="font-medium">{success}</p>
+            <p>{success}</p>
           </div>
         </div>
       )}
 
-      <div className="card p-6 md:p-8">
-        <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit}>
+        <div className="card p-5 mb-4">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center">
+              <svg className="w-5 h-5 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h2 className="font-semibold text-slate-900">Email addresses</h2>
+          </div>
+
           <div>
-            <label className="label">Emails des participants</label>
             <textarea
               value={emails}
               onChange={(e) => setEmails(e.target.value)}
               required
               rows={6}
-              className="input resize-none"
-              placeholder="jean@example.com&#10;marie@example.com&#10;paul@example.com"
+              className="input resize-none min-h-[140px]"
+              placeholder="john@example.com&#10;jane@example.com&#10;mike@example.com"
             />
-            <p className="text-sm text-navy-500 mt-2">
-              Entrez un email par ligne ou séparez-les par des virgules
+            <p className="helper-text">
+              Enter one email per line or separate with commas
             </p>
           </div>
+        </div>
 
-          {/* Info box */}
-          <div className="p-4 rounded-xl bg-water-50 border border-water-200">
-            <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-water-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        {/* Info box */}
+        <div className="card p-4 mb-4 bg-teal-50 border-teal-200">
+          <div className="flex items-start gap-3">
+            <div className="w-8 h-8 rounded-lg bg-teal-100 flex items-center justify-center flex-shrink-0">
+              <svg className="w-4 h-4 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <div className="text-sm text-water-800">
-                <p className="font-medium mb-1">Comment ça marche ?</p>
-                <ul className="list-disc list-inside space-y-1 text-water-700">
-                  <li>Si l'email correspond à un compte existant, le participant sera ajouté directement</li>
-                  <li>Sinon, une invitation par email sera envoyée</li>
-                </ul>
-              </div>
+            </div>
+            <div className="text-sm">
+              <p className="font-medium text-teal-800 mb-1">How it works</p>
+              <ul className="text-teal-700 space-y-1">
+                <li>If the email matches an existing account, they'll be added directly</li>
+                <li>Otherwise, an email invitation will be sent</li>
+              </ul>
             </div>
           </div>
+        </div>
 
-          <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={() => router.push(`/competitions/${competitionId}`)}
-              className="btn-secondary"
-            >
-              Annuler
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-primary flex-1 flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <>
-                  <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
-                  </svg>
-                  Envoi en cours...
-                </>
-              ) : (
-                <>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  Envoyer les invitations
-                </>
-              )}
-            </button>
-          </div>
-        </form>
-      </div>
+        {/* Actions */}
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={() => router.push(`/competitions/${competitionId}`)}
+            className="btn-ghost"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            disabled={loading}
+            className="btn-primary flex-1"
+          >
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="spinner-light"></span>
+                Sending...
+              </span>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                Send invitations
+              </>
+            )}
+          </button>
+        </div>
+      </form>
     </div>
   )
 }
