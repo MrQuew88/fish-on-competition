@@ -15,6 +15,11 @@ export default function Header() {
     loadUser()
   }, [])
 
+  // Close menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false)
+  }, [pathname])
+
   const loadUser = async () => {
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
@@ -34,6 +39,7 @@ export default function Header() {
     router.push('/login')
   }
 
+  // Hide header on public pages
   if (pathname === '/login' || pathname === '/signup' || pathname === '/' || pathname?.startsWith('/invite/')) {
     return null
   }
@@ -51,42 +57,44 @@ export default function Header() {
     <>
       <header className="header">
         <div className="max-w-lg mx-auto px-4">
-          <div className="flex justify-between items-center h-14">
+          <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <Link href="/competitions" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 bg-depth-800 rounded-lg flex items-center justify-center">
-                <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21h18M9 8h1m4 0h1m-5 4h1m4 0h1M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16" />
+            <Link href="/competitions" className="flex items-center gap-3 group">
+              <div className="w-10 h-10 bg-gradient-water rounded-xl flex items-center justify-center shadow-soft group-hover:shadow-glow-water transition-shadow">
+                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313-12.454z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17.5 8.5c-1.5-1.5-3-2-5.5-2" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12c3 0 5.5 2 6.5 5" />
                 </svg>
               </div>
-              <span className="text-display text-base">Fish On!</span>
+              <span className="font-display text-lg font-bold text-navy-900">Fish On!</span>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden sm:flex items-center gap-1">
+            <div className="hidden sm:flex items-center gap-2">
               <Link
                 href="/profile"
-                className="flex items-center gap-2 px-2.5 py-1.5 rounded-lg hover:bg-earth-100 transition-colors"
+                className="flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-navy-100 transition-colors"
               >
                 {profile?.avatar_url ? (
                   <img
                     src={profile.avatar_url}
                     alt=""
-                    className="w-7 h-7 avatar avatar-ring"
+                    className="w-8 h-8 rounded-lg object-cover ring-2 ring-white shadow-soft"
                   />
                 ) : (
-                  <div className="w-7 h-7 rounded-full bg-depth-700 flex items-center justify-center text-2xs text-white font-semibold">
+                  <div className="w-8 h-8 rounded-lg bg-gradient-water flex items-center justify-center text-xs text-white font-bold">
                     {getInitials(profile?.name)}
                   </div>
                 )}
-                <span className="text-sm font-medium text-depth-700">
+                <span className="text-sm font-semibold text-navy-700">
                   {profile?.name?.split(' ')[0] || 'Profil'}
                 </span>
               </Link>
 
               <button
                 onClick={handleLogout}
-                className="p-2 rounded-lg text-depth-400 hover:text-depth-600 hover:bg-earth-100 transition-colors"
+                className="btn-icon"
                 title="Déconnexion"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -98,7 +106,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="sm:hidden p-2 rounded-lg text-depth-600 hover:bg-earth-100 transition-colors"
+              className="sm:hidden btn-icon"
               aria-label="Menu"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,19 +122,19 @@ export default function Header() {
         <>
           {/* Backdrop */}
           <div
-            className="sm:hidden fixed inset-0 bg-black/50 z-40"
+            className="sm:hidden fixed inset-0 bg-navy-950/60 backdrop-blur-sm z-40 animate-fade-in"
             onClick={() => setMobileMenuOpen(false)}
           />
 
           {/* Menu Panel */}
-          <div className="sm:hidden fixed top-0 right-0 bottom-0 w-64 bg-white z-50 shadow-xl">
+          <div className="sm:hidden fixed top-0 right-0 bottom-0 w-72 bg-white z-50 shadow-strong animate-slide-down">
             <div className="flex flex-col h-full">
               {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b border-earth-200">
-                <span className="text-display text-base">Menu</span>
+              <div className="flex items-center justify-between p-5 border-b border-navy-100">
+                <span className="font-display text-lg font-bold text-navy-900">Menu</span>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
-                  className="p-2 rounded-lg text-depth-400 hover:bg-earth-100 transition-colors"
+                  className="btn-icon"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -135,56 +143,60 @@ export default function Header() {
               </div>
 
               {/* User Info */}
-              <div className="p-4 border-b border-earth-200">
-                <div className="flex items-center gap-3">
+              <div className="p-5 bg-navy-50 border-b border-navy-100">
+                <div className="flex items-center gap-4">
                   {profile?.avatar_url ? (
                     <img
                       src={profile.avatar_url}
                       alt=""
-                      className="w-12 h-12 avatar avatar-ring"
+                      className="w-14 h-14 rounded-xl object-cover ring-3 ring-white shadow-soft"
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-depth-700 flex items-center justify-center text-sm text-white font-semibold">
+                    <div className="w-14 h-14 rounded-xl bg-gradient-water flex items-center justify-center text-lg text-white font-bold">
                       {getInitials(profile?.name)}
                     </div>
                   )}
-                  <div>
-                    <div className="font-semibold text-depth-800">{profile?.name || 'Utilisateur'}</div>
-                    <div className="text-sm text-depth-500">{user?.email}</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-display font-bold text-navy-900 truncate">
+                      {profile?.name || 'Utilisateur'}
+                    </div>
+                    <div className="text-sm text-navy-500 truncate">{user?.email}</div>
                   </div>
                 </div>
               </div>
 
               {/* Navigation Links */}
-              <nav className="flex-1 p-4">
+              <nav className="flex-1 p-4 space-y-1">
                 <Link
                   href="/competitions"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-earth-100 transition-colors mb-1"
+                  className="flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-navy-100 transition-colors"
                 >
-                  <svg className="w-5 h-5 text-depth-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 21h18M9 8h1m4 0h1m-5 4h1m4 0h1M5 21V5a2 2 0 012-2h10a2 2 0 012 2v16" />
-                  </svg>
-                  <span className="text-depth-700 font-medium">Mes compétitions</span>
+                  <div className="w-10 h-10 rounded-lg bg-water-100 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-water-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                  </div>
+                  <span className="font-semibold text-navy-700">Mes compétitions</span>
                 </Link>
 
                 <Link
                   href="/profile"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-earth-100 transition-colors mb-1"
+                  className="flex items-center gap-4 px-4 py-3.5 rounded-xl hover:bg-navy-100 transition-colors"
                 >
-                  <svg className="w-5 h-5 text-depth-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  <span className="text-depth-700 font-medium">Mon profil</span>
+                  <div className="w-10 h-10 rounded-lg bg-navy-100 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-navy-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <span className="font-semibold text-navy-700">Mon profil</span>
                 </Link>
               </nav>
 
               {/* Logout Button */}
-              <div className="p-4 border-t border-earth-200">
+              <div className="p-4 border-t border-navy-100">
                 <button
                   onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-earth-100 text-depth-700 rounded-lg hover:bg-earth-200 transition-colors font-medium"
+                  className="w-full flex items-center justify-center gap-3 px-4 py-3.5 bg-navy-100 text-navy-700 rounded-xl hover:bg-navy-200 transition-colors font-semibold"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

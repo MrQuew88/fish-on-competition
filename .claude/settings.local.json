@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(cd /Users/quentinguislain/Desktop/App\\\\ Perso/fishing-competition && npm run build:*)"
+      "Bash(cd /Users/quentinguislain/Desktop/App\\\\ Perso/fishing-competition && npm run build:*)",
+      "WebSearch",
+      "WebFetch(domain:screensdesign.com)"
     ]
   }
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, useParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
@@ -20,7 +20,6 @@ interface CatchWithProfile {
 }
 
 export default function CapturesPage() {
-  const router = useRouter()
   const params = useParams()
   const competitionId = params.id as string
 
@@ -59,12 +58,21 @@ export default function CapturesPage() {
   }
 
   const formatDateTime = (dateString: string) => {
-    return new Date(dateString).toLocaleString('fr-FR', {
+    const date = new Date(dateString)
+    const now = new Date()
+    const diffMs = now.getTime() - date.getTime()
+    const diffMins = Math.floor(diffMs / 60000)
+    const diffHours = Math.floor(diffMs / 3600000)
+    const diffDays = Math.floor(diffMs / 86400000)
+
+    if (diffMins < 1) return "À l'instant"
+    if (diffMins < 60) return `Il y a ${diffMins} min`
+    if (diffHours < 24) return `Il y a ${diffHours}h`
+    if (diffDays < 7) return `Il y a ${diffDays}j`
+
+    return date.toLocaleDateString('fr-FR', {
       day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
+      month: 'short',
     })
   }
 
@@ -92,22 +100,21 @@ export default function CapturesPage() {
   if (loading) {
     return (
       <div className="page-container">
-        <div className="skeleton h-8 w-48 mb-6 rounded-lg"></div>
-        <div className="card p-8 mb-8">
-          <div className="skeleton h-10 w-2/3 mb-4 rounded-xl"></div>
-          <div className="skeleton h-6 w-32 rounded"></div>
-        </div>
-        <div className="space-y-6">
+        <div className="skeleton h-5 w-24 mb-6"></div>
+        <div className="skeleton h-32 rounded-3xl mb-6"></div>
+        <div className="space-y-5">
           {[1, 2, 3].map(i => (
-            <div key={i} className="card p-6">
-              <div className="flex gap-4 mb-4">
-                <div className="skeleton w-12 h-12 rounded-xl"></div>
-                <div className="space-y-2">
-                  <div className="skeleton h-5 w-32 rounded"></div>
-                  <div className="skeleton h-4 w-24 rounded"></div>
+            <div key={i} className="card overflow-hidden">
+              <div className="p-5">
+                <div className="flex gap-4">
+                  <div className="skeleton w-12 h-12 rounded-xl"></div>
+                  <div className="space-y-2 flex-1">
+                    <div className="skeleton h-5 w-32"></div>
+                    <div className="skeleton h-4 w-24"></div>
+                  </div>
                 </div>
               </div>
-              <div className="skeleton h-40 rounded-xl"></div>
+              <div className="skeleton h-56"></div>
             </div>
           ))}
         </div>
@@ -118,14 +125,16 @@ export default function CapturesPage() {
   if (!competition) {
     return (
       <div className="page-container">
-        <div className="card p-12">
+        <div className="card p-8">
           <div className="empty-state">
-            <div className="empty-state-icon">🔍</div>
-            <h3 className="font-display text-xl font-semibold text-navy-900 mb-2">
-              Compétition introuvable
-            </h3>
-            <Link href="/competitions" className="btn-primary">
-              Retour aux compétitions
+            <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-navy-100 flex items-center justify-center">
+              <svg className="w-8 h-8 text-navy-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <h3 className="empty-state-title">Compétition introuvable</h3>
+            <Link href="/competitions" className="btn-primary mt-4">
+              Retour
             </Link>
           </div>
         </div>
@@ -135,55 +144,74 @@ export default function CapturesPage() {
 
   return (
     <div className="page-container">
-      {/* Back link */}
-      <Link href={`/competitions/${competitionId}`} className="back-link">
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      {/* Back button */}
+      <Link href={`/competitions/${competitionId}`} className="back-btn">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        Retour à la compétition
+        Retour
       </Link>
 
-      {/* Header */}
-      <div className="card water-bg text-white p-8 mb-8">
-        <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-2">
-            <span className="text-4xl">📸</span>
-            <div>
-              <h1 className="font-display text-3xl font-bold">Galerie des captures</h1>
-              <p className="text-water-100">{competition.name}</p>
+      {/* Hero Header */}
+      <div className="card-water p-6 mb-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 opacity-10">
+          <svg viewBox="0 0 24 24" fill="currentColor" className="w-full h-full">
+            <path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+            <path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </div>
+        <div className="relative">
+          <h1 className="font-display text-2xl font-bold text-white">Galerie</h1>
+          <p className="text-white/70 text-sm mt-1">{competition.name}</p>
+          <div className="flex items-center gap-4 mt-4">
+            <div className="flex items-center gap-2 text-white/80 text-sm">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <span>{sessions.length} session{sessions.length > 1 ? 's' : ''}</span>
+            </div>
+            <div className="flex items-center gap-2 text-white/80 text-sm">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+              <span>{catches.length} capture{catches.length > 1 ? 's' : ''}</span>
             </div>
           </div>
-          <p className="text-water-200 text-sm mt-4">
-            {sessions.length} session{sessions.length > 1 ? 's' : ''} de pêche
-          </p>
         </div>
       </div>
 
       {sessions.length === 0 ? (
-        <div className="card p-12">
+        <div className="card p-10">
           <div className="empty-state">
-            <div className="empty-state-icon">🐟</div>
-            <h3 className="font-display text-xl font-semibold text-navy-900 mb-2">
-              Aucune capture pour l'instant
-            </h3>
+            <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-navy-100 flex items-center justify-center">
+              <svg className="w-10 h-10 text-navy-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 className="empty-state-title">La galerie est vide</h3>
             <p className="empty-state-text mb-6">
-              Soyez le premier à enregistrer une prise !
+              Soyez le premier à capturer un poisson !
             </p>
-            <Link
-              href={`/competitions/${competitionId}/catches`}
-              className="btn-success inline-flex items-center gap-2"
-            >
-              <span>🎣</span>
-              Enregistrer une capture
-            </Link>
+            {competition.status === 'active' && (
+              <Link
+                href={`/competitions/${competitionId}/catches`}
+                className="btn-success"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
+                </svg>
+                Enregistrer une capture
+              </Link>
+            )}
           </div>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-5">
           {sessions.map((session: any, index: number) => {
             const totalFish = session.catches.length
             const withSize = session.catches.filter((c: any) => c.size !== null)
             const sizes = withSize.map((c: any) => c.size).sort((a: number, b: number) => b - a)
+            const biggestSize = sizes.length > 0 ? sizes[0] : null
             const lures = Array.from(new Set(session.catches.filter((c: any) => c.lure).map((c: any) => c.lure))) as string[]
 
             return (
@@ -192,64 +220,89 @@ export default function CapturesPage() {
                 className="card overflow-hidden animate-slide-up"
                 style={{ animationDelay: `${index * 0.05}s` }}
               >
-                {/* Session Header */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                      {session.avatar_url ? (
-                        <img
-                          src={session.avatar_url}
-                          alt={session.user_name}
-                          className="w-14 h-14 rounded-xl object-cover border-2 border-water-200"
-                        />
-                      ) : (
-                        <div className="w-14 h-14 rounded-xl bg-water-gradient flex items-center justify-center text-xl text-white font-display font-bold">
-                          {getInitials(session.user_name)}
-                        </div>
-                      )}
-                      <div>
-                        <h3 className="font-display text-xl font-bold text-navy-900">
-                          {session.user_name}
-                        </h3>
-                        <p className="text-sm text-navy-500">
-                          {formatDateTime(session.recorded_at)}
-                        </p>
+                {/* Session Header - Social style */}
+                <div className="p-5">
+                  <div className="flex items-start gap-4">
+                    {/* Avatar */}
+                    {session.avatar_url ? (
+                      <img
+                        src={session.avatar_url}
+                        alt={session.user_name}
+                        className="w-12 h-12 rounded-xl object-cover ring-2 ring-white shadow-soft"
+                      />
+                    ) : (
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-water-500 to-water-700 flex items-center justify-center text-white font-display font-bold shadow-soft">
+                        {getInitials(session.user_name)}
                       </div>
+                    )}
+
+                    {/* User info */}
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-display font-bold text-navy-900 truncate">
+                        {session.user_name}
+                      </h3>
+                      <p className="text-sm text-navy-500">
+                        {formatDateTime(session.recorded_at)}
+                      </p>
                     </div>
 
                     {/* Fish count badge */}
-                    <div className="fish-count">
-                      {totalFish}
-                      <span className="text-lg">🐟</span>
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-forest-100 text-forest-700 rounded-full font-display font-bold text-sm">
+                      <span>{totalFish}</span>
+                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                      </svg>
                     </div>
                   </div>
 
-                  {/* Sizes */}
-                  {sizes.length > 0 && (
-                    <div className="mt-4">
-                      <p className="text-sm font-display font-medium text-navy-500 mb-2">
-                        Tailles enregistrées
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {sizes.map((size: number, idx: number) => (
-                          <span key={idx} className="size-badge">
-                            📏 {size} cm
-                          </span>
-                        ))}
-                      </div>
+                  {/* Stats row */}
+                  {(sizes.length > 0 || lures.length > 0) && (
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {biggestSize && (
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-water-100 text-water-700 rounded-lg text-sm font-medium">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                          </svg>
+                          <span>Record: {biggestSize} cm</span>
+                        </div>
+                      )}
+                      {sizes.length > 1 && (
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-navy-100 text-navy-600 rounded-lg text-sm font-medium">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                          </svg>
+                          <span>{sizes.length} mesurés</span>
+                        </div>
+                      )}
+                      {lures.slice(0, 2).map((lure: string, idx: number) => (
+                        <div key={idx} className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gold-100 text-gold-700 rounded-lg text-sm font-medium">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                          </svg>
+                          <span>{lure}</span>
+                        </div>
+                      ))}
+                      {lures.length > 2 && (
+                        <div className="inline-flex items-center px-3 py-1.5 bg-navy-50 text-navy-500 rounded-lg text-sm">
+                          +{lures.length - 2}
+                        </div>
+                      )}
                     </div>
                   )}
 
-                  {/* Lures */}
-                  {lures.length > 0 && (
-                    <div className="mt-4">
-                      <p className="text-sm font-display font-medium text-navy-500 mb-2">
-                        Leurres utilisés
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {lures.map((lure: string, idx: number) => (
-                          <span key={idx} className="lure-badge">
-                            🎣 {lure}
+                  {/* Sizes detail */}
+                  {sizes.length > 0 && (
+                    <div className="mt-4 p-3 bg-navy-50 rounded-xl">
+                      <p className="text-xs font-medium text-navy-500 mb-2 uppercase tracking-wide">Tailles enregistrées</p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {sizes.map((size: number, idx: number) => (
+                          <span
+                            key={idx}
+                            className={`inline-block px-2.5 py-1 rounded-lg text-sm font-display font-semibold ${
+                              idx === 0 ? 'bg-water-500 text-white' : 'bg-white text-navy-700 shadow-sm'
+                            }`}
+                          >
+                            {size} cm
                           </span>
                         ))}
                       </div>
@@ -259,12 +312,14 @@ export default function CapturesPage() {
 
                 {/* Photo */}
                 {session.photo_url && (
-                  <div className="border-t border-navy-100">
+                  <div className="relative">
                     <img
                       src={session.photo_url}
                       alt="Capture"
-                      className="w-full h-auto object-contain max-h-[500px]"
+                      className="w-full h-auto object-cover max-h-[400px]"
                     />
+                    {/* Gradient overlay at bottom */}
+                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/20 to-transparent"></div>
                   </div>
                 )}
               </div>
@@ -273,15 +328,16 @@ export default function CapturesPage() {
         </div>
       )}
 
-      {/* Quick action */}
-      {competition.status === 'active' && (
-        <div className="mt-8 flex justify-center">
+      {/* Quick action FAB */}
+      {competition.status === 'active' && sessions.length > 0 && (
+        <div className="fixed bottom-6 right-6 z-20">
           <Link
             href={`/competitions/${competitionId}/catches`}
-            className="btn-success flex items-center gap-2"
+            className="w-14 h-14 rounded-2xl bg-gradient-to-br from-forest-500 to-forest-600 text-white shadow-lg shadow-forest-500/40 flex items-center justify-center hover:scale-110 active:scale-95 transition-transform"
           >
-            <span className="text-lg">🎣</span>
-            Enregistrer une capture
+            <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
           </Link>
         </div>
       )}
