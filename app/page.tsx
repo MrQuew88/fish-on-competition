@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
@@ -29,131 +30,144 @@ export default function Home() {
 
   if (checking) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50">
-        <div className="spinner"></div>
+      <div className="min-h-screen flex items-center justify-center bg-slate-900">
+        <div className="w-8 h-8 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     )
   }
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      {/* Hero Section */}
-      <div className="bg-white border-b border-slate-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <div className="text-center">
-            {/* Logo */}
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-teal-700 rounded-xl mb-8">
-              <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-              </svg>
-            </div>
+    <main className="relative min-h-screen w-full overflow-hidden bg-slate-900">
+      {/* Animations */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+          from { opacity: 0; transform: translateY(-20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+          from { opacity: 0; transform: scale(0.9); }
+          to { opacity: 1; transform: scale(1); }
+        }
+        .animate-fade-in-up { animation: fadeInUp 0.7s ease-out forwards; }
+        .animate-fade-in-down { animation: fadeInDown 0.7s ease-out forwards; }
+        .animate-fade-in { animation: fadeIn 0.7s ease-out forwards; }
+        .animate-scale-in { animation: scaleIn 0.6s ease-out forwards; }
+      `}} />
 
-            {/* Title */}
-            <h1 className="text-3xl sm:text-4xl font-semibold text-slate-900 tracking-tight mb-4">
-              Fish On
-            </h1>
+      {/* Hero Image Background */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/splash-hero.webp"
+          alt="Compétition de pêche entre amis au lever du soleil"
+          fill
+          priority
+          quality={90}
+          className="object-cover object-center"
+          sizes="100vw"
+        />
 
-            {/* Subtitle */}
-            <p className="text-lg text-slate-600 max-w-md mx-auto mb-10 leading-relaxed">
-              Track your fishing competitions with friends. Log catches, view live leaderboards, and celebrate victories.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-sm mx-auto sm:max-w-none">
-              <Link
-                href="/signup"
-                className="btn-primary btn-lg"
-              >
-                Get started free
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-              </Link>
-              <Link
-                href="/login"
-                className="btn-secondary btn-lg"
-              >
-                Sign in
-              </Link>
-            </div>
-          </div>
-        </div>
+        {/* Gradient overlays for text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/20 to-slate-900/80" />
       </div>
 
-      {/* Features Section */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid gap-6 sm:grid-cols-3">
-          {/* Feature 1 */}
-          <div className="card p-6">
-            <div className="w-12 h-12 rounded-xl bg-teal-500/10 flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
-              </svg>
-            </div>
-            <h3 className="text-base font-semibold text-slate-900 mb-2">
-              Log your catches
-            </h3>
-            <p className="text-sm text-slate-500 leading-relaxed">
-              Record each catch with size, lure, and photos to build your personal record.
-            </p>
-          </div>
+      {/* Content Overlay */}
+      <div className="relative z-10 flex flex-col items-center justify-between min-h-screen px-6 py-12 text-center">
 
-          {/* Feature 2 */}
-          <div className="card p-6">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-            </div>
-            <h3 className="text-base font-semibold text-slate-900 mb-2">
-              Live leaderboard
-            </h3>
-            <p className="text-sm text-slate-500 leading-relaxed">
-              Track your position and your competitors in real-time throughout the competition.
-            </p>
+        {/* Top Section - Logo & Brand */}
+        <div
+          className="pt-4 sm:pt-8 opacity-0 animate-fade-in-down"
+          style={{ animationDelay: '100ms', animationFillMode: 'forwards' }}
+        >
+          <div className="inline-flex items-center justify-center h-16 w-16 md:h-20 md:w-20 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl">
+            <svg className="h-8 w-8 md:h-10 md:w-10 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+            </svg>
           </div>
+          <h1 className="text-2xl md:text-3xl font-bold text-white mt-4 tracking-tight drop-shadow-2xl">
+            Fish On!
+          </h1>
+        </div>
 
-          {/* Feature 3 */}
-          <div className="card p-6">
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4">
-              <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+        {/* Middle Section - Hero Message */}
+        <div className="flex-1 flex flex-col items-center justify-center max-w-2xl py-8">
+          <h2
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight drop-shadow-2xl leading-tight opacity-0 animate-fade-in-up"
+            style={{ animationDelay: '300ms', animationFillMode: 'forwards' }}
+          >
+            Compétitions de pêche entre amis
+          </h2>
+
+          <p
+            className="text-lg md:text-xl text-white/90 mb-8 drop-shadow-lg max-w-lg leading-relaxed opacity-0 animate-fade-in-up"
+            style={{ animationDelay: '500ms', animationFillMode: 'forwards' }}
+          >
+            Suivez vos prises, défiez vos amis, célébrez vos records
+          </p>
+
+          {/* Feature badges */}
+          <div
+            className="flex flex-wrap items-center justify-center gap-3 text-sm md:text-base opacity-0 animate-fade-in-up"
+            style={{ animationDelay: '600ms', animationFillMode: 'forwards' }}
+          >
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 font-medium">
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
+              <span>Photos de prises</span>
             </div>
-            <h3 className="text-base font-semibold text-slate-900 mb-2">
-              Invite friends
-            </h3>
-            <p className="text-sm text-slate-500 leading-relaxed">
-              Create private competitions and invite your fishing buddies via email.
-            </p>
+
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 font-medium">
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+              </svg>
+              <span>Classements en direct</span>
+            </div>
+
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 font-medium">
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span>Entre amis</span>
+            </div>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="mt-16 grid grid-cols-3 gap-8 text-center">
-          <div>
-            <div className="text-2xl font-semibold text-slate-900">Free</div>
-            <div className="text-sm text-slate-500 mt-1">Forever</div>
-          </div>
-          <div>
-            <div className="text-2xl font-semibold text-teal-700">Mobile</div>
-            <div className="text-sm text-slate-500 mt-1">Optimized</div>
-          </div>
-          <div>
-            <div className="text-2xl font-semibold text-slate-900">Fun</div>
-            <div className="text-sm text-slate-500 mt-1">With friends</div>
-          </div>
-        </div>
-      </div>
+        {/* Bottom Section - CTA */}
+        <div
+          className="w-full max-w-md space-y-4 mb-4 opacity-0 animate-fade-in-up"
+          style={{ animationDelay: '700ms', animationFillMode: 'forwards' }}
+        >
+          <Link
+            href="/signup"
+            className="flex items-center justify-center gap-2 w-full bg-white hover:bg-white/95 text-[#0A4F4C] font-bold py-4 px-8 rounded-xl shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-[1.02] text-lg"
+          >
+            <span>Commencer</span>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Link>
 
-      {/* Footer */}
-      <div className="border-t border-slate-200 py-8 text-center">
-        <p className="text-sm text-slate-500">
-          Built for sport fishing enthusiasts
-        </p>
-        <p className="text-xs text-slate-400 mt-1">
-          Pike &bull; Walleye &bull; Bass
-        </p>
+          <Link
+            href="/login"
+            className="flex items-center justify-center w-full border-2 border-white/30 hover:border-white/50 hover:bg-white/10 text-white font-semibold py-3.5 px-8 rounded-xl backdrop-blur-sm transition-all duration-300"
+          >
+            Se connecter
+          </Link>
+
+          {/* Trust element */}
+          <p className="mt-6 text-sm text-white/60 font-medium">
+            Gratuit • Simple • Entre amis
+          </p>
+        </div>
       </div>
     </main>
   )
