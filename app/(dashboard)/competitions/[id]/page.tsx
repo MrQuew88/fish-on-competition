@@ -3,8 +3,18 @@
 import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
-import { Competition, Participant } from '@/types'
+import { Competition, Participant, Catch } from '@/types'
 import Link from 'next/link'
+
+interface LeaderboardEntry {
+  id: string
+  user_id: string
+  name: string
+  avatar_url: string | null
+  catches_count: number
+  total_size: number
+  biggest_catch: number
+}
 
 export default function CompetitionDetailPage() {
   const router = useRouter()
@@ -13,9 +23,12 @@ export default function CompetitionDetailPage() {
 
   const [competition, setCompetition] = useState<Competition | null>(null)
   const [participants, setParticipants] = useState<Participant[]>([])
+  const [catches, setCatches] = useState<Catch[]>([])
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
   const [loading, setLoading] = useState(true)
   const [isCreator, setIsCreator] = useState(false)
   const [actionLoading, setActionLoading] = useState(false)
+  const [isParticipantsExpanded, setIsParticipantsExpanded] = useState(true)
 
   useEffect(() => {
     loadCompetition()
@@ -47,6 +60,42 @@ export default function CompetitionDetailPage() {
 
       if (partError) throw partError
       setParticipants(partData || [])
+
+      // Load catches with user info
+      const { data: catchesData, error: catchesError } = await supabase
+        .from('catches')
+        .select('*, profiles:user_id(name, avatar_url)')
+        .eq('competition_id', competitionId)
+        .order('recorded_at', { ascending: false })
+
+      if (catchesError) throw catchesError
+      setCatches(catchesData || [])
+
+      // Compute leaderboard
+      const leaderboardMap = new Map<string, LeaderboardEntry>()
+      for (const c of (catchesData || [])) {
+        const existing = leaderboardMap.get(c.user_id)
+        if (existing) {
+          existing.catches_count += c.count
+          existing.total_size += (c.size || 0) * c.count
+          existing.biggest_catch = Math.max(existing.biggest_catch, c.size || 0)
+        } else {
+          leaderboardMap.set(c.user_id, {
+            id: c.user_id,
+            user_id: c.user_id,
+            name: c.profiles?.name || 'Participant',
+            avatar_url: c.profiles?.avatar_url || null,
+            catches_count: c.count,
+            total_size: (c.size || 0) * c.count,
+            biggest_catch: c.size || 0
+          })
+        }
+      }
+
+      // Sort by catches count (descending)
+      const sortedLeaderboard = Array.from(leaderboardMap.values())
+        .sort((a, b) => b.catches_count - a.catches_count)
+      setLeaderboard(sortedLeaderboard)
     } catch (error) {
       console.error('Error:', error)
     } finally {
@@ -273,6 +322,41 @@ export default function CompetitionDetailPage() {
                   {competition.description}
                 </p>
               )}
+
+              {/* Rules - Subtle display in hero */}
+              {(competition.rule_total_count || competition.rule_record_size || competition.rule_top_x_biggest) && (
+                <div className="mt-6 pt-6 border-t border-slate-200">
+                  <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+                    Règles de scoring
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {competition.rule_total_count && (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
+                        <svg className="h-4 w-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                        </svg>
+                        <span className="text-sm text-slate-700">Nombre total</span>
+                      </div>
+                    )}
+                    {competition.rule_record_size && (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
+                        <svg className="h-4 w-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                        </svg>
+                        <span className="text-sm text-slate-700">Plus grosse prise</span>
+                      </div>
+                    )}
+                    {competition.rule_top_x_biggest && (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
+                        <svg className="h-4 w-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span className="text-sm text-slate-700">Top {competition.rule_top_x_biggest}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ) : (
@@ -331,6 +415,41 @@ export default function CompetitionDetailPage() {
                   {competition.description}
                 </p>
               )}
+
+              {/* Rules - Subtle display in hero */}
+              {(competition.rule_total_count || competition.rule_record_size || competition.rule_top_x_biggest) && (
+                <div className="mt-6 pt-6 border-t border-white/20">
+                  <div className="text-xs font-semibold text-white/60 uppercase tracking-wide mb-3">
+                    Règles de scoring
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {competition.rule_total_count && (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+                        <svg className="h-4 w-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                        </svg>
+                        <span className="text-sm text-white/90">Nombre total</span>
+                      </div>
+                    )}
+                    {competition.rule_record_size && (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+                        <svg className="h-4 w-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                        </svg>
+                        <span className="text-sm text-white/90">Plus grosse prise</span>
+                      </div>
+                    )}
+                    {competition.rule_top_x_biggest && (
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-sm border border-white/20">
+                        <svg className="h-4 w-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                        <span className="text-sm text-white/90">Top {competition.rule_top_x_biggest}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -357,66 +476,6 @@ export default function CompetitionDetailPage() {
                 </div>
               </div>
             </div>
-          </div>
-        )}
-
-        {/* Quick Actions - Active with colored icons */}
-        {competition.status === 'active' && (
-          <div
-            className="grid grid-cols-3 gap-4"
-            style={{ animation: 'slideInUp 0.5s ease-out 0.3s both' }}
-          >
-            {/* Capturer - Water tones */}
-            <Link
-              href={`/competitions/${competitionId}/catches`}
-              className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-water-surface/50 hover:shadow-[0_4px_20px_rgba(212,165,116,0.12)] transition-all duration-300 ease-out hover:scale-105"
-            >
-              {/* Hover gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-water-surface/0 to-water-surface/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
-
-              <div className="relative z-10 flex flex-col items-center gap-3">
-                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-water-surface/20 to-water-mid/10 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:rotate-3">
-                  <svg className="h-7 w-7 text-water-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4v16m8-8H4" />
-                  </svg>
-                </div>
-                <span className="text-base font-semibold text-slate-900">Capturer</span>
-              </div>
-            </Link>
-
-            {/* Classement - Reflection tones */}
-            <Link
-              href={`/competitions/${competitionId}/leaderboard`}
-              className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-reflect-gold/50 hover:shadow-[0_4px_20px_rgba(212,165,116,0.12)] transition-all duration-300 ease-out hover:scale-105"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-reflect-gold/0 to-reflect-gold/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
-
-              <div className="relative z-10 flex flex-col items-center gap-3">
-                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-reflect-gold/20 via-reflect-subtle/15 to-water-surface/10 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:rotate-3">
-                  <svg className="h-7 w-7 text-reflect-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                  </svg>
-                </div>
-                <span className="text-base font-semibold text-slate-900">Classement</span>
-              </div>
-            </Link>
-
-            {/* Galerie - Merged tones */}
-            <Link
-              href={`/competitions/${competitionId}/captures`}
-              className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-merged-teal-gold/50 hover:shadow-[0_4px_20px_rgba(212,165,116,0.12)] transition-all duration-300 ease-out hover:scale-105"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-merged-teal-gold/0 to-merged-teal-gold/10 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
-
-              <div className="relative z-10 flex flex-col items-center gap-3">
-                <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-merged-teal-gold/20 to-water-mid/15 flex items-center justify-center shadow-sm group-hover:shadow-md transition-all duration-300 group-hover:rotate-3">
-                  <svg className="h-7 w-7 text-merged-teal-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <span className="text-base font-semibold text-slate-900">Galerie</span>
-              </div>
-            </Link>
           </div>
         )}
 
@@ -448,140 +507,308 @@ export default function CompetitionDetailPage() {
           </Link>
         )}
 
-        {/* Participants - Glass effect with enhanced avatars */}
+        {/* Participants - Collapsible Section */}
         <div
-          className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
+          className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
           style={{ animation: 'slideInUp 0.5s ease-out 0.45s both' }}
         >
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Participants</h2>
-            {isCreator && competition.status === 'draft' && (
-              <Link
-                href={`/competitions/${competitionId}/invite`}
-                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover transition-colors duration-200"
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                </svg>
-                Inviter
-              </Link>
-            )}
-          </div>
+          {/* Collapsible Header */}
+          <button
+            onClick={() => setIsParticipantsExpanded(!isParticipantsExpanded)}
+            className="w-full flex items-center justify-between p-6 hover:bg-slate-50/50 transition-colors duration-200"
+          >
+            <div className="flex items-center gap-3">
+              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Participants</h2>
+              <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-sm font-medium">
+                {acceptedParticipants.length}
+              </span>
+            </div>
 
-          {acceptedParticipants.length === 0 ? (
-            <p className="text-base text-slate-500 text-center py-8">
-              Aucun participant confirmé
-            </p>
-          ) : (
-            <div className="space-y-2">
-              {acceptedParticipants.map((participant: any) => (
-                <div
-                  key={participant.id}
-                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-slate-50 hover:to-transparent transition-all duration-200 group"
+            <div className="flex items-center gap-3">
+              {/* Add participant button - visible for draft and active competitions */}
+              {isCreator && competition.status !== 'finished' && (
+                <Link
+                  href={`/competitions/${competitionId}/invite`}
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-water-deep to-water-mid hover:from-water-mid hover:to-water-surface text-white font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md"
                 >
-                  {/* Avatar with enhanced hover */}
-                  <div className="relative">
-                    {participant.profiles?.avatar_url ? (
-                      <img
-                        src={participant.profiles.avatar_url}
-                        alt=""
-                        className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-primary transition-all duration-300 group-hover:scale-105 object-cover"
-                      />
-                    ) : (
-                      <div className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-primary bg-primary flex items-center justify-center text-base text-white font-semibold transition-all duration-300 group-hover:scale-105">
-                        {getInitials(participant.profiles?.name)}
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                  </svg>
+                  Inviter
+                </Link>
+              )}
+
+              {/* Collapse/Expand icon */}
+              <div className="p-2 rounded-lg hover:bg-slate-100 transition-colors duration-200">
+                <svg
+                  className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${isParticipantsExpanded ? 'rotate-180' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+          </button>
+
+          {/* Collapsible Content */}
+          <div
+            className={`transition-all duration-300 ease-in-out overflow-hidden ${
+              isParticipantsExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
+            }`}
+          >
+            <div className="px-6 pb-6 border-t border-slate-100">
+              {acceptedParticipants.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-base text-slate-500">Aucun participant confirmé</p>
+                  {isCreator && competition.status !== 'finished' && (
+                    <Link
+                      href={`/competitions/${competitionId}/invite`}
+                      className="inline-flex items-center gap-2 mt-4 text-primary hover:text-primary-hover font-medium text-sm transition-colors duration-200"
+                    >
+                      Inviter le premier participant
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                  )}
+                </div>
+              ) : (
+                <div className="space-y-2 pt-4">
+                  {acceptedParticipants.map((participant: any) => (
+                    <div
+                      key={participant.id}
+                      className="flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-slate-50 hover:to-transparent transition-all duration-200 group"
+                    >
+                      {/* Avatar with enhanced hover */}
+                      <div className="relative">
+                        {participant.profiles?.avatar_url ? (
+                          <img
+                            src={participant.profiles.avatar_url}
+                            alt=""
+                            className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-primary transition-all duration-300 group-hover:scale-105 object-cover"
+                          />
+                        ) : (
+                          <div className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-primary bg-primary flex items-center justify-center text-base text-white font-semibold transition-all duration-300 group-hover:scale-105">
+                            {getInitials(participant.profiles?.name)}
+                          </div>
+                        )}
+                      </div>
+                      <span className="text-xl font-semibold text-slate-900">
+                        {participant.profiles?.name || 'Participant'}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {pendingParticipants.length > 0 && (
+                <div className="mt-6 pt-6 border-t border-slate-200">
+                  <p className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-4">
+                    En attente ({pendingParticipants.length})
+                  </p>
+                  <div className="flex -space-x-2">
+                    {pendingParticipants.slice(0, 6).map((p) => (
+                      <div
+                        key={p.id}
+                        className="h-12 w-12 rounded-full bg-slate-200 ring-2 ring-white flex items-center justify-center hover:scale-110 hover:z-10 transition-all duration-200"
+                      >
+                        <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                    ))}
+                    {pendingParticipants.length > 6 && (
+                      <div className="h-12 w-12 rounded-full bg-slate-100 ring-2 ring-white flex items-center justify-center text-sm font-semibold text-slate-600 hover:scale-110 hover:z-10 transition-all duration-200">
+                        +{pendingParticipants.length - 6}
                       </div>
                     )}
                   </div>
-                  <span className="text-xl font-semibold text-slate-900">
-                    {participant.profiles?.name || 'Participant'}
-                  </span>
                 </div>
-              ))}
+              )}
             </div>
-          )}
-
-          {pendingParticipants.length > 0 && (
-            <div className="mt-6 pt-6 border-t border-slate-200">
-              <p className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-4">
-                En attente ({pendingParticipants.length})
-              </p>
-              <div className="flex -space-x-2">
-                {pendingParticipants.slice(0, 6).map((p) => (
-                  <div
-                    key={p.id}
-                    className="h-12 w-12 rounded-full bg-slate-200 ring-2 ring-white flex items-center justify-center hover:scale-110 hover:z-10 transition-all duration-200"
-                  >
-                    <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                ))}
-                {pendingParticipants.length > 6 && (
-                  <div className="h-12 w-12 rounded-full bg-slate-100 ring-2 ring-white flex items-center justify-center text-sm font-semibold text-slate-600 hover:scale-110 hover:z-10 transition-all duration-200">
-                    +{pendingParticipants.length - 6}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Rules - Glass effect with colored icons */}
-        <div
-          className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
-          style={{ animation: 'slideInUp 0.5s ease-out 0.6s both' }}
-        >
-          <h2 className="text-2xl font-bold text-slate-900 tracking-tight mb-6">Règles</h2>
-          <div className="space-y-2">
-            {/* Total count rule - Teal */}
-            {competition.rule_total_count && (
-              <div className="flex items-center gap-4 p-4 group">
-                <div className="relative flex-shrink-0">
-                  {/* Shadow layer for depth */}
-                  <div className="absolute inset-0 bg-primary/20 rounded-xl blur-md"></div>
-                  <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-water-surface/20 to-water-mid/10 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                    <svg className="h-7 w-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-                    </svg>
-                  </div>
-                </div>
-                <span className="text-lg font-semibold text-slate-900">Nombre total de prises</span>
-              </div>
-            )}
-            {/* Record size rule - Reflection */}
-            {competition.rule_record_size && (
-              <div className="flex items-center gap-4 p-4 group">
-                <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 bg-reflect-gold/20 rounded-xl blur-md"></div>
-                  <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-reflect-bright/20 via-reflect-gold/15 to-reflect-amber/10 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                    <svg className="h-7 w-7 text-reflect-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                    </svg>
-                  </div>
-                </div>
-                <span className="text-lg font-semibold text-slate-900">Plus grosse prise</span>
-              </div>
-            )}
-            {/* Top X biggest rule - Merged */}
-            {competition.rule_top_x_biggest && (
-              <div className="flex items-center gap-4 p-4 group">
-                <div className="relative flex-shrink-0">
-                  <div className="absolute inset-0 bg-merged-teal-gold/20 rounded-xl blur-md"></div>
-                  <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-reflect-gold/20 via-merged-teal-gold/15 to-water-surface/10 flex items-center justify-center shadow-md group-hover:shadow-lg transition-all duration-300 group-hover:scale-105">
-                    <svg className="h-7 w-7 text-merged-teal-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                    </svg>
-                  </div>
-                </div>
-                <span className="text-lg font-semibold text-slate-900">Top {competition.rule_top_x_biggest} combinés</span>
-              </div>
-            )}
-            {!competition.rule_total_count && !competition.rule_record_size && !competition.rule_top_x_biggest && (
-              <p className="text-base text-slate-500 py-4">Aucune règle définie</p>
-            )}
           </div>
         </div>
+
+        {/* Leaderboard Section */}
+        {competition.status !== 'draft' && (
+          <div
+            className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
+            style={{ animation: 'slideInUp 0.5s ease-out 0.55s both' }}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Classement</h2>
+              <div className="flex items-center gap-2 text-sm text-slate-500">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                </svg>
+                <span>Par nombre de prises</span>
+              </div>
+            </div>
+
+            {leaderboard.length === 0 ? (
+              <div className="text-center py-12">
+                <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4 shadow-md">
+                  <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                  </svg>
+                </div>
+                <p className="text-base text-slate-500">Aucune prise enregistrée</p>
+                <p className="text-sm text-slate-400 mt-1">Soyez le premier à capturer un poisson !</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {leaderboard.map((entry, index) => (
+                  <div
+                    key={entry.id}
+                    className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-200 ${
+                      index === 0
+                        ? 'bg-gradient-to-r from-reflect-gold/20 to-reflect-amber/10 border border-reflect-gold/30'
+                        : index === 1
+                          ? 'bg-gradient-to-r from-slate-200/50 to-slate-100/30 border border-slate-300/50'
+                          : index === 2
+                            ? 'bg-gradient-to-r from-amber-100/50 to-orange-50/30 border border-amber-200/50'
+                            : 'hover:bg-slate-50'
+                    }`}
+                  >
+                    {/* Rank */}
+                    <div className={`flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center font-bold text-lg ${
+                      index === 0
+                        ? 'bg-gradient-to-br from-reflect-gold to-reflect-amber text-white shadow-md'
+                        : index === 1
+                          ? 'bg-gradient-to-br from-slate-400 to-slate-500 text-white shadow-md'
+                          : index === 2
+                            ? 'bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-md'
+                            : 'bg-slate-100 text-slate-600'
+                    }`}>
+                      {index + 1}
+                    </div>
+
+                    {/* Avatar */}
+                    {entry.avatar_url ? (
+                      <img
+                        src={entry.avatar_url}
+                        alt=""
+                        className="h-12 w-12 rounded-full ring-2 ring-white object-cover shadow-sm"
+                      />
+                    ) : (
+                      <div className="h-12 w-12 rounded-full ring-2 ring-white bg-primary flex items-center justify-center text-sm text-white font-semibold shadow-sm">
+                        {getInitials(entry.name)}
+                      </div>
+                    )}
+
+                    {/* Name & Stats */}
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-slate-900 truncate">{entry.name}</p>
+                      <div className="flex items-center gap-3 text-sm text-slate-500">
+                        <span className="flex items-center gap-1">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                          </svg>
+                          {entry.catches_count} prise{entry.catches_count !== 1 ? 's' : ''}
+                        </span>
+                        {entry.biggest_catch > 0 && (
+                          <span className="flex items-center gap-1">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                            </svg>
+                            Max {entry.biggest_catch} cm
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Score Badge */}
+                    <div className={`flex-shrink-0 px-3 py-1.5 rounded-lg font-bold text-lg ${
+                      index === 0
+                        ? 'bg-reflect-gold/20 text-reflect-amber'
+                        : 'bg-slate-100 text-slate-700'
+                    }`}>
+                      {entry.catches_count}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Gallery Section */}
+        {competition.status !== 'draft' && (
+          <div
+            className={`bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 ${competition.status === 'active' ? 'mb-24' : ''}`}
+            style={{ animation: 'slideInUp 0.5s ease-out 0.65s both' }}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Galerie</h2>
+              <div className="text-sm text-slate-500">
+                {catches.filter(c => c.photo_url).length} photo{catches.filter(c => c.photo_url).length !== 1 ? 's' : ''}
+              </div>
+            </div>
+
+            {catches.filter(c => c.photo_url).length === 0 ? (
+              <div className="text-center py-12">
+                <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4 shadow-md">
+                  <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <p className="text-base text-slate-500">Aucune photo pour le moment</p>
+                <p className="text-sm text-slate-400 mt-1">Les photos de vos prises apparaîtront ici</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {catches
+                  .filter(c => c.photo_url)
+                  .slice(0, 9)
+                  .map((catchItem: any) => (
+                    <div
+                      key={catchItem.id}
+                      className="relative aspect-square rounded-xl overflow-hidden group cursor-pointer shadow-md hover:shadow-xl transition-all duration-300"
+                    >
+                      <img
+                        src={catchItem.photo_url}
+                        alt=""
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      />
+                      {/* Overlay with info */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="absolute bottom-0 left-0 right-0 p-3">
+                          <p className="text-white font-medium text-sm truncate">
+                            {catchItem.profiles?.name || 'Participant'}
+                          </p>
+                          <div className="flex items-center gap-2 text-white/80 text-xs">
+                            {catchItem.size && (
+                              <span>{catchItem.size} cm</span>
+                            )}
+                            {catchItem.count > 1 && (
+                              <span>x{catchItem.count}</span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
+
+            {catches.filter(c => c.photo_url).length > 9 && (
+              <div className="mt-4 text-center">
+                <Link
+                  href={`/competitions/${competitionId}/gallery`}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-primary-hover transition-colors duration-200"
+                >
+                  Voir toutes les photos
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Creator Actions */}
         {isCreator && (
@@ -642,26 +869,26 @@ export default function CompetitionDetailPage() {
           </div>
         )}
 
-        {/* FAB with glow effect and entrance animation */}
-        {competition.status === 'active' && (
-          <div
-            className="fixed bottom-6 right-6 group"
-            style={{ animation: 'slideInUp 0.5s ease-out 0.3s both' }}
-          >
-            {/* Glow effect */}
-            <div className="absolute -inset-2 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid rounded-full blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+      </div>
 
+      {/* Floating Full-Width Capture Button */}
+      {competition.status === 'active' && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-gradient-to-t from-white via-white to-transparent pointer-events-none">
+          <div className="max-w-4xl mx-auto">
             <Link
               href={`/competitions/${competitionId}/catches`}
-              className="relative bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] text-white rounded-full h-16 w-16 flex items-center justify-center shadow-xl hover:shadow-2xl transition-all duration-300 ease-out hover:scale-110"
+              className="pointer-events-auto block"
             >
-              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-              </svg>
+              <button className="w-full bg-gradient-to-br from-water-mid via-merged-teal-gold to-water-surface hover:shadow-[0_12px_40px_rgba(212,165,116,0.3)] text-white font-bold py-4 px-6 rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3">
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                <span className="text-lg">Ajouter des prises</span>
+              </button>
             </Link>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }
