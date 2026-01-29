@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function SignupPage() {
   const router = useRouter()
@@ -33,11 +34,26 @@ export default function SignupPage() {
       setLoading(false)
     } else {
       router.push('/competitions')
+      router.refresh() // Force layout re-render to update navigation
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/50 to-teal-50/30 relative flex flex-col">
+    <div className="relative min-h-screen w-full overflow-hidden">
+      {/* Hero Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/splash-hero.webp"
+          alt=""
+          fill
+          priority
+          quality={90}
+          className="object-cover"
+        />
+        {/* Gradient overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/70 via-slate-900/60 to-slate-900/80" />
+      </div>
+
       {/* Animations */}
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes slideInUp {
@@ -57,21 +73,11 @@ export default function SignupPage() {
         .animate-scale-in { animation: scaleIn 0.3s ease-out forwards; }
       `}} />
 
-      {/* Grain texture */}
-      <div className="fixed inset-0 opacity-[0.025] pointer-events-none" style={{ zIndex: 1 }}>
-        <svg width="100%" height="100%">
-          <filter id="grain">
-            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#grain)" />
-        </svg>
-      </div>
-
       {/* Header */}
-      <div className="p-4 relative" style={{ zIndex: 10 }}>
+      <div className="absolute top-0 left-0 p-4 z-20">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-primary transition-colors group"
+          className="inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white transition-colors group"
         >
           <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -81,29 +87,29 @@ export default function SignupPage() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 flex items-center justify-center px-4 py-8 relative" style={{ zIndex: 10 }}>
+      <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
         <div className="w-full max-w-md">
           {/* Logo & Branding */}
           <div
             className="text-center mb-8 animate-slide-in-up"
             style={{ animationDelay: '0ms' }}
           >
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid rounded-xl mb-4 shadow-lg shadow-primary/25">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl mb-4">
               <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
               </svg>
             </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-water-deep to-water-surface bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold text-white">
               Fish On
             </h1>
-            <p className="text-slate-600 mt-2 text-sm">
+            <p className="text-white/70 mt-2 text-sm">
               Rejoignez la communauté des pêcheurs
             </p>
           </div>
 
           {/* Form Card */}
           <div
-            className="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl p-6 sm:p-8 shadow-xl animate-slide-in-up"
+            className="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl p-8 shadow-2xl animate-slide-in-up"
             style={{ animationDelay: '100ms' }}
           >
             {/* Card Title */}

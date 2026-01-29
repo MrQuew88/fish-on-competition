@@ -30,20 +30,20 @@ export default function InviteAcceptPage() {
         .single()
 
       if (partError || !participant) {
-        setError('Invalid or expired invitation')
+        setError('Invitation invalide ou expirée')
         setLoading(false)
         return
       }
 
       if (participant.status === 'accepted') {
-        setError('This invitation has already been accepted')
+        setError('Cette invitation a déjà été acceptée')
         setLoading(false)
         return
       }
 
       setCompetition(participant.competitions)
     } catch (err) {
-      setError('Error loading invitation')
+      setError('Erreur lors du chargement de l\'invitation')
     } finally {
       setLoading(false)
     }
@@ -84,9 +84,9 @@ export default function InviteAcceptPage() {
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
+    return new Date(dateString).toLocaleDateString('fr-FR', {
       day: 'numeric',
+      month: 'short',
       year: 'numeric',
     })
   }
@@ -100,7 +100,7 @@ export default function InviteAcceptPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
           </div>
-          <p className="text-slate-500">Loading invitation...</p>
+          <p className="text-slate-500">Chargement de l'invitation...</p>
         </div>
       </div>
     )
@@ -117,10 +117,10 @@ export default function InviteAcceptPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
               </div>
-              <h3 className="empty-state-title">Invitation Error</h3>
+              <h3 className="empty-state-title">Erreur d'invitation</h3>
               <p className="empty-state-text mb-6">{error}</p>
               <Link href="/" className="btn-primary">
-                Go to homepage
+                Retour à l'accueil
               </Link>
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function InviteAcceptPage() {
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Back
+          Retour
         </Link>
       </div>
 
@@ -155,10 +155,10 @@ export default function InviteAcceptPage() {
               </svg>
             </div>
             <h1 className="text-2xl font-semibold text-slate-900">
-              You're invited!
+              Vous êtes invité !
             </h1>
             <p className="text-slate-500 mt-1">
-              Join this fishing competition
+              Rejoignez cette compétition de pêche
             </p>
           </div>
 
@@ -196,29 +196,29 @@ export default function InviteAcceptPage() {
           <div className="card p-6">
             <form onSubmit={handleAccept} className="space-y-4">
               <div>
-                <label className="label">Your name *</label>
+                <label className="label">Votre nom *</label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
                   className="input"
-                  placeholder="John Smith"
+                  placeholder="Jean Dupont"
                   autoComplete="name"
                 />
               </div>
 
               <div>
-                <label className="label">Tagline (optional)</label>
+                <label className="label">Slogan (optionnel)</label>
                 <input
                   type="text"
                   value={punchline}
                   onChange={(e) => setPunchline(e.target.value)}
                   className="input"
-                  placeholder="Pike hunter since 2010"
+                  placeholder="Chasseur de brochets depuis 2010"
                   maxLength={100}
                 />
-                <p className="helper-text">This will appear on your profile</p>
+                <p className="helper-text">Apparaîtra sur votre profil</p>
               </div>
 
               {error && (
@@ -235,11 +235,11 @@ export default function InviteAcceptPage() {
                 {submitting ? (
                   <span className="flex items-center justify-center gap-2">
                     <span className="spinner-light"></span>
-                    Joining...
+                    Inscription...
                   </span>
                 ) : (
                   <>
-                    Accept invitation
+                    Accepter l'invitation
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
@@ -250,12 +250,12 @@ export default function InviteAcceptPage() {
 
             <div className="mt-6 pt-6 border-t border-slate-200 text-center">
               <p className="text-sm text-slate-500">
-                Already have an account?{' '}
+                Déjà un compte ?{' '}
                 <Link
                   href="/login"
                   className="font-medium text-teal-700 hover:text-teal-600 transition-colors"
                 >
-                  Sign in first
+                  Connectez-vous d'abord
                 </Link>
               </p>
             </div>

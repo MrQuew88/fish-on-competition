@@ -39,7 +39,7 @@ export default function InvitePage() {
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
-        setError('You must be logged in')
+        setError('Vous devez être connecté')
         setLoading(false)
         return
       }
@@ -50,7 +50,7 @@ export default function InvitePage() {
         .filter(email => email.length > 0)
 
       if (emailList.length === 0) {
-        setError('Please enter at least one email')
+        setError('Veuillez saisir au moins un email')
         setLoading(false)
         return
       }
@@ -120,10 +120,10 @@ export default function InvitePage() {
       }
 
       const message = []
-      if (acceptedCount > 0) message.push(`${acceptedCount} participant(s) added`)
-      if (invitedCount > 0) message.push(`${invitedCount} invitation(s) sent`)
+      if (acceptedCount > 0) message.push(`${acceptedCount} participant(s) ajouté(s)`)
+      if (invitedCount > 0) message.push(`${invitedCount} invitation(s) envoyée(s)`)
 
-      setSuccess(message.join(' and '))
+      setSuccess(message.join(' et '))
       setEmails('')
 
       setTimeout(() => {
@@ -143,7 +143,7 @@ export default function InvitePage() {
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
         </svg>
-        Back
+        Retour
       </Link>
 
       {/* Header */}
@@ -154,7 +154,7 @@ export default function InvitePage() {
           </svg>
         </div>
         <h1 className="text-xl font-semibold text-slate-900">
-          Invite participants
+          Inviter des participants
         </h1>
         {competition && (
           <p className="text-slate-500 text-sm mt-1">{competition.name}</p>
@@ -187,7 +187,7 @@ export default function InvitePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
-            <h2 className="font-semibold text-slate-900">Email addresses</h2>
+            <h2 className="font-semibold text-slate-900">Adresses email</h2>
           </div>
 
           <div>
@@ -197,10 +197,10 @@ export default function InvitePage() {
               required
               rows={6}
               className="input resize-none min-h-[140px]"
-              placeholder="john@example.com&#10;jane@example.com&#10;mike@example.com"
+              placeholder="jean@exemple.com&#10;marie@exemple.com&#10;pierre@exemple.com"
             />
             <p className="helper-text">
-              Enter one email per line or separate with commas
+              Saisissez un email par ligne ou séparez-les par des virgules
             </p>
           </div>
         </div>
@@ -214,10 +214,10 @@ export default function InvitePage() {
               </svg>
             </div>
             <div className="text-sm">
-              <p className="font-medium text-teal-800 mb-1">How it works</p>
+              <p className="font-medium text-teal-800 mb-1">Comment ça marche</p>
               <ul className="text-teal-700 space-y-1">
-                <li>If the email matches an existing account, they'll be added directly</li>
-                <li>Otherwise, an email invitation will be sent</li>
+                <li>Si l'email correspond à un compte existant, la personne sera ajoutée directement</li>
+                <li>Sinon, une invitation par email sera envoyée</li>
               </ul>
             </div>
           </div>
@@ -230,7 +230,7 @@ export default function InvitePage() {
             onClick={() => router.push(`/competitions/${competitionId}`)}
             className="btn-ghost"
           >
-            Cancel
+            Annuler
           </button>
           <button
             type="submit"
@@ -240,14 +240,14 @@ export default function InvitePage() {
             {loading ? (
               <span className="flex items-center justify-center gap-2">
                 <span className="spinner-light"></span>
-                Sending...
+                Envoi...
               </span>
             ) : (
               <>
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                Send invitations
+                Envoyer les invitations
               </>
             )}
           </button>

@@ -5,9 +5,21 @@ import { Competition } from '@/types'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
+interface ParticipantInfo {
+  id: string
+  user_id: string | null
+  avatar_url?: string | null
+  name?: string | null
+}
+
+interface CompetitionWithStats extends Competition {
+  participants: ParticipantInfo[]
+  catches_count: number
+}
+
 export default function CompetitionsPage() {
   const router = useRouter()
-  const [competitions, setCompetitions] = useState<Competition[]>([])
+  const [competitions, setCompetitions] = useState<CompetitionWithStats[]>([])
   const [loading, setLoading] = useState(true)
 
   // Grain texture for page background
@@ -80,7 +92,45 @@ export default function CompetitionsPage() {
         new Date(b.start_date).getTime() - new Date(a.start_date).getTime()
       )
 
-      setCompetitions(uniqueCompetitions)
+      // 6. Fetch participants and catches count for each competition
+      const competitionsWithStats: CompetitionWithStats[] = await Promise.all(
+        uniqueCompetitions.map(async (comp) => {
+          // Get participants with profile info
+          const { data: participantsData } = await supabase
+            .from('participants')
+            .select(`
+              id,
+              user_id,
+              profiles:user_id (
+                name,
+                avatar_url
+              )
+            `)
+            .eq('competition_id', comp.id)
+            .eq('status', 'accepted')
+
+          const participants: ParticipantInfo[] = (participantsData || []).map((p: { id: string; user_id: string | null; profiles: { name: string | null; avatar_url: string | null } | null }) => ({
+            id: p.id,
+            user_id: p.user_id,
+            name: p.profiles?.name || null,
+            avatar_url: p.profiles?.avatar_url || null
+          }))
+
+          // Get catches count
+          const { count: catchesCount } = await supabase
+            .from('catches')
+            .select('*', { count: 'exact', head: true })
+            .eq('competition_id', comp.id)
+
+          return {
+            ...comp,
+            participants,
+            catches_count: catchesCount || 0
+          }
+        })
+      )
+
+      setCompetitions(competitionsWithStats)
     } catch (error) {
       console.error('Error:', error)
     } finally {
@@ -93,6 +143,23 @@ export default function CompetitionsPage() {
       day: 'numeric',
       month: 'short'
     })
+  }
+
+  const formatDateRange = (startDate: string, endDate: string) => {
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+
+    // Check if same day
+    if (start.toDateString() === end.toDateString()) {
+      return formatDate(startDate)
+    }
+
+    return `${formatDate(startDate)} - ${formatDate(endDate)}`
+  }
+
+  const getInitials = (name: string | null | undefined) => {
+    if (!name) return '?'
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
   }
 
   const StatusBadge = ({ status }: { status: string }) => {
@@ -121,44 +188,6 @@ export default function CompetitionsPage() {
     )
   }
 
-  const getStatusIcon = (status: string) => {
-    if (status === 'active') {
-      return (
-        <div className="relative flex-shrink-0">
-          <div className="absolute inset-0 bg-emerald-500/20 rounded-xl blur-md"></div>
-          <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
-            <svg className="h-7 w-7 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-          </div>
-        </div>
-      )
-    }
-    if (status === 'finished') {
-      return (
-        <div className="relative flex-shrink-0">
-          <div className="absolute inset-0 bg-slate-500/20 rounded-xl blur-md"></div>
-          <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
-            <svg className="h-7 w-7 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-            </svg>
-          </div>
-        </div>
-      )
-    }
-    return (
-      <div className="relative flex-shrink-0">
-        <div className="absolute inset-0 bg-amber-500/20 rounded-xl blur-md"></div>
-        <div className="relative h-14 w-14 rounded-xl bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:scale-105 transition-all duration-300">
-          <svg className="h-7 w-7 text-amber-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-          </svg>
-        </div>
-      </div>
-    )
-  }
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/50 to-teal-50/30 relative">
@@ -179,12 +208,28 @@ export default function CompetitionsPage() {
           {/* Cards skeleton */}
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white/90 rounded-2xl p-6 shadow-md">
-                <div className="flex items-center gap-4">
-                  <div className="h-14 w-14 bg-slate-200 rounded-xl animate-pulse"></div>
-                  <div className="flex-1">
-                    <div className="h-6 w-2/3 bg-slate-200 rounded animate-pulse mb-2"></div>
-                    <div className="h-4 w-1/2 bg-slate-200 rounded animate-pulse"></div>
+              <div key={i} className="bg-white/95 rounded-2xl p-5 shadow-md">
+                {/* Top row skeleton */}
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-6 w-48 bg-slate-200 rounded animate-pulse"></div>
+                    <div className="h-6 w-20 bg-slate-200 rounded-full animate-pulse"></div>
+                  </div>
+                  <div className="h-5 w-5 bg-slate-200 rounded animate-pulse"></div>
+                </div>
+                {/* Bottom grid skeleton */}
+                <div className="grid grid-cols-2 gap-x-6 gap-y-3">
+                  <div className="space-y-2">
+                    <div className="h-4 w-28 bg-slate-200 rounded animate-pulse"></div>
+                    <div className="h-4 w-32 bg-slate-200 rounded animate-pulse"></div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 w-20 bg-slate-200 rounded animate-pulse"></div>
+                    <div className="flex -space-x-2">
+                      {[1, 2, 3].map((j) => (
+                        <div key={j} className="h-7 w-7 bg-slate-200 rounded-full animate-pulse"></div>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -272,39 +317,93 @@ export default function CompetitionsPage() {
                 className="group block"
                 style={{ animation: `slideInUp 0.5s ease-out ${0.1 + index * 0.1}s both` }}
               >
-                <div className="bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-4 md:p-6 shadow-md hover:shadow-xl hover:border-slate-300 transition-all duration-300">
-                  <div className="flex items-center gap-4">
-                    {/* Status icon with colored gradient */}
-                    {getStatusIcon(competition.status)}
-
-                    {/* Content */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-2 flex-wrap">
-                        <h2 className="text-lg md:text-xl font-semibold text-slate-900 truncate">
-                          {competition.name}
-                        </h2>
-                        <StatusBadge status={competition.status} />
-                      </div>
-                      <div className="flex items-center gap-4 text-sm text-slate-500 flex-wrap">
-                        <span className="flex items-center gap-1.5">
-                          <svg className="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                          <span className="font-medium">{formatDate(competition.start_date)}</span>
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <svg className="h-4 w-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                          </svg>
-                          <span className="font-medium">{competition.location}</span>
-                        </span>
-                      </div>
+                <div className="bg-white/95 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-5 shadow-md hover:shadow-xl hover:border-slate-300 transition-all duration-300">
+                  {/* Top: Name + Badge + Chevron */}
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <div className="flex items-center gap-3 flex-1 min-w-0 flex-wrap">
+                      <h2 className="text-xl font-semibold text-slate-900 truncate">
+                        {competition.name}
+                      </h2>
+                      <StatusBadge status={competition.status} />
                     </div>
-
-                    {/* Arrow */}
                     <svg className="h-5 w-5 text-slate-400 flex-shrink-0 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
+                  </div>
+
+                  {/* Bottom: Info Grid */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
+                    {/* Left Column - Date & Location */}
+                    <div className="space-y-2">
+                      {/* Date range */}
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <svg className="h-4 w-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <span className="font-medium">{formatDateRange(competition.start_date, competition.end_date)}</span>
+                      </div>
+
+                      {/* Location */}
+                      <div className="flex items-center gap-2 text-sm text-slate-600">
+                        <svg className="h-4 w-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span className="truncate">{competition.location}</span>
+                      </div>
+                    </div>
+
+                    {/* Right Column - Participants & Fish count */}
+                    <div className="space-y-2">
+                      {/* Participants */}
+                      <div>
+                        <div className="text-xs text-slate-500 mb-1.5">Participants</div>
+                        <div className="flex items-center -space-x-2">
+                          {competition.participants.length === 0 ? (
+                            <span className="text-sm text-slate-400">Aucun participant</span>
+                          ) : (
+                            <>
+                              {competition.participants.slice(0, 4).map((participant) => (
+                                participant.avatar_url ? (
+                                  <img
+                                    key={participant.id}
+                                    src={participant.avatar_url}
+                                    alt={participant.name || 'Participant'}
+                                    className="h-7 w-7 rounded-full ring-2 ring-white object-cover"
+                                  />
+                                ) : (
+                                  <div
+                                    key={participant.id}
+                                    className="h-7 w-7 rounded-full ring-2 ring-white bg-gradient-to-br from-primary/80 to-primary flex items-center justify-center"
+                                  >
+                                    <span className="text-[10px] font-semibold text-white">
+                                      {getInitials(participant.name)}
+                                    </span>
+                                  </div>
+                                )
+                              ))}
+                              {competition.participants.length > 4 && (
+                                <div className="h-7 w-7 rounded-full bg-slate-200 ring-2 ring-white flex items-center justify-center">
+                                  <span className="text-xs font-semibold text-slate-700">
+                                    +{competition.participants.length - 4}
+                                  </span>
+                                </div>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Fish count */}
+                      <div className="flex items-center gap-2 text-sm">
+                        <svg className="h-4 w-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <span className={competition.catches_count > 0 ? "text-slate-600 font-medium" : "text-slate-400"}>
+                          {competition.catches_count > 0 ? `${competition.catches_count} prises` : "Aucune prise"}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Link>
