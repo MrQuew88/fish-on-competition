@@ -109,12 +109,15 @@ export default function CompetitionsPage() {
             .eq('competition_id', comp.id)
             .eq('status', 'accepted')
 
-          const participants: ParticipantInfo[] = (participantsData || []).map((p: { id: string; user_id: string | null; profiles: { name: string | null; avatar_url: string | null } | null }) => ({
-            id: p.id,
-            user_id: p.user_id,
-            name: p.profiles?.name || null,
-            avatar_url: p.profiles?.avatar_url || null
-          }))
+          const participants: ParticipantInfo[] = (participantsData || []).map((p: any) => {
+            const profile = Array.isArray(p.profiles) ? p.profiles[0] : p.profiles
+            return {
+              id: p.id,
+              user_id: p.user_id,
+              name: profile?.name || null,
+              avatar_url: profile?.avatar_url || null
+            }
+          })
 
           // Get catches count
           const { count: catchesCount } = await supabase
