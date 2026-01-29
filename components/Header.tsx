@@ -96,7 +96,7 @@ export default function Header() {
   return (
     <>
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+      <header className="sticky top-0 z-50 bg-surface/95 backdrop-blur-md border-b border-surface-border/80 shadow-sm">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center h-16 md:h-[72px]">
             {/* Logo */}
@@ -118,7 +118,7 @@ export default function Header() {
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive('/competitions')
                     ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-sm'
-                    : 'text-slate-600 hover:text-primary hover:bg-primary-light'
+                    : 'text-text-secondary hover:text-primary hover:bg-primary-light'
                 }`}
               >
                 Compétitions
@@ -132,28 +132,28 @@ export default function Header() {
                 className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 ${
                   isActive('/profile')
                     ? 'bg-primary-light'
-                    : 'hover:bg-slate-50'
+                    : 'hover:bg-surface-bg'
                 }`}
               >
                 {profile?.avatar_url ? (
                   <img
                     src={profile.avatar_url}
                     alt=""
-                    className="h-8 w-8 rounded-full ring-2 ring-slate-200 object-cover"
+                    className="h-8 w-8 rounded-full ring-2 ring-surface-border object-cover"
                   />
                 ) : (
-                  <div className="h-8 w-8 rounded-full ring-2 ring-slate-200 bg-primary flex items-center justify-center text-xs text-white font-medium">
+                  <div className="h-8 w-8 rounded-full ring-2 ring-surface-border bg-primary flex items-center justify-center text-xs text-white font-medium">
                     {getInitials(profile?.name)}
                   </div>
                 )}
-                <span className="text-sm font-medium text-slate-900 hidden lg:block">
+                <span className="text-sm font-medium text-text-primary hidden lg:block">
                   {profile?.name?.split(' ')[0] || 'Profil'}
                 </span>
               </Link>
 
               <button
                 onClick={handleLogout}
-                className="p-2 rounded-lg text-slate-500 hover:text-slate-700 hover:bg-slate-100 transition-all duration-200"
+                className="p-2 rounded-lg text-text-muted hover:text-text-secondary hover:bg-surface-bg transition-all duration-200"
                 title="Déconnexion"
                 aria-label="Déconnexion"
               >
@@ -166,7 +166,7 @@ export default function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors duration-200"
+              className="md:hidden p-2 rounded-lg text-text-secondary hover:bg-surface-bg transition-colors duration-200"
               aria-label="Menu"
             >
               <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -188,44 +188,44 @@ export default function Header() {
 
       {/* Mobile Menu Panel */}
       <div
-        className={`md:hidden fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-white/95 backdrop-blur-md shadow-2xl z-50 transform transition-transform duration-300 ease-out ${
+        className={`md:hidden fixed right-0 top-0 h-full w-80 max-w-[85vw] bg-surface/95 backdrop-blur-md shadow-2xl z-50 transform transition-transform duration-300 ease-out ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Panel Header */}
-          <div className="flex items-center justify-between p-4 border-b border-slate-200">
-            <span className="text-lg font-semibold text-slate-900">Menu</span>
+          <div className="flex items-center justify-between p-4 border-b border-surface-border">
+            <span className="text-lg font-semibold text-text-primary">Menu</span>
             <button
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-lg hover:bg-slate-100 transition-colors duration-200"
+              className="p-2 rounded-lg hover:bg-surface-bg transition-colors duration-200"
               aria-label="Fermer le menu"
             >
-              <svg className="h-6 w-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="h-6 w-6 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
           {/* User Info */}
-          <div className="p-4 bg-gradient-to-br from-slate-50 to-slate-100/50 border-b border-slate-200">
+          <div className="p-4 bg-gradient-to-br from-surface-bg to-surface-bg/50 border-b border-surface-border">
             <div className="flex items-center gap-3">
               {profile?.avatar_url ? (
                 <img
                   src={profile.avatar_url}
                   alt=""
-                  className="h-14 w-14 rounded-xl ring-2 ring-slate-200 object-cover shadow-sm"
+                  className="h-14 w-14 rounded-xl ring-2 ring-surface-border object-cover shadow-sm"
                 />
               ) : (
-                <div className="h-14 w-14 rounded-xl ring-2 ring-slate-200 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-lg text-white font-semibold shadow-sm">
+                <div className="h-14 w-14 rounded-xl ring-2 ring-surface-border bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-lg text-white font-semibold shadow-sm">
                   {getInitials(profile?.name)}
                 </div>
               )}
               <div className="flex-1 min-w-0">
-                <div className="font-semibold text-slate-900 truncate">
+                <div className="font-semibold text-text-primary truncate">
                   {profile?.name || 'Utilisateur'}
                 </div>
-                <div className="text-sm text-slate-500 truncate">{user?.email}</div>
+                <div className="text-sm text-text-muted truncate">{user?.email}</div>
               </div>
             </div>
           </div>
@@ -237,7 +237,7 @@ export default function Header() {
               className={`block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
                 isActive('/competitions')
                   ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md'
-                  : 'text-slate-700 hover:text-primary hover:bg-primary-light'
+                  : 'text-text-secondary hover:text-primary hover:bg-primary-light'
               }`}
             >
               <div className="flex items-center gap-3">
@@ -259,16 +259,16 @@ export default function Header() {
               className={`block px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
                 isActive('/profile')
                   ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md'
-                  : 'text-slate-700 hover:text-primary hover:bg-primary-light'
+                  : 'text-text-secondary hover:text-primary hover:bg-primary-light'
               }`}
             >
               <div className="flex items-center gap-3">
                 <div className={`h-9 w-9 rounded-lg flex items-center justify-center ${
                   isActive('/profile')
                     ? 'bg-white/20'
-                    : 'bg-gradient-to-br from-slate-100 to-slate-200'
+                    : 'bg-gradient-to-br from-surface-bg to-surface-border'
                 }`}>
-                  <svg className={`w-5 h-5 ${isActive('/profile') ? 'text-white' : 'text-slate-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className={`w-5 h-5 ${isActive('/profile') ? 'text-white' : 'text-text-secondary'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                   </svg>
                 </div>
@@ -278,11 +278,11 @@ export default function Header() {
           </nav>
 
           {/* Logout Button */}
-          <div className="p-6 pt-0 border-t border-slate-200 mt-auto">
+          <div className="p-6 pt-0 border-t border-surface-border mt-auto">
             <div className="pt-6">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white border-2 border-slate-200 hover:border-primary text-slate-700 hover:text-primary rounded-xl transition-all duration-200 font-medium shadow-sm hover:shadow-md"
+                className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-surface border-2 border-surface-border hover:border-primary text-text-secondary hover:text-primary rounded-xl transition-all duration-200 font-medium shadow-sm hover:shadow-md"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

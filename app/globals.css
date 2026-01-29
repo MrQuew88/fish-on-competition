@@ -22,11 +22,11 @@
 
   /* Focus states - accessible but subtle */
   *:focus-visible {
-    @apply outline-2 outline-offset-2 outline-teal-600;
+    @apply outline-2 outline-offset-2 outline-primary;
   }
 
   ::selection {
-    @apply bg-teal-100 text-teal-900;
+    @apply bg-primary-light text-primary;
   }
 }
 
@@ -81,17 +81,17 @@
 
   .btn-primary {
     @apply btn
-           bg-teal-700 text-white
-           hover:bg-teal-600
-           focus-visible:ring-teal-600;
+           bg-primary text-white
+           hover:bg-primary-600
+           focus-visible:ring-primary;
   }
 
   .btn-secondary {
     @apply btn
-           border-2 border-teal-700 text-teal-700
+           border-2 border-primary text-primary
            bg-transparent
-           hover:bg-teal-50
-           focus-visible:ring-teal-600;
+           hover:bg-primary-light
+           focus-visible:ring-primary;
   }
 
   .btn-ghost {
@@ -104,9 +104,9 @@
 
   .btn-success {
     @apply btn
-           bg-emerald-600 text-white
-           hover:bg-emerald-500
-           focus-visible:ring-emerald-500;
+           bg-status-active text-white
+           hover:bg-status-active/90
+           focus-visible:ring-status-active;
   }
 
   .btn-lg {
@@ -124,7 +124,7 @@
            text-slate-500
            transition-colors duration-150
            hover:bg-slate-100 hover:text-slate-700
-           focus-visible:ring-2 focus-visible:ring-teal-600;
+           focus-visible:ring-2 focus-visible:ring-primary;
     min-height: 40px;
     min-width: 40px;
   }
@@ -160,7 +160,7 @@
            text-base
            placeholder:text-slate-400
            transition-colors duration-150
-           focus:outline-none focus:border-teal-600 focus:ring-2 focus:ring-teal-600/20;
+           focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20;
     min-height: 48px;
   }
 
@@ -189,8 +189,8 @@
   }
 
   .badge-active {
-    @apply bg-emerald-500/10 text-emerald-700
-           border border-emerald-500/20;
+    @apply bg-status-active/10 text-status-active
+           border border-status-active/20;
   }
 
   .badge-finished {
@@ -212,7 +212,7 @@
   }
 
   .status-dot-live {
-    @apply bg-emerald-500;
+    @apply bg-status-active;
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
 
@@ -246,7 +246,7 @@
 
   .avatar-placeholder {
     @apply flex items-center justify-center
-           bg-teal-700 text-white
+           bg-primary text-white
            font-medium;
   }
 
@@ -301,11 +301,11 @@
   }
 
   .alert-success {
-    @apply bg-emerald-50 text-emerald-700 border border-emerald-200;
+    @apply bg-status-active-bg text-status-active border border-status-active/30;
   }
 
   .alert-info {
-    @apply bg-teal-50 text-teal-700 border border-teal-200;
+    @apply bg-primary-light text-primary border border-primary/30;
   }
 
   /* ----------------------------------------
@@ -415,12 +415,12 @@
   .fab {
     @apply fixed bottom-20 right-4
            w-14 h-14
-           bg-teal-700 text-white
+           bg-primary text-white
            rounded-xl
            shadow-md
            flex items-center justify-center
            transition-all duration-200
-           hover:bg-teal-600 hover:shadow-lg
+           hover:bg-primary-600 hover:shadow-lg
            z-50;
   }
 
@@ -486,13 +486,13 @@
            rounded-t-xl border-x border-t border-orange-200;
   }
 
-  /* Icon containers with teal accent */
+  /* Icon containers with primary accent */
   .icon-container {
-    @apply bg-teal-500/10 p-3 rounded-lg;
+    @apply bg-primary/10 p-3 rounded-lg;
   }
 
   .icon-container-lg {
-    @apply bg-teal-500/10 p-4 rounded-xl;
+    @apply bg-primary/10 p-4 rounded-xl;
   }
 }
 

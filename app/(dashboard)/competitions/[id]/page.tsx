@@ -170,20 +170,20 @@ export default function CompetitionDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/50 to-teal-50/30 relative">
+      <div className="min-h-screen bg-surface-bg relative">
         <div
           className="absolute inset-0 opacity-[0.025] pointer-events-none"
           style={{ backgroundImage: grainTexture }}
         />
         <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 space-y-8">
-          <div className="h-5 w-28 bg-slate-200 rounded animate-pulse"></div>
-          <div className="h-56 bg-slate-200 rounded-2xl animate-pulse"></div>
+          <div className="h-5 w-28 bg-surface-muted rounded animate-pulse"></div>
+          <div className="h-56 bg-surface-muted rounded-2xl animate-pulse"></div>
           <div className="grid grid-cols-3 gap-4">
             {[1, 2, 3].map(i => (
-              <div key={i} className="h-28 bg-slate-200 rounded-xl animate-pulse"></div>
+              <div key={i} className="h-28 bg-surface-muted rounded-xl animate-pulse"></div>
             ))}
           </div>
-          <div className="h-48 bg-slate-200 rounded-2xl animate-pulse"></div>
+          <div className="h-48 bg-surface-muted rounded-2xl animate-pulse"></div>
         </div>
       </div>
     )
@@ -191,24 +191,24 @@ export default function CompetitionDetailPage() {
 
   if (!competition) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/50 to-teal-50/30 relative">
+      <div className="min-h-screen bg-surface-bg relative">
         <div
           className="absolute inset-0 opacity-[0.025] pointer-events-none"
           style={{ backgroundImage: grainTexture }}
         />
         <div className="relative z-10 max-w-4xl mx-auto px-4 py-8">
-          <div className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-8 shadow-lg">
+          <div className="bg-surface/80 backdrop-blur-md border border-surface-border/80 rounded-2xl p-8 shadow-lg">
             <div className="text-center">
-              <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4 shadow-md">
-                <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-surface-muted to-surface-hover flex items-center justify-center mb-4 shadow-md">
+                <svg className="w-8 h-8 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Compétition introuvable</h3>
-              <p className="text-base text-slate-600 mb-6">Cette compétition n'existe pas ou a été supprimée</p>
+              <h3 className="text-2xl font-bold text-text-primary mb-2">Compétition introuvable</h3>
+              <p className="text-base text-text-secondary mb-6">Cette compétition n'existe pas ou a été supprimée</p>
               <Link
                 href="/competitions"
-                className="inline-flex items-center justify-center bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105"
+                className="inline-flex items-center justify-center bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid hover:from-water-mid hover:to-water-surface hover:shadow-[0_8px_30px_rgba(212,165,116,0.25)] text-text-inverse font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 ease-out hover:scale-105"
               >
                 Retour
               </Link>
@@ -225,26 +225,26 @@ export default function CompetitionDetailPage() {
   const StatusBadge = () => {
     if (competition.status === 'active') {
       return (
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-400/20 border border-emerald-400/30 backdrop-blur-sm mb-4 shadow-sm">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-status-active/20 border border-status-active/30 backdrop-blur-sm mb-4 shadow-sm">
           {/* Animated dot with ping effect */}
           <div className="relative">
-            <div className="absolute inset-0 rounded-full bg-emerald-400 animate-ping opacity-75"></div>
-            <div className="h-2 w-2 rounded-full bg-emerald-400 relative z-10"></div>
+            <div className="absolute inset-0 rounded-full bg-status-active animate-ping opacity-75"></div>
+            <div className="h-2 w-2 rounded-full bg-status-active relative z-10"></div>
           </div>
-          <span className="text-sm font-semibold text-emerald-50">En cours</span>
+          <span className="text-sm font-semibold text-primary-100">En cours</span>
         </div>
       )
     }
     if (competition.status === 'finished') {
       return (
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-400/20 border border-slate-400/30 backdrop-blur-sm mb-4 shadow-sm">
-          <span className="text-sm font-semibold text-slate-200">Terminée</span>
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-status-completed/20 border border-status-completed/30 backdrop-blur-sm mb-4 shadow-sm">
+          <span className="text-sm font-semibold text-surface-muted">Terminée</span>
         </div>
       )
     }
     return (
-      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-400/20 border border-amber-400/30 backdrop-blur-sm mb-4 shadow-sm">
-        <span className="text-sm font-semibold text-amber-200">Brouillon</span>
+      <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-status-pending/20 border border-status-pending/30 backdrop-blur-sm mb-4 shadow-sm">
+        <span className="text-sm font-semibold text-accent-light">Brouillon</span>
       </div>
     )
   }
@@ -253,7 +253,7 @@ export default function CompetitionDetailPage() {
   const isDraft = competition.status === 'draft'
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/50 to-teal-50/30 relative">
+    <div className="min-h-screen bg-surface-bg relative">
       {/* Keyframes for animations */}
       <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
 
@@ -267,7 +267,7 @@ export default function CompetitionDetailPage() {
         {/* Back button - enhanced animation */}
         <Link
           href="/competitions"
-          className="flex items-center gap-2 text-slate-600 hover:text-primary transition-all duration-200 group mb-6"
+          className="flex items-center gap-2 text-text-secondary hover:text-primary transition-all duration-200 group mb-6"
         >
           <svg className="h-5 w-5 group-hover:-translate-x-1 group-hover:scale-110 transition-all duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -278,22 +278,22 @@ export default function CompetitionDetailPage() {
         {/* Hero Card */}
         {isDraft ? (
           // Draft: lighter hero card
-          <div className="relative overflow-hidden bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-8 shadow-lg">
+          <div className="relative overflow-hidden bg-surface/80 backdrop-blur-md border border-surface-border/80 rounded-2xl p-8 shadow-lg">
             <div className="relative z-10">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-100 border border-amber-200 mb-4 shadow-sm">
-                <span className="text-sm font-semibold text-amber-700">Brouillon</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-status-pending border border-accent-amber mb-4 shadow-sm">
+                <span className="text-sm font-semibold text-accent-dark">Brouillon</span>
               </div>
-              <h1 className="text-4xl font-bold tracking-tighter text-slate-900 mb-3">
+              <h1 className="text-4xl font-bold tracking-tighter text-text-primary mb-3">
                 {competition.name}
               </h1>
               {competition.species && (
-                <p className="text-xl font-medium text-slate-600 mb-6">
+                <p className="text-xl font-medium text-text-secondary mb-6">
                   {competition.species}
                 </p>
               )}
 
               {/* Meta info */}
-              <div className="flex flex-wrap gap-4 text-slate-600">
+              <div className="flex flex-wrap gap-4 text-text-secondary">
                 <div className="flex items-center gap-2">
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -318,40 +318,40 @@ export default function CompetitionDetailPage() {
               </div>
 
               {competition.description && (
-                <p className="mt-4 pt-4 border-t border-slate-200 text-slate-600 text-base">
+                <p className="mt-4 pt-4 border-t border-surface-border text-text-secondary text-base">
                   {competition.description}
                 </p>
               )}
 
               {/* Rules - Subtle display in hero */}
               {(competition.rule_total_count || competition.rule_record_size || competition.rule_top_x_biggest) && (
-                <div className="mt-6 pt-6 border-t border-slate-200">
-                  <div className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-3">
+                <div className="mt-6 pt-6 border-t border-surface-border">
+                  <div className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-3">
                     Règles de scoring
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {competition.rule_total_count && (
-                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
-                        <svg className="h-4 w-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-muted border border-surface-border">
+                        <svg className="h-4 w-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                         </svg>
-                        <span className="text-sm text-slate-700">Nombre total</span>
+                        <span className="text-sm text-text-secondary">Nombre total</span>
                       </div>
                     )}
                     {competition.rule_record_size && (
-                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
-                        <svg className="h-4 w-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-muted border border-surface-border">
+                        <svg className="h-4 w-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                         </svg>
-                        <span className="text-sm text-slate-700">Plus grosse prise</span>
+                        <span className="text-sm text-text-secondary">Plus grosse prise</span>
                       </div>
                     )}
                     {competition.rule_top_x_biggest && (
-                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 border border-slate-200">
-                        <svg className="h-4 w-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-muted border border-surface-border">
+                        <svg className="h-4 w-4 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                         </svg>
-                        <span className="text-sm text-slate-700">Top {competition.rule_top_x_biggest}</span>
+                        <span className="text-sm text-text-secondary">Top {competition.rule_top_x_biggest}</span>
                       </div>
                     )}
                   </div>
@@ -380,13 +380,13 @@ export default function CompetitionDetailPage() {
                 {competition.name}
               </h1>
               {competition.species && (
-                <p className="text-xl font-medium text-teal-100 mb-6">
+                <p className="text-xl font-medium text-primary-100 mb-6">
                   {competition.species}
                 </p>
               )}
 
               {/* Meta info */}
-              <div className="flex flex-wrap gap-4 text-teal-100/90">
+              <div className="flex flex-wrap gap-4 text-primary-100/90">
                 <div className="flex items-center gap-2">
                   <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -411,7 +411,7 @@ export default function CompetitionDetailPage() {
               </div>
 
               {competition.description && (
-                <p className="mt-4 pt-4 border-t border-white/10 text-teal-50 text-base">
+                <p className="mt-4 pt-4 border-t border-white/10 text-primary-50 text-base">
                   {competition.description}
                 </p>
               )}
@@ -483,7 +483,7 @@ export default function CompetitionDetailPage() {
         {competition.status === 'finished' && (
           <Link
             href={`/competitions/${competitionId}/results`}
-            className="group relative bg-white/90 backdrop-blur-sm border border-slate-200 rounded-xl p-6 shadow-md hover:shadow-xl hover:border-primary/30 transition-all duration-300 ease-out block"
+            className="group relative bg-surface/90 backdrop-blur-sm border border-surface-border rounded-xl p-6 shadow-md hover:shadow-xl hover:border-primary/30 transition-all duration-300 ease-out block"
             style={{ animation: 'slideInUp 0.5s ease-out 0.3s both' }}
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary-light/0 to-primary-light/50 opacity-0 group-hover:opacity-100 rounded-xl transition-opacity duration-300"></div>
@@ -491,16 +491,16 @@ export default function CompetitionDetailPage() {
             <div className="relative z-10 flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="relative h-16 w-16 rounded-xl bg-gradient-to-br from-reflect-gold to-reflect-amber flex items-center justify-center shadow-md group-hover:shadow-lg group-hover:scale-105 transition-all duration-300">
-                  <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-8 w-8 text-text-inverse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xl font-bold text-slate-900">Résultats finaux</p>
-                  <p className="text-sm text-slate-500">Voir le classement complet</p>
+                  <p className="text-xl font-bold text-text-primary">Résultats finaux</p>
+                  <p className="text-sm text-text-muted">Voir le classement complet</p>
                 </div>
               </div>
-              <svg className="w-6 h-6 text-slate-400 group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-text-muted group-hover:translate-x-1 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>
@@ -509,17 +509,17 @@ export default function CompetitionDetailPage() {
 
         {/* Participants - Collapsible Section */}
         <div
-          className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+          className="bg-surface/80 backdrop-blur-md border border-surface-border/80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
           style={{ animation: 'slideInUp 0.5s ease-out 0.45s both' }}
         >
           {/* Collapsible Header */}
           <button
             onClick={() => setIsParticipantsExpanded(!isParticipantsExpanded)}
-            className="w-full flex items-center justify-between p-6 hover:bg-slate-50/50 transition-colors duration-200"
+            className="w-full flex items-center justify-between p-6 hover:bg-surface-muted/50 transition-colors duration-200"
           >
             <div className="flex items-center gap-3">
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Participants</h2>
-              <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-600 text-sm font-medium">
+              <h2 className="text-2xl font-bold text-text-primary tracking-tight">Participants</h2>
+              <span className="px-2.5 py-0.5 rounded-full bg-surface-muted text-text-secondary text-sm font-medium">
                 {acceptedParticipants.length}
               </span>
             </div>
@@ -530,7 +530,7 @@ export default function CompetitionDetailPage() {
                 <Link
                   href={`/competitions/${competitionId}/invite`}
                   onClick={(e) => e.stopPropagation()}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-water-deep to-water-mid hover:from-water-mid hover:to-water-surface text-white font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-water-deep to-water-mid hover:from-water-mid hover:to-water-surface text-text-inverse font-medium text-sm transition-all duration-200 shadow-sm hover:shadow-md"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
@@ -540,9 +540,9 @@ export default function CompetitionDetailPage() {
               )}
 
               {/* Collapse/Expand icon */}
-              <div className="p-2 rounded-lg hover:bg-slate-100 transition-colors duration-200">
+              <div className="p-2 rounded-lg hover:bg-surface-muted transition-colors duration-200">
                 <svg
-                  className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${isParticipantsExpanded ? 'rotate-180' : ''}`}
+                  className={`w-5 h-5 text-text-muted transition-transform duration-300 ${isParticipantsExpanded ? 'rotate-180' : ''}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -559,10 +559,10 @@ export default function CompetitionDetailPage() {
               isParticipantsExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'
             }`}
           >
-            <div className="px-6 pb-6 border-t border-slate-100">
+            <div className="px-6 pb-6 border-t border-surface-border">
               {acceptedParticipants.length === 0 ? (
                 <div className="text-center py-8">
-                  <p className="text-base text-slate-500">Aucun participant confirmé</p>
+                  <p className="text-base text-text-muted">Aucun participant confirmé</p>
                   {isCreator && competition.status !== 'finished' && (
                     <Link
                       href={`/competitions/${competitionId}/invite`}
@@ -580,7 +580,7 @@ export default function CompetitionDetailPage() {
                   {acceptedParticipants.map((participant: any) => (
                     <div
                       key={participant.id}
-                      className="flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-slate-50 hover:to-transparent transition-all duration-200 group"
+                      className="flex items-center gap-4 p-4 rounded-xl hover:bg-gradient-to-r hover:from-surface-muted hover:to-transparent transition-all duration-200 group"
                     >
                       {/* Avatar with enhanced hover */}
                       <div className="relative">
@@ -588,15 +588,15 @@ export default function CompetitionDetailPage() {
                           <img
                             src={participant.profiles.avatar_url}
                             alt=""
-                            className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-primary transition-all duration-300 group-hover:scale-105 object-cover"
+                            className="h-14 w-14 rounded-full ring-2 ring-surface-border group-hover:ring-primary transition-all duration-300 group-hover:scale-105 object-cover"
                           />
                         ) : (
-                          <div className="h-14 w-14 rounded-full ring-2 ring-slate-200 group-hover:ring-primary bg-primary flex items-center justify-center text-base text-white font-semibold transition-all duration-300 group-hover:scale-105">
+                          <div className="h-14 w-14 rounded-full ring-2 ring-surface-border group-hover:ring-primary bg-primary flex items-center justify-center text-base text-text-inverse font-semibold transition-all duration-300 group-hover:scale-105">
                             {getInitials(participant.profiles?.name)}
                           </div>
                         )}
                       </div>
-                      <span className="text-xl font-semibold text-slate-900">
+                      <span className="text-xl font-semibold text-text-primary">
                         {participant.profiles?.name || 'Participant'}
                       </span>
                     </div>
@@ -605,23 +605,23 @@ export default function CompetitionDetailPage() {
               )}
 
               {pendingParticipants.length > 0 && (
-                <div className="mt-6 pt-6 border-t border-slate-200">
-                  <p className="text-sm font-semibold text-slate-500 uppercase tracking-wide mb-4">
+                <div className="mt-6 pt-6 border-t border-surface-border">
+                  <p className="text-sm font-semibold text-text-muted uppercase tracking-wide mb-4">
                     En attente ({pendingParticipants.length})
                   </p>
                   <div className="flex -space-x-2">
                     {pendingParticipants.slice(0, 6).map((p) => (
                       <div
                         key={p.id}
-                        className="h-12 w-12 rounded-full bg-slate-200 ring-2 ring-white flex items-center justify-center hover:scale-110 hover:z-10 transition-all duration-200"
+                        className="h-12 w-12 rounded-full bg-surface-muted ring-2 ring-surface flex items-center justify-center hover:scale-110 hover:z-10 transition-all duration-200"
                       >
-                        <svg className="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-5 h-5 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                       </div>
                     ))}
                     {pendingParticipants.length > 6 && (
-                      <div className="h-12 w-12 rounded-full bg-slate-100 ring-2 ring-white flex items-center justify-center text-sm font-semibold text-slate-600 hover:scale-110 hover:z-10 transition-all duration-200">
+                      <div className="h-12 w-12 rounded-full bg-surface-muted ring-2 ring-surface flex items-center justify-center text-sm font-semibold text-text-secondary hover:scale-110 hover:z-10 transition-all duration-200">
                         +{pendingParticipants.length - 6}
                       </div>
                     )}
@@ -635,28 +635,22 @@ export default function CompetitionDetailPage() {
         {/* Leaderboard Section */}
         {competition.status !== 'draft' && (
           <div
-            className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-surface/80 backdrop-blur-md border border-surface-border/80 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
             style={{ animation: 'slideInUp 0.5s ease-out 0.55s both' }}
           >
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Classement</h2>
-              <div className="flex items-center gap-2 text-sm text-slate-500">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-                <span>Par nombre de prises</span>
-              </div>
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-text-primary tracking-tight">Classement</h2>
             </div>
 
             {leaderboard.length === 0 ? (
               <div className="text-center py-12">
-                <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4 shadow-md">
-                  <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-surface-muted to-surface-hover flex items-center justify-center mb-4 shadow-md">
+                  <svg className="w-8 h-8 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                   </svg>
                 </div>
-                <p className="text-base text-slate-500">Aucune prise enregistrée</p>
-                <p className="text-sm text-slate-400 mt-1">Soyez le premier à capturer un poisson !</p>
+                <p className="text-base text-text-muted">Aucune prise enregistrée</p>
+                <p className="text-sm text-text-muted mt-1">Soyez le premier à capturer un poisson !</p>
               </div>
             ) : (
               <div className="space-y-3">
@@ -665,23 +659,23 @@ export default function CompetitionDetailPage() {
                     key={entry.id}
                     className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-200 ${
                       index === 0
-                        ? 'bg-gradient-to-r from-reflect-gold/20 to-reflect-amber/10 border border-reflect-gold/30'
+                        ? 'bg-gradient-to-r from-medal-gold-bg/20 to-medal-gold-bg/10 border border-medal-gold/30'
                         : index === 1
-                          ? 'bg-gradient-to-r from-slate-200/50 to-slate-100/30 border border-slate-300/50'
+                          ? 'bg-gradient-to-r from-medal-silver-bg/50 to-medal-silver-bg/30 border border-medal-silver/50'
                           : index === 2
-                            ? 'bg-gradient-to-r from-amber-100/50 to-orange-50/30 border border-amber-200/50'
-                            : 'hover:bg-slate-50'
+                            ? 'bg-gradient-to-r from-medal-bronze-bg/50 to-medal-bronze-bg/30 border border-medal-bronze/50'
+                            : 'hover:bg-surface-muted'
                     }`}
                   >
                     {/* Rank */}
                     <div className={`flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center font-bold text-lg ${
                       index === 0
-                        ? 'bg-gradient-to-br from-reflect-gold to-reflect-amber text-white shadow-md'
+                        ? 'bg-gradient-to-br from-medal-gold to-reflect-amber text-text-inverse shadow-md'
                         : index === 1
-                          ? 'bg-gradient-to-br from-slate-400 to-slate-500 text-white shadow-md'
+                          ? 'bg-gradient-to-br from-medal-silver to-medal-silver text-text-inverse shadow-md'
                           : index === 2
-                            ? 'bg-gradient-to-br from-amber-500 to-orange-500 text-white shadow-md'
-                            : 'bg-slate-100 text-slate-600'
+                            ? 'bg-gradient-to-br from-medal-bronze to-medal-bronze text-text-inverse shadow-md'
+                            : 'bg-surface-muted text-text-secondary'
                     }`}>
                       {index + 1}
                     </div>
@@ -691,18 +685,18 @@ export default function CompetitionDetailPage() {
                       <img
                         src={entry.avatar_url}
                         alt=""
-                        className="h-12 w-12 rounded-full ring-2 ring-white object-cover shadow-sm"
+                        className="h-12 w-12 rounded-full ring-2 ring-surface object-cover shadow-sm"
                       />
                     ) : (
-                      <div className="h-12 w-12 rounded-full ring-2 ring-white bg-primary flex items-center justify-center text-sm text-white font-semibold shadow-sm">
+                      <div className="h-12 w-12 rounded-full ring-2 ring-surface bg-primary flex items-center justify-center text-sm text-text-inverse font-semibold shadow-sm">
                         {getInitials(entry.name)}
                       </div>
                     )}
 
                     {/* Name & Stats */}
                     <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-slate-900 truncate">{entry.name}</p>
-                      <div className="flex items-center gap-3 text-sm text-slate-500">
+                      <p className="font-semibold text-text-primary truncate">{entry.name}</p>
+                      <div className="flex items-center gap-3 text-sm text-text-muted">
                         <span className="flex items-center gap-1">
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
@@ -723,8 +717,8 @@ export default function CompetitionDetailPage() {
                     {/* Score Badge */}
                     <div className={`flex-shrink-0 px-3 py-1.5 rounded-lg font-bold text-lg ${
                       index === 0
-                        ? 'bg-reflect-gold/20 text-reflect-amber'
-                        : 'bg-slate-100 text-slate-700'
+                        ? 'bg-medal-gold-bg/20 text-medal-gold'
+                        : 'bg-surface-muted text-text-secondary'
                     }`}>
                       {entry.catches_count}
                     </div>
@@ -738,25 +732,25 @@ export default function CompetitionDetailPage() {
         {/* Gallery Section */}
         {competition.status !== 'draft' && (
           <div
-            className={`bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 ${competition.status === 'active' ? 'mb-24' : ''}`}
+            className={`bg-surface/80 backdrop-blur-md border border-surface-border/80 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 ${competition.status === 'active' ? 'mb-24' : ''}`}
             style={{ animation: 'slideInUp 0.5s ease-out 0.65s both' }}
           >
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-slate-900 tracking-tight">Galerie</h2>
-              <div className="text-sm text-slate-500">
+              <h2 className="text-2xl font-bold text-text-primary tracking-tight">Galerie</h2>
+              <div className="text-sm text-text-muted">
                 {catches.filter(c => c.photo_url).length} photo{catches.filter(c => c.photo_url).length !== 1 ? 's' : ''}
               </div>
             </div>
 
             {catches.filter(c => c.photo_url).length === 0 ? (
               <div className="text-center py-12">
-                <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center mb-4 shadow-md">
-                  <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-surface-muted to-surface-hover flex items-center justify-center mb-4 shadow-md">
+                  <svg className="w-8 h-8 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                   </svg>
                 </div>
-                <p className="text-base text-slate-500">Aucune photo pour le moment</p>
-                <p className="text-sm text-slate-400 mt-1">Les photos de vos prises apparaîtront ici</p>
+                <p className="text-base text-text-muted">Aucune photo pour le moment</p>
+                <p className="text-sm text-text-muted mt-1">Les photos de vos prises apparaîtront ici</p>
               </div>
             ) : (
               <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -837,8 +831,8 @@ export default function CompetitionDetailPage() {
             )}
 
             {competition.status === 'draft' && acceptedParticipants.length < 2 && (
-              <div className="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-xl p-6 text-center shadow-md">
-                <p className="text-base text-slate-500">
+              <div className="bg-surface/80 backdrop-blur-md border border-surface-border/80 rounded-xl p-6 text-center shadow-md">
+                <p className="text-base text-text-muted">
                   Minimum 2 participants requis pour commencer
                 </p>
               </div>
@@ -848,11 +842,11 @@ export default function CompetitionDetailPage() {
               <button
                 onClick={handleFinishCompetition}
                 disabled={actionLoading}
-                className="w-full bg-white border-2 border-slate-300 hover:border-primary text-slate-700 hover:text-primary font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-3"
+                className="w-full bg-surface border-2 border-surface-hover hover:border-primary text-text-secondary hover:text-primary font-semibold px-6 py-3 rounded-xl shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-3"
               >
                 {actionLoading ? (
                   <>
-                    <div className="h-5 w-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin"></div>
+                    <div className="h-5 w-5 border-2 border-surface-hover border-t-text-secondary rounded-full animate-spin"></div>
                     Terminaison...
                   </>
                 ) : (

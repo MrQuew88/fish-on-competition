@@ -40,19 +40,19 @@ function PodiumDisplay({
             <img
               src={second.user_avatar}
               alt=""
-              className="w-14 h-14 mx-auto rounded-xl object-cover ring-2 ring-slate-300 mb-2"
+              className="w-14 h-14 mx-auto rounded-xl object-cover ring-2 ring-surface-border mb-2"
             />
           ) : (
-            <div className="w-14 h-14 mx-auto rounded-xl bg-slate-200 flex items-center justify-center text-lg font-semibold text-slate-600 mb-2">
+            <div className="w-14 h-14 mx-auto rounded-xl bg-surface-muted flex items-center justify-center text-lg font-semibold text-text-secondary mb-2">
               {getInitials(second.user_name)}
             </div>
           )}
           <div className="w-20 podium-second h-20 flex flex-col items-center justify-end pb-3">
             <div className="rank-badge rank-2 mb-1">2</div>
-            <span className="text-xs font-semibold text-slate-700 truncate w-full px-1">
+            <span className="text-xs font-semibold text-text-secondary truncate w-full px-1">
               {second.user_name.split(' ')[0]}
             </span>
-            <span className="text-[10px] text-slate-500">{valueFormatter(second)}</span>
+            <span className="text-[10px] text-text-muted">{valueFormatter(second)}</span>
           </div>
         </div>
       )}
@@ -229,7 +229,7 @@ export default function ResultsPage() {
         <div className="card p-8">
           <div className="empty-state">
             <div className="empty-state-icon">
-              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
@@ -264,19 +264,19 @@ export default function ResultsPage() {
             <path fillRule="evenodd" d="M5 5a3 3 0 015-2.236A3 3 0 0114.83 6H16a2 2 0 110 4h-1.17a3 3 0 01-5.66 0H8.83a3 3 0 01-5.66 0H2a2 2 0 110-4h1.17A3 3 0 015 5z" clipRule="evenodd" />
           </svg>
         </div>
-        <h1 className="text-xl font-semibold text-slate-900 mb-1">
+        <h1 className="text-xl font-semibold text-text-primary mb-1">
           Final Results
         </h1>
-        <p className="text-slate-600 text-sm">{competition.name}</p>
-        <div className="flex flex-wrap items-center justify-center gap-4 text-slate-500 text-xs mt-4">
+        <p className="text-text-secondary text-sm">{competition.name}</p>
+        <div className="flex flex-wrap items-center justify-center gap-4 text-text-muted text-xs mt-4">
           <span className="flex items-center gap-1.5">
-            <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
             {formatDate(competition.start_date)}
           </span>
           <span className="flex items-center gap-1.5">
-            <svg className="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
             </svg>
             {competition.location}
@@ -289,13 +289,13 @@ export default function ResultsPage() {
         {/* Total Fish Count */}
         {competition.rule_total_count && rankedByTotal.length > 0 && (
           <div className="card overflow-hidden animate-slide-up">
-            <div className="flex items-center gap-3 p-4 border-b border-slate-100">
-              <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-3 p-4 border-b border-surface-border/50">
+              <div className="w-10 h-10 rounded-lg bg-status-active/10 flex items-center justify-center">
+                <svg className="w-5 h-5 text-status-active" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                 </svg>
               </div>
-              <h2 className="text-base font-semibold text-slate-900">Total catch count</h2>
+              <h2 className="text-base font-semibold text-text-primary">Total catch count</h2>
             </div>
             <PodiumDisplay
               entries={rankedByTotal}
@@ -307,13 +307,13 @@ export default function ResultsPage() {
         {/* Record Size */}
         {competition.rule_record_size && rankedByRecord.length > 0 && (
           <div className="card overflow-hidden animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            <div className="flex items-center gap-3 p-4 border-b border-slate-100">
-              <div className="w-10 h-10 rounded-lg bg-teal-500/10 flex items-center justify-center">
-                <svg className="w-5 h-5 text-teal-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="flex items-center gap-3 p-4 border-b border-surface-border/50">
+              <div className="w-10 h-10 rounded-lg bg-primary-500/10 flex items-center justify-center">
+                <svg className="w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
                 </svg>
               </div>
-              <h2 className="text-base font-semibold text-slate-900">Biggest catch</h2>
+              <h2 className="text-base font-semibold text-text-primary">Biggest catch</h2>
             </div>
             <PodiumDisplay
               entries={rankedByRecord}
@@ -325,13 +325,13 @@ export default function ResultsPage() {
         {/* Top N */}
         {competition.rule_top_x_biggest && rankedByTopN.length > 0 && (
           <div className="card overflow-hidden animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <div className="flex items-center gap-3 p-4 border-b border-slate-100">
+            <div className="flex items-center gap-3 p-4 border-b border-surface-border/50">
               <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
                 <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               </div>
-              <h2 className="text-base font-semibold text-slate-900">Top {competition.rule_top_x_biggest} combined</h2>
+              <h2 className="text-base font-semibold text-text-primary">Top {competition.rule_top_x_biggest} combined</h2>
             </div>
             <PodiumDisplay
               entries={rankedByTopN}
@@ -351,7 +351,7 @@ export default function ResultsPage() {
           </div>
           <div>
             <p className="text-xs font-medium text-amber-600 uppercase tracking-wide">Prize</p>
-            <p className="text-sm font-semibold text-slate-900">{competition.prize}</p>
+            <p className="text-sm font-semibold text-text-primary">{competition.prize}</p>
           </div>
         </div>
       )}

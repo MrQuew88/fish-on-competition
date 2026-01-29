@@ -211,12 +211,12 @@ export default function LeaderboardPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-surface-bg via-primary-light to-surface-bg" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6">
           <div className="max-w-3xl mx-auto">
-            <div className="h-8 w-32 bg-slate-200 rounded-lg mb-6 animate-pulse" />
+            <div className="h-8 w-32 bg-surface-muted rounded-lg mb-6 animate-pulse" />
             <div className="h-24 bg-white/80 rounded-2xl mb-6 animate-pulse" />
             <div className="h-12 bg-white/80 rounded-xl mb-6 animate-pulse" />
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -236,17 +236,17 @@ export default function LeaderboardPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-surface-bg via-primary-light to-surface-bg" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6 flex items-center justify-center">
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-lg p-8 text-center max-w-sm">
-            <div className="w-16 h-16 mx-auto rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
-              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-surface-border/80 shadow-lg p-8 text-center max-w-sm">
+            <div className="w-16 h-16 mx-auto rounded-2xl bg-surface-bg flex items-center justify-center mb-4">
+              <svg className="w-8 h-8 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-slate-900 mb-2">Compétition introuvable</h3>
+            <h3 className="text-lg font-semibold text-text-primary mb-2">Compétition introuvable</h3>
             <Link
               href="/competitions"
               className="inline-flex items-center justify-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid text-white rounded-xl font-semibold shadow-lg shadow-primary/25"
@@ -276,7 +276,7 @@ export default function LeaderboardPage() {
     }
     if (rank === 2) {
       return (
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-slate-300 to-slate-400 flex items-center justify-center shadow-lg shadow-slate-500/20">
+        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-medal-silver to-medal-silver flex items-center justify-center shadow-lg shadow-medal-silver/20">
           <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
             <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
           </svg>
@@ -301,7 +301,7 @@ export default function LeaderboardPage() {
       return 'bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 border-2 border-amber-300/60 shadow-xl shadow-amber-500/10'
     }
     if (rank === 2) {
-      return 'bg-gradient-to-br from-slate-100 to-slate-200 border-2 border-slate-300 shadow-lg'
+      return 'bg-gradient-to-br from-medal-silver-bg to-medal-silver-bg border-2 border-medal-silver/50 shadow-lg'
     }
     if (rank === 3) {
       return 'bg-gradient-to-br from-orange-50 to-orange-100 border-2 border-orange-300/60 shadow-lg shadow-orange-500/10'
@@ -311,16 +311,16 @@ export default function LeaderboardPage() {
 
   const getAvatarRingStyle = (rank: number) => {
     if (rank === 1) return 'ring-4 ring-amber-400 shadow-lg shadow-amber-500/30'
-    if (rank === 2) return 'ring-4 ring-slate-400 shadow-lg shadow-slate-500/20'
+    if (rank === 2) return 'ring-4 ring-medal-silver shadow-lg shadow-medal-silver/20'
     if (rank === 3) return 'ring-4 ring-orange-400 shadow-lg shadow-orange-500/20'
     return 'ring-2 ring-slate-200'
   }
 
   const getTextColorStyle = (rank: number) => {
     if (rank === 1) return 'text-amber-900'
-    if (rank === 2) return 'text-slate-700'
+    if (rank === 2) return 'text-text-secondary'
     if (rank === 3) return 'text-orange-900'
-    return 'text-slate-900'
+    return 'text-text-primary'
   }
 
   return (
@@ -329,7 +329,7 @@ export default function LeaderboardPage() {
 
       {/* Premium Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
+        <div className="absolute inset-0 bg-gradient-to-br from-surface-bg via-primary-light to-surface-bg" />
         <div
           className="absolute inset-0 opacity-[0.025]"
           style={{ backgroundImage: grainTexture }}
@@ -341,10 +341,10 @@ export default function LeaderboardPage() {
           {/* Back button */}
           <Link
             href={`/competitions/${competitionId}`}
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-primary mb-6 group transition-colors duration-200"
+            className="inline-flex items-center gap-2 text-text-secondary hover:text-primary mb-6 group transition-colors duration-200"
             style={{ animation: 'slideInUp 0.4s ease-out forwards' }}
           >
-            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-primary/30 transition-all duration-200">
+            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-surface-border/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-primary/30 transition-all duration-200">
               <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
@@ -357,16 +357,16 @@ export default function LeaderboardPage() {
             className="mb-6"
             style={{ animation: 'slideInUp 0.4s ease-out 0.1s forwards', opacity: 0 }}
           >
-            <p className="text-sm text-slate-600 mb-1">{competition.name}</p>
+            <p className="text-sm text-text-secondary mb-1">{competition.name}</p>
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
+              <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-text-primary">
                 Classement
               </h1>
               {competition.status === 'active' && (
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700 border border-emerald-200">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-status-active/20 text-status-active border border-status-active/30">
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-status-active opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-status-active"></span>
                   </span>
                   En direct
                 </span>
@@ -387,7 +387,7 @@ export default function LeaderboardPage() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 whitespace-nowrap ${
                     activeRule === rule.type
                       ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md shadow-primary/20'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 bg-white/50'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-white/80 bg-white/50'
                   }`}
                 >
                   {rule.icon}
@@ -400,20 +400,20 @@ export default function LeaderboardPage() {
           {ranking.length === 0 ? (
             // Empty State
             <div
-              className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-lg p-12 text-center"
+              className="bg-white/90 backdrop-blur-sm rounded-2xl border border-surface-border/80 shadow-lg p-12 text-center"
               style={{ animation: 'slideInUp 0.4s ease-out 0.2s forwards', opacity: 0 }}
             >
-              <div className="h-24 w-24 mx-auto rounded-full bg-gradient-to-br from-primary-light to-[#0A4F4C]/10 flex items-center justify-center mb-6">
+              <div className="h-24 w-24 mx-auto rounded-full bg-gradient-to-br from-primary-light to-primary-600/10 flex items-center justify-center mb-6">
                 <svg className="w-12 h-12 text-primary/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Aucune capture</h3>
-              <p className="text-slate-600 mb-6">Soyez le premier à enregistrer une prise !</p>
+              <h3 className="text-2xl font-bold text-text-primary mb-2">Aucune capture</h3>
+              <p className="text-text-secondary mb-6">Soyez le premier à enregistrer une prise !</p>
               {competition.status === 'active' && (
                 <Link
                   href={`/competitions/${competitionId}/catches`}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-[#0A4F4C] text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-status-active to-primary-600 text-white rounded-xl font-semibold shadow-lg shadow-status-active/25 hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -476,14 +476,14 @@ export default function LeaderboardPage() {
                                   </span>
                                 )}
                               </div>
-                              <p className="text-sm text-slate-600">{entry.total_count} prises</p>
+                              <p className="text-sm text-text-secondary">{entry.total_count} prises</p>
                             </div>
 
                             <div className="text-right">
                               <div className={`text-3xl font-bold tabular-nums ${getTextColorStyle(rank)}`}>
                                 {getValueForRule(entry).split(' ')[0]}
                               </div>
-                              <div className="text-sm text-slate-500">{getUnitLabel()}</div>
+                              <div className="text-sm text-text-muted">{getUnitLabel()}</div>
                             </div>
                           </div>
                         </div>
@@ -530,7 +530,7 @@ export default function LeaderboardPage() {
                           <div className={`text-3xl font-bold tabular-nums mt-2 ${getTextColorStyle(2)}`}>
                             {getValueForRule(top3[1]).split(' ')[0]}
                           </div>
-                          <div className="text-sm text-slate-500">{getUnitLabel()}</div>
+                          <div className="text-sm text-text-muted">{getUnitLabel()}</div>
                         </div>
                       </div>
                     ) : <div />}
@@ -575,7 +575,7 @@ export default function LeaderboardPage() {
                           <div className={`text-4xl font-bold tabular-nums mt-2 ${getTextColorStyle(1)}`}>
                             {getValueForRule(top3[0]).split(' ')[0]}
                           </div>
-                          <div className="text-sm text-slate-500">{getUnitLabel()}</div>
+                          <div className="text-sm text-text-muted">{getUnitLabel()}</div>
                         </div>
                       </div>
                     )}
@@ -617,7 +617,7 @@ export default function LeaderboardPage() {
                           <div className={`text-3xl font-bold tabular-nums mt-2 ${getTextColorStyle(3)}`}>
                             {getValueForRule(top3[2]).split(' ')[0]}
                           </div>
-                          <div className="text-sm text-slate-500">{getUnitLabel()}</div>
+                          <div className="text-sm text-text-muted">{getUnitLabel()}</div>
                         </div>
                       </div>
                     ) : <div />}
@@ -628,11 +628,11 @@ export default function LeaderboardPage() {
               {/* Rest of Rankings (4th place and below) */}
               {rest.length > 0 && (
                 <div
-                  className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-lg shadow-slate-900/5 overflow-hidden"
+                  className="bg-white/90 backdrop-blur-sm rounded-2xl border border-surface-border/80 shadow-lg shadow-slate-900/5 overflow-hidden"
                   style={{ animation: 'slideInUp 0.4s ease-out 0.3s forwards', opacity: 0 }}
                 >
-                  <div className="p-5 border-b border-slate-100">
-                    <h2 className="font-semibold text-slate-900">Autres participants</h2>
+                  <div className="p-5 border-b border-surface-border/50">
+                    <h2 className="font-semibold text-text-primary">Autres participants</h2>
                   </div>
 
                   <div className="p-4 space-y-2">
@@ -645,10 +645,10 @@ export default function LeaderboardPage() {
                           className={`group flex items-center gap-4 p-4 rounded-xl transition-all duration-200 ${
                             isCurrentUser
                               ? 'bg-primary-light/50 border-2 border-primary/30'
-                              : 'hover:bg-slate-50 border border-transparent'
+                              : 'hover:bg-surface-bg border border-transparent'
                           }`}
                         >
-                          <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 text-slate-600 font-semibold text-lg tabular-nums">
+                          <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-surface-bg text-text-secondary font-semibold text-lg tabular-nums">
                             {rank}
                           </div>
 
@@ -666,21 +666,21 @@ export default function LeaderboardPage() {
 
                           <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2">
-                              <p className="font-semibold text-slate-900 truncate">{entry.user_name}</p>
+                              <p className="font-semibold text-text-primary truncate">{entry.user_name}</p>
                               {isCurrentUser && (
                                 <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-primary text-white">
                                   Vous
                                 </span>
                               )}
                             </div>
-                            <p className="text-sm text-slate-500">{entry.total_count} prises</p>
+                            <p className="text-sm text-text-muted">{entry.total_count} prises</p>
                           </div>
 
                           <div className="text-right">
-                            <div className="text-2xl font-bold tabular-nums text-slate-900">
+                            <div className="text-2xl font-bold tabular-nums text-text-primary">
                               {getValueForRule(entry).split(' ')[0]}
                             </div>
-                            <div className="text-xs text-slate-500">{getUnitLabel()}</div>
+                            <div className="text-xs text-text-muted">{getUnitLabel()}</div>
                           </div>
                         </div>
                       )
@@ -697,7 +697,7 @@ export default function LeaderboardPage() {
                 >
                   <Link
                     href={`/competitions/${competitionId}/catches`}
-                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-[#0A4F4C] text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+                    className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-status-active to-primary-600 text-white rounded-xl font-semibold shadow-lg shadow-status-active/25 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -712,7 +712,7 @@ export default function LeaderboardPage() {
           {/* No Rules Defined */}
           {availableRules.length === 0 && (
             <div
-              className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-lg p-12 text-center"
+              className="bg-white/90 backdrop-blur-sm rounded-2xl border border-surface-border/80 shadow-lg p-12 text-center"
               style={{ animation: 'slideInUp 0.4s ease-out 0.2s forwards', opacity: 0 }}
             >
               <div className="h-20 w-20 mx-auto rounded-full bg-amber-100 flex items-center justify-center mb-6">
@@ -720,8 +720,8 @@ export default function LeaderboardPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-2">Aucune règle définie</h3>
-              <p className="text-slate-600">Cette compétition n'a pas de critères de classement</p>
+              <h3 className="text-xl font-bold text-text-primary mb-2">Aucune règle définie</h3>
+              <p className="text-text-secondary">Cette compétition n'a pas de critères de classement</p>
             </div>
           )}
         </div>

@@ -3,7 +3,9 @@
     "allow": [
       "Bash(cd /Users/quentinguislain/Desktop/App\\\\ Perso/fishing-competition && npm run build:*)",
       "WebSearch",
-      "WebFetch(domain:screensdesign.com)"
+      "WebFetch(domain:screensdesign.com)",
+      "Bash(cd /Users/quentinguislain/Desktop/App\\\\ Perso/fishing-competition && npx next lint:*)",
+      "Bash(cd:*)"
     ]
   }
 }

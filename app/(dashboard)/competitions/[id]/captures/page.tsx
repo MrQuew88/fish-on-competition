@@ -246,12 +246,12 @@ export default function CapturesPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-surface-bg via-primary-light to-surface-bg" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6">
           <div className="max-w-7xl mx-auto">
-            <div className="h-8 w-32 bg-slate-200 rounded-lg mb-6 animate-pulse" />
+            <div className="h-8 w-32 bg-surface-muted rounded-lg mb-6 animate-pulse" />
             <div className="h-12 bg-white/80 rounded-xl mb-6 animate-pulse" />
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
@@ -269,17 +269,17 @@ export default function CapturesPage() {
       <>
         <style dangerouslySetInnerHTML={{ __html: entranceAnimation }} />
         <div className="fixed inset-0 -z-10">
-          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
+          <div className="absolute inset-0 bg-gradient-to-br from-surface-bg via-primary-light to-surface-bg" />
           <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: grainTexture }} />
         </div>
         <div className="min-h-screen px-4 py-6 flex items-center justify-center">
-          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-lg p-8 text-center max-w-sm">
-            <div className="w-16 h-16 mx-auto rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
-              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-surface-border/80 shadow-lg p-8 text-center max-w-sm">
+            <div className="w-16 h-16 mx-auto rounded-2xl bg-surface-bg flex items-center justify-center mb-4">
+              <svg className="w-8 h-8 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-slate-900 mb-2">Compétition introuvable</h3>
+            <h3 className="text-lg font-semibold text-text-primary mb-2">Compétition introuvable</h3>
             <Link
               href="/competitions"
               className="inline-flex items-center justify-center gap-2 mt-4 px-6 py-3 bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid text-white rounded-xl font-semibold shadow-lg shadow-primary/25"
@@ -298,7 +298,7 @@ export default function CapturesPage() {
 
       {/* Premium Background */}
       <div className="fixed inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-primary-light to-slate-100" />
+        <div className="absolute inset-0 bg-gradient-to-br from-surface-bg via-primary-light to-surface-bg" />
         <div
           className="absolute inset-0 opacity-[0.025]"
           style={{ backgroundImage: grainTexture }}
@@ -310,10 +310,10 @@ export default function CapturesPage() {
           {/* Back button */}
           <Link
             href={`/competitions/${competitionId}`}
-            className="inline-flex items-center gap-2 text-slate-600 hover:text-primary mb-6 group transition-colors duration-200"
+            className="inline-flex items-center gap-2 text-text-secondary hover:text-primary mb-6 group transition-colors duration-200"
             style={{ animation: 'slideInUp 0.4s ease-out forwards' }}
           >
-            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-slate-200/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-primary/30 transition-all duration-200">
+            <div className="w-10 h-10 rounded-xl bg-white/80 backdrop-blur-sm border border-surface-border/80 flex items-center justify-center shadow-sm group-hover:shadow-md group-hover:border-primary/30 transition-all duration-200">
               <svg className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
@@ -326,13 +326,13 @@ export default function CapturesPage() {
             className="mb-6"
             style={{ animation: 'slideInUp 0.4s ease-out 0.1s forwards', opacity: 0 }}
           >
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900 mb-1">
+            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-text-primary mb-1">
               Galerie
             </h1>
-            <p className="text-slate-600">{competition.name}</p>
+            <p className="text-text-secondary">{competition.name}</p>
 
             {/* Stats */}
-            <div className="flex items-center gap-6 mt-4 text-sm text-slate-600">
+            <div className="flex items-center gap-6 mt-4 text-sm text-text-secondary">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-lg bg-primary-light flex items-center justify-center">
                   <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -342,8 +342,8 @@ export default function CapturesPage() {
                 <span className="font-medium">{sessionsWithPhotos.length} photos</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
-                  <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-8 h-8 rounded-lg bg-status-active/20 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-status-active" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                   </svg>
                 </div>
@@ -351,8 +351,8 @@ export default function CapturesPage() {
               </div>
               {participants.length > 0 && (
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
-                    <svg className="w-4 h-4 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="w-8 h-8 rounded-lg bg-accent-amber/20 flex items-center justify-center">
+                    <svg className="w-4 h-4 text-accent-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                   </div>
@@ -373,7 +373,7 @@ export default function CapturesPage() {
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 whitespace-nowrap ${
                   selectedFilter === null
                     ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md shadow-primary/20'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 bg-white/50'
+                    : 'text-text-secondary hover:text-text-primary hover:bg-white/80 bg-white/50'
                 }`}
               >
                 Tous
@@ -385,7 +385,7 @@ export default function CapturesPage() {
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 whitespace-nowrap ${
                     selectedFilter === participant.id
                       ? 'text-white bg-gradient-to-r from-water-deep via-merged-teal-gold to-water-mid shadow-md shadow-primary/20'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/80 bg-white/50'
+                      : 'text-text-secondary hover:text-text-primary hover:bg-white/80 bg-white/50'
                   }`}
                 >
                   {participant.avatar ? (
@@ -412,7 +412,7 @@ export default function CapturesPage() {
           {sessionsWithPhotos.length === 0 ? (
             // Empty State
             <div
-              className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-lg p-12 text-center"
+              className="bg-white/90 backdrop-blur-sm rounded-2xl border border-surface-border/80 shadow-lg p-12 text-center"
               style={{ animation: 'slideInUp 0.4s ease-out 0.2s forwards', opacity: 0 }}
             >
               <div className="h-24 w-24 mx-auto rounded-full bg-gradient-to-br from-primary-light to-primary/10 flex items-center justify-center mb-6">
@@ -420,8 +420,8 @@ export default function CapturesPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-bold text-slate-900 mb-2">Galerie vide</h3>
-              <p className="text-slate-600 mb-8">
+              <h3 className="text-2xl font-bold text-text-primary mb-2">Galerie vide</h3>
+              <p className="text-text-secondary mb-8">
                 {selectedFilter
                   ? "Ce participant n'a pas encore partagé de photos"
                   : "Soyez le premier à partager une photo de votre prise !"}
@@ -429,7 +429,7 @@ export default function CapturesPage() {
               {competition.status === 'active' && (
                 <Link
                   href={`/competitions/${competitionId}/catches`}
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-emerald-500 to-primary text-white rounded-xl font-semibold shadow-lg shadow-emerald-500/25 hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-status-active to-primary text-white rounded-xl font-semibold shadow-lg shadow-status-active/25 hover:shadow-xl hover:scale-[1.02] transition-all duration-200"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
@@ -455,7 +455,7 @@ export default function CapturesPage() {
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     {/* Image */}
-                    <div className="relative aspect-square bg-slate-200">
+                    <div className="relative aspect-square bg-surface-muted">
                       <img
                         src={session.photo_url!}
                         alt="Capture"
@@ -514,7 +514,7 @@ export default function CapturesPage() {
                     </div>
 
                     {/* Fish count badge - visible on mobile */}
-                    <div className="md:hidden absolute top-2 left-2 px-2 py-1 rounded-full bg-emerald-500 text-white text-xs font-bold">
+                    <div className="md:hidden absolute top-2 left-2 px-2 py-1 rounded-full bg-status-active-bg0 text-white text-xs font-bold">
                       {session.totalFish}
                     </div>
                   </div>
@@ -527,7 +527,7 @@ export default function CapturesPage() {
           {competition.status === 'active' && sessionsWithPhotos.length > 0 && (
             <Link
               href={`/competitions/${competitionId}/catches`}
-              className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-emerald-500 to-primary text-white rounded-full shadow-lg shadow-emerald-500/30 flex items-center justify-center hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-200 z-30"
+              className="fixed bottom-6 right-6 w-14 h-14 bg-gradient-to-r from-status-active to-primary text-white rounded-full shadow-lg shadow-status-active/30 flex items-center justify-center hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-200 z-30"
               style={{ animation: 'slideInUp 0.4s ease-out 0.4s forwards', opacity: 0 }}
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -616,25 +616,25 @@ export default function CapturesPage() {
                       <img
                         src={selectedSession.avatar_url}
                         alt=""
-                        className="w-12 h-12 rounded-full ring-2 ring-slate-200 object-cover"
+                        className="w-12 h-12 rounded-full ring-2 ring-surface-border object-cover"
                       />
                     ) : (
-                      <div className="w-12 h-12 rounded-full ring-2 ring-slate-200 bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-white font-bold">
+                      <div className="w-12 h-12 rounded-full ring-2 ring-surface-border bg-gradient-to-br from-water-deep via-merged-teal-gold to-water-mid flex items-center justify-center text-white font-bold">
                         {getInitials(selectedSession.user_name)}
                       </div>
                     )}
                     <div>
-                      <h2 className="text-xl font-bold text-slate-900">{selectedSession.user_name}</h2>
-                      <p className="text-sm text-slate-500">{formatFullDate(selectedSession.recorded_at)}</p>
+                      <h2 className="text-xl font-bold text-text-primary">{selectedSession.user_name}</h2>
+                      <p className="text-sm text-text-muted">{formatFullDate(selectedSession.recorded_at)}</p>
                     </div>
                   </div>
 
                   {/* Desktop Close Button */}
                   <button
                     onClick={() => setSelectedSession(null)}
-                    className="hidden md:flex p-2 rounded-lg hover:bg-slate-100 transition-colors duration-200"
+                    className="hidden md:flex p-2 rounded-lg hover:bg-surface-bg transition-colors duration-200"
                   >
-                    <svg className="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-6 h-6 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                     </svg>
                   </button>
@@ -643,14 +643,14 @@ export default function CapturesPage() {
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   {/* Fish Count */}
-                  <div className="p-4 rounded-xl bg-emerald-50 border border-emerald-200">
-                    <div className="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center mb-2">
-                      <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="p-4 rounded-xl bg-status-active-bg border border-status-active/30">
+                    <div className="w-10 h-10 rounded-lg bg-status-active/20 flex items-center justify-center mb-2">
+                      <svg className="w-5 h-5 text-status-active" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
                       </svg>
                     </div>
-                    <p className="text-xs font-semibold text-emerald-700 uppercase tracking-wide mb-1">Prises</p>
-                    <p className="text-2xl font-bold text-emerald-900 tabular-nums">{selectedSession.totalFish}</p>
+                    <p className="text-xs font-semibold text-status-active uppercase tracking-wide mb-1">Prises</p>
+                    <p className="text-2xl font-bold text-status-active tabular-nums">{selectedSession.totalFish}</p>
                   </div>
 
                   {/* Size */}
@@ -667,34 +667,34 @@ export default function CapturesPage() {
                   )}
 
                   {/* Time */}
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200">
-                    <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center mb-2">
-                      <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="p-4 rounded-xl bg-surface-bg border border-surface-border">
+                    <div className="w-10 h-10 rounded-lg bg-surface-bg flex items-center justify-center mb-2">
+                      <svg className="w-5 h-5 text-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <p className="text-xs font-semibold text-slate-600 uppercase tracking-wide mb-1">Heure</p>
-                    <p className="text-2xl font-bold text-slate-900 tabular-nums">{formatTime(selectedSession.recorded_at)}</p>
+                    <p className="text-xs font-semibold text-text-secondary uppercase tracking-wide mb-1">Heure</p>
+                    <p className="text-2xl font-bold text-text-primary tabular-nums">{formatTime(selectedSession.recorded_at)}</p>
                   </div>
 
                   {/* Lure */}
                   {selectedSession.lures.length > 0 && (
-                    <div className="p-4 rounded-xl bg-amber-50 border border-amber-200">
-                      <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center mb-2">
-                        <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="p-4 rounded-xl bg-accent-amber/10 border border-accent-amber/30">
+                      <div className="w-10 h-10 rounded-lg bg-accent-amber/20 flex items-center justify-center mb-2">
+                        <svg className="w-5 h-5 text-accent-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                         </svg>
                       </div>
-                      <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-1">Leurre</p>
-                      <p className="text-lg font-bold text-amber-900 truncate">{selectedSession.lures[0]}</p>
+                      <p className="text-xs font-semibold text-accent-amber uppercase tracking-wide mb-1">Leurre</p>
+                      <p className="text-lg font-bold text-accent-amber truncate">{selectedSession.lures[0]}</p>
                     </div>
                   )}
                 </div>
 
                 {/* All Sizes */}
                 {selectedSession.catches.some(c => c.size !== null) && (
-                  <div className="mt-auto pt-6 border-t border-slate-200">
-                    <p className="text-sm font-semibold text-slate-900 mb-3">Tailles enregistrées</p>
+                  <div className="mt-auto pt-6 border-t border-surface-border">
+                    <p className="text-sm font-semibold text-text-primary mb-3">Tailles enregistrées</p>
                     <div className="flex flex-wrap gap-2">
                       {selectedSession.catches
                         .filter(c => c.size !== null)
@@ -708,7 +708,7 @@ export default function CapturesPage() {
                                 ? 'bg-gradient-to-r from-amber-400 to-orange-500 text-white'
                                 : idx === 0
                                 ? 'bg-primary text-white'
-                                : 'bg-slate-100 text-slate-700'
+                                : 'bg-surface-bg text-text-secondary'
                             }`}
                           >
                             {size} cm
