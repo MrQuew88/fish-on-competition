@@ -14,6 +14,8 @@ interface LeaderboardEntry {
   catches_count: number
   total_size: number
   biggest_catch: number
+  top5_total: number
+  all_sizes: number[]
 }
 
 export default function CompetitionDetailPage() {
@@ -29,6 +31,7 @@ export default function CompetitionDetailPage() {
   const [isCreator, setIsCreator] = useState(false)
   const [actionLoading, setActionLoading] = useState(false)
   const [isParticipantsExpanded, setIsParticipantsExpanded] = useState(true)
+  const [activeLeaderboardTab, setActiveLeaderboardTab] = useState<'total' | 'biggest' | 'top5'>('total')
 
   useEffect(() => {
     loadCompetition()
@@ -79,6 +82,9 @@ export default function CompetitionDetailPage() {
           existing.catches_count += c.count
           existing.total_size += (c.size || 0) * c.count
           existing.biggest_catch = Math.max(existing.biggest_catch, c.size || 0)
+          if (c.size) {
+            existing.all_sizes.push(c.size)
+          }
         } else {
           leaderboardMap.set(c.user_id, {
             id: c.user_id,
@@ -87,12 +93,20 @@ export default function CompetitionDetailPage() {
             avatar_url: c.profiles?.avatar_url || null,
             catches_count: c.count,
             total_size: (c.size || 0) * c.count,
-            biggest_catch: c.size || 0
+            biggest_catch: c.size || 0,
+            top5_total: 0,
+            all_sizes: c.size ? [c.size] : []
           })
         }
       }
 
-      // Sort by catches count (descending)
+      // Calculate top 5 total for each participant
+      leaderboardMap.forEach((entry) => {
+        const sortedSizes = entry.all_sizes.sort((a, b) => b - a)
+        entry.top5_total = sortedSizes.slice(0, 5).reduce((sum, size) => sum + size, 0)
+      })
+
+      // Sort by catches count (descending) by default
       const sortedLeaderboard = Array.from(leaderboardMap.values())
         .sort((a, b) => b.catches_count - a.catches_count)
       setLeaderboard(sortedLeaderboard)
@@ -263,7 +277,7 @@ export default function CompetitionDetailPage() {
         style={{ backgroundImage: grainTexture }}
       />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className={`relative z-10 max-w-4xl mx-auto px-4 py-8 space-y-8 ${competition.status === 'active' ? 'pb-32' : ''}`}>
         {/* Back button - enhanced animation */}
         <Link
           href="/competitions"
@@ -515,7 +529,7 @@ export default function CompetitionDetailPage() {
           {/* Collapsible Header */}
           <button
             onClick={() => setIsParticipantsExpanded(!isParticipantsExpanded)}
-            className="w-full flex items-center justify-between p-6 hover:bg-surface-muted/50 transition-colors duration-200"
+            className="w-full flex items-center justify-between gap-4 p-6 hover:bg-surface-muted/50 transition-colors duration-200"
           >
             <div className="flex items-center gap-3">
               <h2 className="text-2xl font-bold text-text-primary tracking-tight">Participants</h2>
@@ -635,97 +649,173 @@ export default function CompetitionDetailPage() {
         {/* Leaderboard Section */}
         {competition.status !== 'draft' && (
           <div
-            className="bg-surface/80 backdrop-blur-md border border-surface-border/80 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-surface/80 backdrop-blur-md border border-surface-border/80 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
             style={{ animation: 'slideInUp 0.5s ease-out 0.55s both' }}
           >
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-text-primary tracking-tight">Classement</h2>
+            <div className="p-6 pb-0">
+              <h2 className="text-2xl font-bold text-text-primary tracking-tight mb-4">Classement</h2>
+
+              {/* Tabs Navigation */}
+              <div className="flex gap-2 border-b border-surface-border pb-0">
+                <button
+                  onClick={() => setActiveLeaderboardTab('total')}
+                  className={`flex items-center gap-2 px-4 py-2 font-medium text-sm whitespace-nowrap transition-colors ${
+                    activeLeaderboardTab === 'total'
+                      ? 'text-primary-600 border-b-2 border-primary-600'
+                      : 'text-text-secondary hover:text-text-primary'
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
+                  </svg>
+                  Nombre total
+                </button>
+
+                <button
+                  onClick={() => setActiveLeaderboardTab('biggest')}
+                  className={`flex items-center gap-2 px-4 py-2 font-medium text-sm whitespace-nowrap transition-colors ${
+                    activeLeaderboardTab === 'biggest'
+                      ? 'text-primary-600 border-b-2 border-primary-600'
+                      : 'text-text-secondary hover:text-text-primary'
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                  </svg>
+                  Plus grosse prise
+                </button>
+
+                <button
+                  onClick={() => setActiveLeaderboardTab('top5')}
+                  className={`flex items-center gap-2 px-4 py-2 font-medium text-sm whitespace-nowrap transition-colors ${
+                    activeLeaderboardTab === 'top5'
+                      ? 'text-primary-600 border-b-2 border-primary-600'
+                      : 'text-text-secondary hover:text-text-primary'
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
+                  Top 5 combiné
+                </button>
+              </div>
             </div>
 
-            {leaderboard.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-surface-muted to-surface-hover flex items-center justify-center mb-4 shadow-md">
-                  <svg className="w-8 h-8 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                </div>
-                <p className="text-base text-text-muted">Aucune prise enregistrée</p>
-                <p className="text-sm text-text-muted mt-1">Soyez le premier à capturer un poisson !</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {leaderboard.map((entry, index) => (
-                  <div
-                    key={entry.id}
-                    className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-200 ${
-                      index === 0
-                        ? 'bg-gradient-to-r from-medal-gold-bg/20 to-medal-gold-bg/10 border border-medal-gold/30'
-                        : index === 1
-                          ? 'bg-gradient-to-r from-medal-silver-bg/50 to-medal-silver-bg/30 border border-medal-silver/50'
-                          : index === 2
-                            ? 'bg-gradient-to-r from-medal-bronze-bg/50 to-medal-bronze-bg/30 border border-medal-bronze/50'
-                            : 'hover:bg-surface-muted'
-                    }`}
-                  >
-                    {/* Rank */}
-                    <div className={`flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center font-bold text-lg ${
-                      index === 0
-                        ? 'bg-gradient-to-br from-medal-gold to-reflect-amber text-text-inverse shadow-md'
-                        : index === 1
-                          ? 'bg-gradient-to-br from-medal-silver to-medal-silver text-text-inverse shadow-md'
-                          : index === 2
-                            ? 'bg-gradient-to-br from-medal-bronze to-medal-bronze text-text-inverse shadow-md'
-                            : 'bg-surface-muted text-text-secondary'
-                    }`}>
-                      {index + 1}
-                    </div>
-
-                    {/* Avatar */}
-                    {entry.avatar_url ? (
-                      <img
-                        src={entry.avatar_url}
-                        alt=""
-                        className="h-12 w-12 rounded-full ring-2 ring-surface object-cover shadow-sm"
-                      />
-                    ) : (
-                      <div className="h-12 w-12 rounded-full ring-2 ring-surface bg-primary flex items-center justify-center text-sm text-text-inverse font-semibold shadow-sm">
-                        {getInitials(entry.name)}
-                      </div>
-                    )}
-
-                    {/* Name & Stats */}
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-text-primary truncate">{entry.name}</p>
-                      <div className="flex items-center gap-3 text-sm text-text-muted">
-                        <span className="flex items-center gap-1">
-                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
-                          </svg>
-                          {entry.catches_count} prise{entry.catches_count !== 1 ? 's' : ''}
-                        </span>
-                        {entry.biggest_catch > 0 && (
-                          <span className="flex items-center gap-1">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-                            </svg>
-                            Max {entry.biggest_catch} cm
-                          </span>
-                        )}
-                      </div>
-                    </div>
-
-                    {/* Score Badge */}
-                    <div className={`flex-shrink-0 px-3 py-1.5 rounded-lg font-bold text-lg ${
-                      index === 0
-                        ? 'bg-medal-gold-bg/20 text-medal-gold'
-                        : 'bg-surface-muted text-text-secondary'
-                    }`}>
-                      {entry.catches_count}
-                    </div>
+            <div className="border-t border-surface-border p-6">
+              {leaderboard.length === 0 ? (
+                <div className="text-center py-12">
+                  <div className="mx-auto h-16 w-16 rounded-xl bg-gradient-to-br from-surface-muted to-surface-hover flex items-center justify-center mb-4 shadow-md">
+                    <svg className="w-8 h-8 text-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
                   </div>
-                ))}
-              </div>
-            )}
+                  <p className="text-base text-text-muted">Aucune prise enregistrée</p>
+                  <p className="text-sm text-text-muted mt-1">Soyez le premier à capturer un poisson !</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {(() => {
+                    // Sort leaderboard based on active tab
+                    const sortedLeaderboard = [...leaderboard].sort((a, b) => {
+                      switch (activeLeaderboardTab) {
+                        case 'total':
+                          return b.catches_count - a.catches_count
+                        case 'biggest':
+                          return b.biggest_catch - a.biggest_catch
+                        case 'top5':
+                          return b.top5_total - a.top5_total
+                        default:
+                          return 0
+                      }
+                    })
+
+                    // Filter out entries with no relevant data for biggest/top5 tabs
+                    const filteredLeaderboard = activeLeaderboardTab === 'biggest'
+                      ? sortedLeaderboard.filter(e => e.biggest_catch > 0)
+                      : activeLeaderboardTab === 'top5'
+                        ? sortedLeaderboard.filter(e => e.top5_total > 0)
+                        : sortedLeaderboard
+
+                    if (filteredLeaderboard.length === 0) {
+                      return (
+                        <div className="text-center py-8">
+                          <p className="text-base text-text-muted">
+                            {activeLeaderboardTab === 'biggest'
+                              ? 'Aucune taille enregistrée'
+                              : 'Aucune taille enregistrée pour calculer le Top 5'}
+                          </p>
+                          <p className="text-sm text-text-muted mt-1">
+                            Enregistrez la taille de vos prises pour apparaître ici
+                          </p>
+                        </div>
+                      )
+                    }
+
+                    return filteredLeaderboard.map((entry, index) => (
+                      <div
+                        key={entry.id}
+                        className={`flex items-center gap-4 p-4 rounded-xl transition-all duration-200 ${
+                          index === 0
+                            ? 'bg-gradient-to-r from-medal-gold-bg/20 to-medal-gold-bg/10 border border-medal-gold/30'
+                            : index === 1
+                              ? 'bg-gradient-to-r from-medal-silver-bg/50 to-medal-silver-bg/30 border border-medal-silver/50'
+                              : index === 2
+                                ? 'bg-gradient-to-r from-medal-bronze-bg/50 to-medal-bronze-bg/30 border border-medal-bronze/50'
+                                : 'hover:bg-surface-muted'
+                        }`}
+                      >
+                        {/* Rank */}
+                        <div className={`flex-shrink-0 h-10 w-10 rounded-full flex items-center justify-center font-bold text-lg ${
+                          index === 0
+                            ? 'bg-gradient-to-br from-medal-gold to-reflect-amber text-text-inverse shadow-md'
+                            : index === 1
+                              ? 'bg-gradient-to-br from-medal-silver to-medal-silver text-text-inverse shadow-md'
+                              : index === 2
+                                ? 'bg-gradient-to-br from-medal-bronze to-medal-bronze text-text-inverse shadow-md'
+                                : 'bg-surface-muted text-text-secondary'
+                        }`}>
+                          {index + 1}
+                        </div>
+
+                        {/* Avatar */}
+                        {entry.avatar_url ? (
+                          <img
+                            src={entry.avatar_url}
+                            alt=""
+                            className="h-12 w-12 rounded-full ring-2 ring-surface object-cover shadow-sm"
+                          />
+                        ) : (
+                          <div className="h-12 w-12 rounded-full ring-2 ring-surface bg-primary flex items-center justify-center text-sm text-text-inverse font-semibold shadow-sm">
+                            {getInitials(entry.name)}
+                          </div>
+                        )}
+
+                        {/* Name & Stats */}
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold text-text-primary truncate">{entry.name}</p>
+                          <p className="text-sm text-text-secondary">
+                            {activeLeaderboardTab === 'total' && `${entry.catches_count} ${entry.catches_count > 1 ? 'prises' : 'prise'}`}
+                            {activeLeaderboardTab === 'biggest' && `Max: ${entry.biggest_catch} cm`}
+                            {activeLeaderboardTab === 'top5' && `Top 5: ${entry.top5_total} cm`}
+                          </p>
+                        </div>
+
+                        {/* Score Badge - changes based on active tab */}
+                        <div className={`flex-shrink-0 px-3 py-1.5 rounded-lg font-bold text-lg ${
+                          index === 0
+                            ? 'bg-medal-gold-bg/20 text-medal-gold'
+                            : 'bg-surface-muted text-text-secondary'
+                        }`}>
+                          {activeLeaderboardTab === 'total' && entry.catches_count}
+                          {activeLeaderboardTab === 'biggest' && `${entry.biggest_catch} cm`}
+                          {activeLeaderboardTab === 'top5' && `${entry.top5_total} cm`}
+                        </div>
+                      </div>
+                    ))
+                  })()}
+                </div>
+              )}
+            </div>
           </div>
         )}
 

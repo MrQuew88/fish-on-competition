@@ -428,7 +428,10 @@ export default function RecordCatchPage() {
                   </div>
                 ) : (
                   // Upload Area
-                  <label className="block cursor-pointer group">
+                  <div
+                    onClick={() => fileInputRef.current?.click()}
+                    className="block cursor-pointer group"
+                  >
                     <div className="relative border-2 border-dashed border-surface-border rounded-xl p-8 hover:border-primary hover:bg-primary-light/30 transition-all duration-200">
                       <div className="flex flex-col items-center text-center gap-3">
                         <div className="h-16 w-16 rounded-xl bg-gradient-to-br from-primary-light to-primary/10 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
@@ -447,7 +450,7 @@ export default function RecordCatchPage() {
                         </div>
                       </div>
                     </div>
-                  </label>
+                  </div>
                 )}
                 <input
                   ref={fileInputRef}
