@@ -518,6 +518,15 @@
   @apply bg-slate-400;
 }
 
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Safe area for mobile devices */
 .safe-area-pb {
   padding-bottom: max(env(safe-area-inset-bottom, 0px), 1rem);

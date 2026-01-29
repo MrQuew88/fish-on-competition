@@ -656,10 +656,10 @@ export default function CompetitionDetailPage() {
               <h2 className="text-2xl font-bold text-text-primary tracking-tight mb-4">Classement</h2>
 
               {/* Tabs Navigation */}
-              <div className="flex gap-2 border-b border-surface-border pb-0">
+              <div className="flex gap-2 border-b border-surface-border pb-0 overflow-x-auto scrollbar-hide">
                 <button
                   onClick={() => setActiveLeaderboardTab('total')}
-                  className={`flex items-center gap-2 px-4 py-2 font-medium text-sm whitespace-nowrap transition-colors ${
+                  className={`flex items-center gap-2 px-4 py-2 font-medium text-sm whitespace-nowrap flex-shrink-0 transition-colors ${
                     activeLeaderboardTab === 'total'
                       ? 'text-primary-600 border-b-2 border-primary-600'
                       : 'text-text-secondary hover:text-text-primary'
@@ -673,7 +673,7 @@ export default function CompetitionDetailPage() {
 
                 <button
                   onClick={() => setActiveLeaderboardTab('biggest')}
-                  className={`flex items-center gap-2 px-4 py-2 font-medium text-sm whitespace-nowrap transition-colors ${
+                  className={`flex items-center gap-2 px-4 py-2 font-medium text-sm whitespace-nowrap flex-shrink-0 transition-colors ${
                     activeLeaderboardTab === 'biggest'
                       ? 'text-primary-600 border-b-2 border-primary-600'
                       : 'text-text-secondary hover:text-text-primary'
@@ -687,7 +687,7 @@ export default function CompetitionDetailPage() {
 
                 <button
                   onClick={() => setActiveLeaderboardTab('top5')}
-                  className={`flex items-center gap-2 px-4 py-2 font-medium text-sm whitespace-nowrap transition-colors ${
+                  className={`flex items-center gap-2 px-4 py-2 font-medium text-sm whitespace-nowrap flex-shrink-0 transition-colors ${
                     activeLeaderboardTab === 'top5'
                       ? 'text-primary-600 border-b-2 border-primary-600'
                       : 'text-text-secondary hover:text-text-primary'
