@@ -456,7 +456,6 @@ export default function RecordCatchPage() {
                   ref={fileInputRef}
                   type="file"
                   accept="image/jpeg,image/png,image/heic,image/*"
-                  capture="environment"
                   onChange={handlePhotoChange}
                   className="hidden"
                 />
